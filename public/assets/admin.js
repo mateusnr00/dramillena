@@ -115,8 +115,8 @@
           { p: 'hero.eyebrow', l: 'Chamada', s: 'Texto pequeno acima do título' },
           { p: 'hero.title', l: 'Título', s: HINT },
           { p: 'hero.sub', l: 'Subtítulo', t: 'textarea' },
-          { p: 'hero.ctaPrimary', l: 'Botão do WhatsApp' },
-          { p: 'hero.ctaSecondary', l: 'Botão de agendar' },
+          { p: 'hero.ctaPrimary', l: 'Botão de agendar' },
+          { p: 'hero.ctaSecondary', l: 'Link do WhatsApp' },
           { p: 'hero.antes', l: 'Foto antes', t: 'image' },
           { p: 'hero.depois', l: 'Foto depois', t: 'image' },
           { p: 'hero.note', l: 'Legenda da foto' }
@@ -182,6 +182,24 @@
           fields: [{ p: 'texto', l: 'Depoimento', t: 'textarea' }, { p: 'nome', l: 'Nome' }, { p: 'role', l: 'Detalhe', s: 'Ex.: Cliente desde 2023' }] }
       ]
     },
+    processo: {
+      title: 'Como funciona', desc: 'As etapas do atendimento.', icon: 'steps', color: '#d4b88a',
+      groups: [
+        { label: 'Seção', fields: [{ p: 'processo.title', l: 'Título' }] },
+        { label: 'Etapas', list: 'processo.steps', itemLabel: function (it) { return it.title; },
+          blank: { title: '', desc: '' },
+          fields: [{ p: 'title', l: 'Etapa' }, { p: 'desc', l: 'Descrição', t: 'textarea' }] }
+      ]
+    },
+    faq: {
+      title: 'Dúvidas', desc: 'Perguntas frequentes. Também aparecem no Google.', icon: 'help', color: '#d4b88a',
+      groups: [
+        { label: 'Seção', fields: [{ p: 'faq.title', l: 'Título' }] },
+        { label: 'Perguntas', list: 'faq.items', itemLabel: function (it) { return it.q; },
+          blank: { q: '', a: '' },
+          fields: [{ p: 'q', l: 'Pergunta' }, { p: 'a', l: 'Resposta', t: 'textarea' }] }
+      ]
+    },
     agendar: {
       title: 'Agendamento', desc: 'O formulário no fim da página.', icon: 'calendar', color: '#d4b88a',
       groups: [
@@ -229,7 +247,7 @@
       { id: 'painel', title: 'Painel', desc: 'Visitas, contatos e de onde vêm as pacientes.', icon: 'chart', color: '#d4b88a' },
       { id: 'leads', title: 'Leads', desc: 'Quem preencheu o formulário de agendamento.', icon: 'inbox', color: '#d4b88a' }
     ] },
-    { group: 'Conteúdo do site', items: ['inicio', 'sobre', 'resultados', 'procedimentos', 'depoimentos', 'agendar'].map(function (k) {
+    { group: 'Conteúdo do site', items: ['inicio', 'sobre', 'procedimentos', 'processo', 'resultados', 'depoimentos', 'faq', 'agendar'].map(function (k) {
       return { id: k, title: CONTENT[k].title, desc: CONTENT[k].desc, icon: CONTENT[k].icon, color: CONTENT[k].color };
     }) },
     { group: 'Ajustes', items: [
@@ -565,7 +583,7 @@
     var procs = (state.config.procedimentos && state.config.procedimentos.items) || [];
     var faq = (state.config.faq && state.config.faq.items) || [];
     var fixed = {
-      hero_wa: 'WhatsApp · topo da página', hero_agendar: 'Agendar · topo da página', nav_cta: 'Agendar · menu',
+      hero_wa: 'WhatsApp · topo da página', hero_agendar: 'Agendar · topo da página', nav_agendar: 'Agendar · menu', menu_agendar: 'Agendar · menu do celular', menu_wa: 'WhatsApp · menu do celular', dock_agendar: 'Agendar · barra fixa', dock_wa: 'WhatsApp · botão fixo', faq_wa: 'WhatsApp · Dúvidas',
       sobre_wa: 'WhatsApp · seção Sobre', proc_wa: 'WhatsApp · Procedimentos', depoimentos_wa: 'WhatsApp · Depoimentos',
       galeria_cta: 'Conversar sobre meu caso · galeria', lead_hero_wa: 'WhatsApp · Agendamento', form_success_wa: 'WhatsApp · após o formulário',
       float_wa: 'WhatsApp · botão flutuante', footer_wa: 'WhatsApp · rodapé', footer_instagram: 'Instagram · rodapé',

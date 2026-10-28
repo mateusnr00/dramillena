@@ -2,6 +2,8 @@
   'use strict';
 
   var SITE = window.__SITE__ || {};
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function get(kind, key) {
@@ -14,9 +16,9 @@
     return Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
   }
 
-  // =================================================================
-  // Rastreamento próprio (anônimo, sem cookies): visitas, cliques e leads
-  // =================================================================
+  /* =================================================================
+     Rastreamento próprio (anônimo, sem cookies): visitas, cliques e leads
+     ================================================================= */
   var visitor = get('localStorage', 'mc_v') || rid();
   set('localStorage', 'mc_v', visitor);
 
@@ -53,7 +55,6 @@
     } catch (e) { /* tenta fetch */ }
     try { fetch(url, { method: 'POST', body: body, keepalive: true, headers: { 'content-type': 'application/json' } }); } catch (e) { /* ignora */ }
   }
-
   function send(type, label) {
     beacon('/api/track', {
       type: type, label: label || '', visitor: visitor, session: session,
@@ -61,12 +62,11 @@
       source: utm.source || '', medium: utm.medium || '', campaign: utm.campaign || ''
     });
   }
-
   send('pageview');
 
-  // =================================================================
-  // Pixel da Meta e Google Analytics (só com ID configurado e após aceite)
-  // =================================================================
+  /* =================================================================
+     Pixel da Meta e Google Analytics (só com ID configurado e após aceite)
+     ================================================================= */
   function pixel(name, data) { if (window.fbq) window.fbq('track', name, data || {}); }
   function gtagEvent(name, data) { if (window.gtag) window.gtag('event', name, data || {}); }
 
@@ -90,7 +90,7 @@
     }
   }
 
-  var consentBox = document.querySelector('[data-consent]');
+  var consentBox = $('[data-consent]');
   if (consentBox) {
     var choice = get('localStorage', 'mc_consent');
     if (choice === 'yes') loadMarketing();
@@ -101,7 +101,6 @@
     });
   }
 
-  // Cliques em botões e links importantes
   document.addEventListener('click', function (ev) {
     var el = ev.target.closest('a, button');
     if (!el) return;
@@ -116,234 +115,201 @@
     }
   }, true);
 
-  var scrolled75 = false;
+  $$('details[data-track-open]').forEach(function (d) {
+    d.addEventListener('toggle', function () { if (d.open) send('click', d.getAttribute('data-track-open')); });
+  });
 
-  // =================================================================
-  // Barra de progresso e menu
-  // =================================================================
-  var nav = document.getElementById('nav');
-  var progressBar = document.getElementById('progress');
+  /* =================================================================
+     Navegação
+     ================================================================= */
+  var nav = $('[data-nav]');
+  var burger = $('[data-burger]');
+  var menu = $('[data-menu]');
+  function isOpen() { return document.documentElement.classList.contains('menu-open'); }
+  function setMenu(open) {
+    document.documentElement.classList.toggle('menu-open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+    menu.hidden = !open;
+  }
+  burger.addEventListener('click', function () { setMenu(!isOpen()); });
+  menu.addEventListener('click', function (ev) { if (ev.target.closest('a')) setMenu(false); });
+  document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape' && isOpen()) { setMenu(false); burger.focus(); } });
+
+  var scrolled75 = false;
   var ticking = false;
-  function onScrollUI() {
+  function onScroll() {
     ticking = false;
-    var y = window.scrollY;
-    nav.classList.toggle('scrolled', y > 30);
+    nav.classList.toggle('is-scrolled', window.scrollY > 8);
     var max = document.documentElement.scrollHeight - window.innerHeight;
-    var p = max > 0 ? y / max : 0;
-    progressBar.style.width = Math.min(100, p * 100) + '%';
-    if (!scrolled75 && p > 0.75) { scrolled75 = true; send('scroll', '75'); }
+    if (!scrolled75 && max > 0 && window.scrollY / max > 0.75) { scrolled75 = true; send('scroll', '75'); }
   }
   window.addEventListener('scroll', function () {
-    if (!ticking) { ticking = true; requestAnimationFrame(onScrollUI); }
+    if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
   }, { passive: true });
-  onScrollUI();
+  onScroll();
 
-  // =================================================================
-  // Revelar ao rolar
-  // =================================================================
-  if ('IntersectionObserver' in window && !reduceMotion) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
-  } else {
-    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
-  }
+  /* =================================================================
+     Antes e depois
+     ================================================================= */
+  $$('[data-ba]').forEach(function (el) {
+    var range = $('.ba__range', el);
+    var dragging = false, decided = false, moved = false, sX = 0, sY = 0;
 
-  // =================================================================
-  // Antes e depois: mouse e toque, detectando a intenção do gesto
-  // =================================================================
-  function makeBA(el) {
-    var dragging = false;
-    var sX = 0, sY = 0, intent = null, moved = false;
-
-    function setPos(clientX) {
+    function setPos(pct) {
+      pct = Math.max(0, Math.min(100, pct));
+      el.style.setProperty('--pos', pct + '%');
+      if (range) range.value = String(Math.round(pct));
+    }
+    function fromX(x) {
       var r = el.getBoundingClientRect();
-      var x = Math.max(0, Math.min(r.width, clientX - r.left));
-      el.style.setProperty('--pos', ((x / r.width) * 100) + '%');
+      setPos(((x - r.left) / r.width) * 100);
       moved = true;
     }
-    function done() {
-      if (moved && intent === 'h') send('click', 'antes_depois');
-      dragging = false; intent = null; moved = false;
-    }
-
-    el.addEventListener('mousedown', function (e) {
-      dragging = true;
-      intent = 'h';
-      setPos(e.clientX);
-      e.preventDefault();
+    el.addEventListener('pointerdown', function (e) {
+      if (e.button !== 0) return;
+      el.dataset.touched = '1';
+      dragging = true; moved = false;
+      decided = e.pointerType === 'mouse';
+      sX = e.clientX; sY = e.clientY;
+      if (decided) { fromX(e.clientX); el.setPointerCapture(e.pointerId); }
     });
-    window.addEventListener('mousemove', function (e) {
-      if (dragging && intent === 'h') setPos(e.clientX);
-    });
-    window.addEventListener('mouseup', function () { if (dragging) done(); });
-
-    el.addEventListener('touchstart', function (e) {
-      var t = e.touches[0];
-      sX = t.clientX; sY = t.clientY;
-      intent = null;
-      dragging = true;
-    }, { passive: true });
-
-    window.addEventListener('touchmove', function (e) {
+    el.addEventListener('pointermove', function (e) {
       if (!dragging) return;
-      var t = e.touches[0];
-      if (intent === null) {
-        var dx = Math.abs(t.clientX - sX);
-        var dy = Math.abs(t.clientY - sY);
-        if (dx < 10 && dy < 10) return;
-        intent = dx > dy ? 'h' : 'v';
-        if (intent === 'v') { dragging = false; return; }
+      if (!decided) {
+        var dx = Math.abs(e.clientX - sX), dy = Math.abs(e.clientY - sY);
+        if (dx < 8 && dy < 8) return;
+        if (dy > dx) { dragging = false; return; }
+        decided = true;
+        try { el.setPointerCapture(e.pointerId); } catch (err) { /* ignora */ }
       }
-      if (intent === 'h') {
-        if (e.cancelable) e.preventDefault();
-        setPos(t.clientX);
-      }
-    }, { passive: false });
-
-    window.addEventListener('touchend', function () { if (dragging) done(); });
-    window.addEventListener('touchcancel', function () { dragging = false; intent = null; });
-
-    // Teclado: setas movem a comparação.
-    el.tabIndex = 0;
-    el.addEventListener('keydown', function (e) {
-      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-      var cur = parseFloat(getComputedStyle(el).getPropertyValue('--pos')) || 55;
-      el.style.setProperty('--pos', Math.max(0, Math.min(100, cur + (e.key === 'ArrowLeft' ? -5 : 5))) + '%');
-      e.preventDefault();
+      fromX(e.clientX);
     });
-
-    el.style.setProperty('--pos', '55%');
-  }
-
-  document.querySelectorAll('.ba, .gcase').forEach(makeBA);
-
-  // Abertura do hero: uma passada suave e para.
-  var ba = document.getElementById('ba');
-  if (ba && !reduceMotion) {
-    var userTouched = false;
-    var cancel = function () { userTouched = true; };
-    ['mousedown', 'touchstart'].forEach(function (ev) { ba.addEventListener(ev, cancel, { once: true }); });
-
-    var keyframes = [
-      { t: 0, pos: 50 },
-      { t: 1100, pos: 78 },
-      { t: 2200, pos: 28 },
-      { t: 3100, pos: 55 }
-    ];
-    var startAt = performance.now() + 700;
-    var intro = function (now) {
-      if (userTouched) return;
-      var elapsed = now - startAt;
-      if (elapsed < 0) { requestAnimationFrame(intro); return; }
-      if (elapsed >= keyframes[keyframes.length - 1].t) {
-        ba.style.setProperty('--pos', keyframes[keyframes.length - 1].pos + '%');
-        return;
-      }
-      var a, b;
-      for (var i = 0; i < keyframes.length - 1; i++) {
-        if (elapsed >= keyframes[i].t && elapsed < keyframes[i + 1].t) { a = keyframes[i]; b = keyframes[i + 1]; break; }
-      }
-      var segT = (elapsed - a.t) / (b.t - a.t);
-      var eased = segT < 0.5 ? 2 * segT * segT : 1 - Math.pow(-2 * segT + 2, 2) / 2;
-      ba.style.setProperty('--pos', (a.pos + (b.pos - a.pos) * eased) + '%');
-      requestAnimationFrame(intro);
-    };
-    requestAnimationFrame(intro);
-  }
-
-  // =================================================================
-  // Filtros da galeria
-  // =================================================================
-  document.querySelectorAll('.galeria__filter').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      document.querySelectorAll('.galeria__filter').forEach(function (b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      var f = btn.dataset.filter;
-      document.querySelectorAll('.gcase').forEach(function (c) {
-        c.style.display = f === 'all' || c.dataset.cat === f ? '' : 'none';
-      });
-      send('click', 'filtro_' + f);
-    });
-  });
-
-  // =================================================================
-  // Formulário: salva o lead e leva para o WhatsApp
-  // =================================================================
-  var form = document.getElementById('leadForm');
-  var tel = document.getElementById('telefone');
-  var nomeEl = document.getElementById('nome');
-  var err = document.getElementById('formErr');
-
-  tel.addEventListener('input', function (e) {
-    var v = e.target.value.replace(/\D/g, '').slice(0, 11);
-    if (v.length > 6) v = '(' + v.slice(0, 2) + ') ' + v.slice(2, 7) + '-' + v.slice(7);
-    else if (v.length > 2) v = '(' + v.slice(0, 2) + ') ' + v.slice(2);
-    else if (v.length > 0) v = '(' + v;
-    e.target.value = v;
-    tel.removeAttribute('aria-invalid');
-  });
-  nomeEl.addEventListener('input', function () { nomeEl.removeAttribute('aria-invalid'); });
-
-  var started = false;
-  form.addEventListener('focusin', function () {
-    if (!started) { started = true; send('click', 'form_inicio'); }
-  });
-
-  function shake(i) {
-    i.setAttribute('aria-invalid', 'true');
-    if (i.animate && !reduceMotion) {
-      i.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-6px)' }, { transform: 'translateX(6px)' }, { transform: 'translateX(0)' }], { duration: 300 });
+    function end() {
+      if (dragging && moved) send('click', 'antes_depois');
+      dragging = false;
     }
-  }
-
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var nome = nomeEl.value.trim();
-    var phone = tel.value.replace(/\D/g, '');
-    err.textContent = '';
-    if (nome.length < 2) { shake(nomeEl); err.textContent = 'Conte pra gente o seu nome.'; nomeEl.focus(); return; }
-    if (phone.length < 10) { shake(tel); err.textContent = 'Confira o WhatsApp com DDD.'; tel.focus(); return; }
-
-    beacon('/api/lead', {
-      nome: nome, telefone: phone, procedimento: '',
-      visitor: visitor, session: session, ref: ref,
-      source: utm.source || '', medium: utm.medium || '', campaign: utm.campaign || ''
-    });
-    pixel('Lead', { content_name: 'Form Submit' });
-    gtagEvent('generate_lead', {});
-
-    var msg = 'Olá! Sou ' + nome + ' e gostaria de agendar uma avaliação com a Dra. Millena.';
-    var waUrl = 'https://wa.me/' + (SITE.waNumber || '') + '?text=' + encodeURIComponent(msg);
-    document.getElementById('successWa').setAttribute('href', waUrl);
-
-    form.style.display = 'none';
-    document.getElementById('success').classList.add('active');
-
-    // Abre o WhatsApp em seguida. Se o navegador bloquear, o botão continua lá.
-    setTimeout(function () {
-      var w = window.open(waUrl, '_blank');
-      if (!w) location.href = waUrl;
-    }, 1200);
+    el.addEventListener('pointerup', end);
+    el.addEventListener('pointercancel', function () { dragging = false; });
+    if (range) range.addEventListener('input', function () { el.dataset.touched = '1'; setPos(Number(range.value)); });
   });
 
-  // =================================================================
-  // Rolagem suave para as âncoras
-  // =================================================================
-  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
-    a.addEventListener('click', function (e) {
-      var h = a.getAttribute('href');
-      if (h.length > 1) {
-        var t = document.querySelector(h);
-        if (t) {
-          e.preventDefault();
-          var y = t.getBoundingClientRect().top + window.scrollY - 20;
-          window.scrollTo({ top: y, behavior: reduceMotion ? 'auto' : 'smooth' });
+  // O único movimento automático da página: uma passada suave no antes e
+  // depois do topo, para mostrar que dá para arrastar.
+  var heroBa = $('.hero [data-ba]');
+  if (heroBa && !reduceMotion) {
+    var frames = [[0, 50], [1000, 72], [2000, 32], [2800, 50]];
+    var start = performance.now() + 900;
+    var tick = function (now) {
+      if (heroBa.dataset.touched) return;
+      var t = now - start;
+      if (t < 0) { requestAnimationFrame(tick); return; }
+      if (t >= frames[frames.length - 1][0]) { heroBa.style.setProperty('--pos', '50%'); return; }
+      for (var i = 0; i < frames.length - 1; i++) {
+        if (t >= frames[i][0] && t < frames[i + 1][0]) {
+          var k = (t - frames[i][0]) / (frames[i + 1][0] - frames[i][0]);
+          k = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+          heroBa.style.setProperty('--pos', (frames[i][1] + (frames[i + 1][1] - frames[i][1]) * k) + '%');
+          break;
         }
       }
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  /* =================================================================
+     Filtro de resultados
+     ================================================================= */
+  var filters = $('.chips-filter');
+  if (filters) {
+    filters.addEventListener('click', function (ev) {
+      var b = ev.target.closest('button');
+      if (!b) return;
+      var f = b.getAttribute('data-filter');
+      $$('button', filters).forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      $$('.result').forEach(function (r) { r.hidden = Boolean(f) && r.getAttribute('data-cat') !== f; });
+      send('click', 'filtro_' + (f || 'todos'));
     });
-  });
+  }
+
+  /* =================================================================
+     Depoimentos: setas
+     ================================================================= */
+  var rail = $('[data-rail]');
+  if (rail) {
+    var arrows = $$('[data-scroll]');
+    var update = function () {
+      var max = rail.scrollWidth - rail.clientWidth - 2;
+      arrows.forEach(function (b) {
+        b.disabled = b.getAttribute('data-scroll') === '-1' ? rail.scrollLeft <= 2 : rail.scrollLeft >= max;
+      });
+    };
+    arrows.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var card = $('.quote', rail);
+        var step = card ? card.getBoundingClientRect().width + 24 : 400;
+        rail.scrollBy({ left: Number(b.getAttribute('data-scroll')) * step, behavior: reduceMotion ? 'auto' : 'smooth' });
+      });
+    });
+    rail.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
+
+  /* =================================================================
+     Formulário: salva o lead e leva para o WhatsApp
+     ================================================================= */
+  var form = $('#leadForm');
+  if (form) {
+    var nomeEl = $('#nome');
+    var tel = $('#telefone');
+    var err = $('#formErr');
+
+    tel.addEventListener('input', function () {
+      var v = tel.value.replace(/\D/g, '').slice(0, 11);
+      if (v.length > 6) v = '(' + v.slice(0, 2) + ') ' + v.slice(2, 7) + '-' + v.slice(7);
+      else if (v.length > 2) v = '(' + v.slice(0, 2) + ') ' + v.slice(2);
+      else if (v.length > 0) v = '(' + v;
+      tel.value = v;
+      tel.removeAttribute('aria-invalid');
+    });
+    nomeEl.addEventListener('input', function () { nomeEl.removeAttribute('aria-invalid'); });
+
+    var started = false;
+    form.addEventListener('focusin', function () {
+      if (!started) { started = true; send('click', 'form_inicio'); }
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var nome = nomeEl.value.trim();
+      var phone = tel.value.replace(/\D/g, '');
+      var interesse = $('#interesse').value;
+      err.textContent = '';
+      if (nome.length < 2) { nomeEl.setAttribute('aria-invalid', 'true'); err.textContent = 'Escreva seu nome para continuar.'; nomeEl.focus(); return; }
+      if (phone.length < 10) { tel.setAttribute('aria-invalid', 'true'); err.textContent = 'Confira o WhatsApp com DDD, por exemplo (11) 99999-9999.'; tel.focus(); return; }
+
+      beacon('/api/lead', {
+        nome: nome, telefone: phone, procedimento: interesse,
+        visitor: visitor, session: session, ref: ref,
+        source: utm.source || '', medium: utm.medium || '', campaign: utm.campaign || ''
+      });
+      pixel('Lead', { content_name: interesse });
+      gtagEvent('generate_lead', { procedimento: interesse });
+
+      var msg = 'Olá! Sou ' + nome + ' e gostaria de agendar uma avaliação com a Dra. Millena.' +
+        (interesse && interesse !== 'Ainda não sei' ? ' Tenho interesse em ' + interesse + '.' : '');
+      var waUrl = 'https://wa.me/' + (SITE.waNumber || '') + '?text=' + encodeURIComponent(msg);
+      $('#successWa').setAttribute('href', waUrl);
+      form.classList.add('is-sent');
+      $('#success').hidden = false;
+
+      setTimeout(function () {
+        var w = window.open(waUrl, '_blank');
+        if (!w) location.href = waUrl;
+      }, 1000);
+    });
+  }
 })();
