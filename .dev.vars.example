@@ -1,0 +1,4 @@
+# Copie para .dev.vars para rodar localmente (npm run dev).
+AUTH_SECRET=troque-por-um-texto-longo-e-aleatorio
+ADMIN_EMAIL=voce@exemplo.com
+ADMIN_PASSWORD=uma-senha-forte
