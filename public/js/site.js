@@ -151,6 +151,52 @@
   onScroll();
 
   /* =================================================================
+     Entrada do conteúdo com fade, seção por seção
+     ================================================================= */
+  var REVEAL = [
+    '.hero__kicker', '.hero__title', '.hero__sub', '.hero__actions', '.statement__text',
+    '.label', '.display', '.body-lg', '.pull', '.checks li', '.sobre__copy .btn',
+    '.stat', '.tile', '.results__head .muted', '.result', '.method__list li', '.steps__list li',
+    '.quote', '.faq .link-wa', '.qa', '.book__card', '.foot__brand', '.foot__cols > *'
+  ].join(',');
+  var revealEls = $$(REVEAL);
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    revealEls.forEach(function (el) {
+      var i = Array.prototype.indexOf.call(el.parentElement.children, el);
+      el.style.setProperty('--d', Math.min(i, 6) * 80 + 'ms');
+      el.classList.add('rv');
+    });
+    var revealIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); revealIO.unobserve(e.target); }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+    revealEls.forEach(function (el) { revealIO.observe(el); });
+  }
+
+  /* =================================================================
+     Parallax: a imagem anda mais devagar que a página
+     ================================================================= */
+  var parallaxEls = reduceMotion ? [] : $$('[data-parallax]');
+  if (parallaxEls.length) {
+    var pTick = false;
+    var runParallax = function () {
+      pTick = false;
+      var vh = window.innerHeight;
+      parallaxEls.forEach(function (el) {
+        var box = el.parentElement.getBoundingClientRect();
+        if (box.bottom < -200 || box.top > vh + 200) return;
+        var speed = Number(el.getAttribute('data-parallax')) || 0.1;
+        var offset = (box.top + box.height / 2 - vh / 2) * -speed;
+        el.style.transform = 'translate3d(0,' + offset.toFixed(1) + 'px,0) scale(1.12)';
+      });
+    };
+    window.addEventListener('scroll', function () { if (!pTick) { pTick = true; requestAnimationFrame(runParallax); } }, { passive: true });
+    window.addEventListener('resize', runParallax);
+    runParallax();
+  }
+
+  /* =================================================================
      Antes e depois
      ================================================================= */
   $$('[data-ba]').forEach(function (el) {

@@ -15,7 +15,8 @@ Depois de cada mudança:
 
 ## Design
 
-Direção atual, pedida pelo dono: **estilo Apple/Nike**. Preto e branco, títulos gigantes em caixa alta (Archivo condensada), texto em Inter, imagens de borda a borda, pouco texto por tela e um único momento de movimento na rolagem.
+Direção atual, pedida pelo dono: **estilo Apple/Nike**. Paleta clean: fundos branco e cinza bem claro (#f5f5f7), texto quase preto (#1d1d1f), sem seções pretas. Títulos gigantes em caixa alta (Archivo condensada), texto em Inter, imagens de borda a borda e pouco texto por tela.
+- Movimento: fade em degradê entre seções (`.fade--w2g` / `.fade--g2w`), conteúdo que surge suave ao rolar (`.rv`) e parallax nas fotos (`data-parallax`). Tudo desligado com movimento reduzido.
 
 - Grade de 8 px: espaçamentos, alturas de linha, controles e raios em múltiplos de 8.
 - Tamanhos de texto em rem; o site precisa aguentar letra em 200% sem vazar.

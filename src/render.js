@@ -2,7 +2,7 @@
 // Todo texto vindo do painel passa por esc() (ou fmt(), que escapa antes
 // de aplicar os marcadores *itálico* e |quebra).
 
-const ASSET_VERSION = '12';
+const ASSET_VERSION = '13';
 
 export function esc(s) {
   return String(s ?? '').replace(/[&<>"']/g, c => (
@@ -57,15 +57,15 @@ const icon = {
   right: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>'
 };
 
-function ba({ before, after, alt, cls = '', eager = false }) {
+function ba({ before, after, alt, cls = '', eager = false, parallax = false }) {
   const b = safeUrl(before);
   const a = safeUrl(after);
   if (!b || !a) return '';
   const load = eager ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"';
   return `
     <div class="ba ${cls}" data-ba style="--pos:50%">
-      <img class="ba__img" src="${esc(b)}" alt="${esc(alt)}, antes" ${load} decoding="async" width="664" height="890" />
-      <img class="ba__img ba__after" src="${esc(a)}" alt="${esc(alt)}, depois" ${load} decoding="async" width="664" height="890" />
+      <img class="ba__img" src="${esc(b)}" alt="${esc(alt)}, antes" ${load} decoding="async" width="664" height="890"${parallax ? ' data-parallax="0.12"' : ''} />
+      <img class="ba__img ba__after" src="${esc(a)}" alt="${esc(alt)}, depois" ${load} decoding="async" width="664" height="890"${parallax ? ' data-parallax="0.12"' : ''} />
       <span class="ba__tag ba__tag--l" aria-hidden="true">Antes</span>
       <span class="ba__tag ba__tag--r" aria-hidden="true">Depois</span>
       <span class="ba__line" aria-hidden="true"><span class="ba__knob">${icon.left}${icon.right}</span></span>
@@ -100,6 +100,7 @@ function head(cfg, origin) {
   } : null;
   return `
 <meta charset="utf-8" />
+<script>document.documentElement.classList.add('js')</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#111111" />
 <meta name="color-scheme" content="light" />
@@ -128,6 +129,10 @@ const NAV = [['#sobre', 'Sobre'], ['#procedimentos', 'Tratamentos'], ['#resultad
 
 function brandName(cfg) {
   return plain(cfg.settings.nome).replace(/^Dra\.?\s*/i, '') || 'Millena Curty';
+}
+
+function fade(kind) {
+  return `<div class="fade fade--${kind}" aria-hidden="true"></div>`;
 }
 
 function nav(cfg) {
@@ -166,7 +171,7 @@ function hero(cfg) {
     </div>
   </div>
   <figure class="hero__media">
-    ${ba({ before: h.antes, after: h.depois, alt: 'Harmonização facial', cls: 'ba--bleed', eager: true })}
+    ${ba({ before: h.antes, after: h.depois, alt: 'Harmonização facial', cls: 'ba--bleed', eager: true, parallax: true })}
     ${h.note ? `<figcaption>${esc(h.note)}</figcaption>` : ''}
   </figure>
 </section>`;
@@ -203,7 +208,7 @@ function sobre(cfg) {
   return `
 <section class="sobre" id="sobre">
   <figure class="sobre__photo">
-    ${foto ? `<img src="${esc(foto)}" alt="${esc(plain(cfg.settings.nome))}" loading="lazy" decoding="async" width="1200" height="1600" />` : ''}
+    ${foto ? `<img src="${esc(foto)}" alt="${esc(plain(cfg.settings.nome))}" loading="lazy" decoding="async" width="1200" height="1600" data-parallax="0.08" />` : ''}
   </figure>
   <div class="sobre__copy">
     <p class="label">${esc(m.badge || 'Quem cuida de você')}${cfg.settings.cro ? ` · ${esc(cfg.settings.cro)}` : ''}</p>
@@ -496,14 +501,21 @@ ${nav(cfg)}
 <main id="conteudo">
 ${hero(cfg)}
 ${statement(cfg)}
+${fade('w2g')}
 ${sobre(cfg)}
+${fade('g2w')}
 ${stats(cfg)}
 ${procedimentos(cfg)}
+${fade('w2g')}
 ${resultados(cfg)}
+${fade('g2w')}
 ${metodo(cfg)}
+${fade('w2g')}
 ${processo(cfg)}
+${fade('g2w')}
 ${depoimentos(cfg)}
 ${faq(cfg)}
+${fade('w2g')}
 ${agendar(cfg)}
 </main>
 ${footer(cfg)}
