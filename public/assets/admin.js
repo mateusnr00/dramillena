@@ -119,7 +119,8 @@
           { p: 'hero.ctaSecondary', l: 'Link do WhatsApp' },
           { p: 'hero.antes', l: 'Foto antes', t: 'image' },
           { p: 'hero.depois', l: 'Foto depois', t: 'image' },
-          { p: 'hero.note', l: 'Legenda da foto' }
+          { p: 'hero.note', l: 'Legenda da foto' },
+          { p: 'hero.frase', l: 'Frase de destaque', t: 'textarea', s: 'Aparece logo abaixo do topo e acende palavra por palavra' }
         ] },
         { label: 'Números', list: 'hero.trust', itemLabel: function (it) { return (it.num || '') + ' ' + (it.label || ''); },
           blank: { num: '', label: '' },

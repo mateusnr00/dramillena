@@ -25,7 +25,8 @@ export const DEFAULT_CONFIG = {
   hero: {
     eyebrow: 'Avaliação gratuita, com vagas limitadas este mês',
     title: 'Você, mais você.|*Sem parecer "feita".*',
-    sub: 'Harmonização facial autoral com a Dra. Millena Curty. Ninguém percebe o procedimento. Todo mundo percebe você.',
+    sub: 'Harmonização facial autoral com a Dra. Millena Curty, em São Paulo. Resultado natural, do jeito que você é.',
+    frase: 'Ninguém percebe o procedimento. Todo mundo percebe você.',
     ctaPrimary: 'Agendar avaliação gratuita',
     ctaSecondary: 'Falar no WhatsApp',
     antes: '/img/antes1.webp',

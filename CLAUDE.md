@@ -15,4 +15,9 @@ Depois de cada mudança:
 
 ## Design
 
-O dono gosta do visual original do site (fundo creme, bronze, Fraunces + Outfit, topo escuro com antes e depois). **Melhore sem trocar o design.** Não redesenhe o site sem pedido explícito.
+Direção atual, pedida pelo dono: **estilo Apple/Nike**. Preto e branco, títulos gigantes em caixa alta (Archivo condensada), texto em Inter, imagens de borda a borda, pouco texto por tela e um único momento de movimento na rolagem.
+
+- Grade de 8 px: espaçamentos, alturas de linha, controles e raios em múltiplos de 8.
+- Tamanhos de texto em rem; o site precisa aguentar letra em 200% sem vazar.
+- Contraste mínimo de 4,5:1 em texto comum.
+- Versões rejeitadas: Apple clara com SF/Inter, creme e bronze original, creme e bronze refinada com arco, mapa do rosto. Não volte a elas sem pedido.

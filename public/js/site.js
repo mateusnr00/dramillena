@@ -235,11 +235,10 @@
   }
 
   /* =================================================================
-     Depoimentos: setas
+     Vitrines horizontais: setas
      ================================================================= */
-  var rail = $('[data-rail]');
-  if (rail) {
-    var arrows = $$('[data-scroll]');
+  $$('[data-rail]').forEach(function (rail) {
+    var arrows = $$('[data-scroll]', rail.closest('section'));
     var update = function () {
       var max = rail.scrollWidth - rail.clientWidth - 2;
       arrows.forEach(function (b) {
@@ -248,15 +247,35 @@
     };
     arrows.forEach(function (b) {
       b.addEventListener('click', function () {
-        var card = $('.quote', rail);
-        var step = card ? card.getBoundingClientRect().width + 24 : 400;
+        var card = rail.firstElementChild;
+        var step = card ? card.getBoundingClientRect().width + 16 : 400;
         rail.scrollBy({ left: Number(b.getAttribute('data-scroll')) * step, behavior: reduceMotion ? 'auto' : 'smooth' });
       });
     });
     rail.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
     update();
+  });
+
+  /* =================================================================
+     Frase que acende palavra por palavra (o único movimento ligado à
+     rolagem; desligado com "reduzir movimento")
+     ================================================================= */
+  var wordsEl = $('[data-words]');
+  if (wordsEl && !reduceMotion) {
+    var wordSpans = $$('span', wordsEl);
+    var lightWords = function () {
+      var rect = wordsEl.getBoundingClientRect();
+      var vh = window.innerHeight;
+      var p = (vh * 0.8 - rect.top) / (rect.height + vh * 0.3);
+      p = Math.max(0, Math.min(1, p));
+      var lit = Math.round(p * wordSpans.length);
+      wordSpans.forEach(function (w, i) { w.classList.toggle('on', i < lit); });
+    };
+    window.addEventListener('scroll', function () { requestAnimationFrame(lightWords); }, { passive: true });
+    lightWords();
   }
+
 
   var dockEl = $('[data-dock]');
   var bookEl = $('#agendar');
