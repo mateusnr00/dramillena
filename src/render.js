@@ -2,7 +2,7 @@
 // Todo texto vindo do painel passa por esc() (ou fmt(), que escapa antes
 // de aplicar os marcadores *itálico* e |quebra).
 
-const ASSET_VERSION = '13';
+const ASSET_VERSION = '14';
 
 export function esc(s) {
   return String(s ?? '').replace(/[&<>"']/g, c => (
@@ -102,7 +102,7 @@ function head(cfg, origin) {
 <meta charset="utf-8" />
 <script>document.documentElement.classList.add('js')</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta name="theme-color" content="#111111" />
+<meta name="theme-color" content="#ffffff" />
 <meta name="color-scheme" content="light" />
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}" />
@@ -120,7 +120,7 @@ ${ld(business)}
 ${faq ? ld(faq) : ''}
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=Inter:wght@400;500;600&display=swap" />
 ${safeUrl(cfg.hero.antes) ? `<link rel="preload" as="image" href="${esc(safeUrl(cfg.hero.antes))}" />` : ''}
 <link rel="stylesheet" href="/css/site.css?v=${ASSET_VERSION}" />`;
 }

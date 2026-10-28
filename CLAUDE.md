@@ -15,10 +15,10 @@ Depois de cada mudança:
 
 ## Design
 
-Direção atual, pedida pelo dono: **estilo Apple/Nike**. Paleta clean: fundos branco e cinza bem claro (#f5f5f7), texto quase preto (#1d1d1f), sem seções pretas. Títulos gigantes em caixa alta (Archivo condensada), texto em Inter, imagens de borda a borda e pouco texto por tela.
+Direção atual, pedida pelo dono: **estilo Apple/Nike, clean e feminino** (o site é de uma doutora; a versão preta com Archivo condensada em caixa alta foi rejeitada por parecer masculina). Fundos branco e rosé bem claro (#f9f1f0), texto ameixa escuro (#2b2125), botões e destaques em rosa antigo (#9b4a62). Títulos grandes em Bodoni Moda (sem caixa alta, com itálico rosa no destaque), texto em Inter, imagens de borda a borda e pouco texto por tela.
 - Movimento: fade em degradê entre seções (`.fade--w2g` / `.fade--g2w`), conteúdo que surge suave ao rolar (`.rv`) e parallax nas fotos (`data-parallax`). Tudo desligado com movimento reduzido.
 
 - Grade de 8 px: espaçamentos, alturas de linha, controles e raios em múltiplos de 8.
 - Tamanhos de texto em rem; o site precisa aguentar letra em 200% sem vazar.
 - Contraste mínimo de 4,5:1 em texto comum.
-- Versões rejeitadas: Apple clara com SF/Inter, creme e bronze original, creme e bronze refinada com arco, mapa do rosto. Não volte a elas sem pedido.
+- Versões rejeitadas: Apple clara com SF/Inter, creme e bronze original, creme e bronze refinada com arco, mapa do rosto, preto e branco com Archivo condensada (masculina demais). Não volte a elas sem pedido.
