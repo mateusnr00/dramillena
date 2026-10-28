@@ -15,11 +15,13 @@ Depois de cada mudança:
 
 ## Design
 
-Direção atual, pedida pelo dono: **estilo Apple/Nike, clean e feminino** (o site é de uma doutora; a versão preta com Archivo condensada em caixa alta foi rejeitada por parecer masculina). Fundos branco e rosé bem claro (#f9f1f0), texto ameixa escuro (#2b2125), botões e destaques em rosa antigo (#9b4a62). Títulos grandes em Bodoni Moda (sem caixa alta, com itálico rosa no destaque), texto em Inter, imagens de borda a borda e pouco texto por tela.
-- Estrutura editorial, sem cara de template: nada de faixa de números gigantes, cards com ícone, colunas de "pilares" com linha, passos 1-2-3-4 soltos, cards de depoimento com estrelas ou nome gigante no rodapé. Tratamentos em lista (índice), um depoimento por vez em destaque, números discretos no topo, passos dentro do agendamento.
-- Movimento: fade em degradê entre seções (`.fade--w2g` / `.fade--g2w`), conteúdo que surge suave ao rolar, sem desfoque (`.rv`) e parallax nas fotos (`data-parallax`). Tudo desligado com movimento reduzido.
+Direção atual, pedida pelo dono no briefing **"The Art of the Face"**: luxury editorial + scientific futurism + cinematic minimalism. Base escura de cinema com capítulos claros para respiro.
 
-- Grade de 8 px: espaçamentos, alturas de linha, controles e raios em múltiplos de 8.
-- Tamanhos de texto em rem; o site precisa aguentar letra em 200% sem vazar.
-- Contraste mínimo de 4,5:1 em texto comum.
-- Versões rejeitadas: Apple clara com SF/Inter, creme e bronze original, creme e bronze refinada com arco, mapa do rosto, preto e branco com Archivo condensada (masculina demais). Não volte a elas sem pedido.
+- Paleta: Obsidian #10100F, Deep Charcoal #222321, Warm Ivory #F5F0E7, Champagne #D5C9B5, Muted Stone #8B8278 (só sobre obsidian), Soft White #FAF8F4. Texto secundário sobre ivory: #625a52. Nada de dourado chamativo, rosa clichê ou neon.
+- Tipografia: Newsreader light nos títulos (tamanho óptico fixo em 36 para os traços finos não sumirem), Manrope no texto, DM Mono só em legendas técnicas. Cormorant quebra o "ê" no Chromium, não usar.
+- Página em capítulos (01 a 10): abertura com retrato e luz lateral, filosofia, a profissional, Face Explorer (desenho de proporções em SVG, não 3D), tratamentos (índice que abre), ciência (camadas, colágeno, etapas), confiança, o espaço, agendamento, rodapé.
+- Movimento: só títulos sobem por máscara e imagens abrem por recorte; texto corrido fica parado. Sem scroll hijacking, sem quique, sem partículas. Tudo desligado com movimento reduzido e o conteúdo aparece sem JavaScript.
+- Conteúdo: não inventar credenciais, resultados ou depoimentos. Antes e depois só com consentimento e aviso. O Explorer não mostra pontos de aplicação nem prevê resultado.
+- Grade de 8 px para espaços, controles e raios. Texto em rem, aguenta letra em 200%. Contraste mínimo de 4,5:1.
+- Metas: Lighthouse acessibilidade 95+, performance 90+, LCP até 2,5 s, CLS até 0,1.
+- Versões rejeitadas: Apple clara com SF/Inter, creme e bronze original, creme e bronze refinada com arco, mapa do rosto colorido, preto e branco com Archivo condensada, rosé com Bodoni, layout de landing page com cara de template. Não volte a elas sem pedido.

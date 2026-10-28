@@ -109,48 +109,99 @@
   var HINT = 'Use *palavra* para destacar em itálico e | para quebrar linha.';
   var CONTENT = {
     inicio: {
-      title: 'Início', desc: 'O topo da página, com o antes e depois e os números.', icon: 'home', color: '#d4b88a',
+      title: 'Abertura', desc: 'O topo da página: retrato, título e números.', icon: 'home', color: '#d4b88a',
       groups: [
-        { label: 'Topo da página', fields: [
+        { label: 'Abertura', fields: [
+          { p: 'hero.foto', l: 'Retrato da abertura', t: 'image', s: 'Foto editorial vertical, de preferência com luz lateral e fundo neutro' },
           { p: 'hero.eyebrow', l: 'Chamada', s: 'Texto pequeno acima do título' },
-          { p: 'hero.title', l: 'Título', s: HINT },
-          { p: 'hero.sub', l: 'Subtítulo', t: 'textarea' },
+          { p: 'hero.title', l: 'Título', s: 'Use | para quebrar linha. A segunda linha fica em itálico.' },
+          { p: 'hero.sub', l: 'Frase abaixo do título', t: 'textarea' },
           { p: 'hero.ctaPrimary', l: 'Botão de agendar' },
-          { p: 'hero.ctaSecondary', l: 'Link do WhatsApp' },
-          { p: 'hero.antes', l: 'Foto antes', t: 'image' },
-          { p: 'hero.depois', l: 'Foto depois', t: 'image' },
-          { p: 'hero.note', l: 'Legenda da foto' },
-          { p: 'hero.frase', l: 'Frase de destaque', t: 'textarea', s: 'Aparece logo abaixo do topo e acende palavra por palavra' }
+          { p: 'hero.ctaSecondary', l: 'Link para a filosofia' }
         ] },
-        { label: 'Números', list: 'hero.trust', itemLabel: function (it) { return (it.num || '') + ' ' + (it.label || ''); },
+        { label: 'Números', hint: 'Aparecem no capítulo de confiança. Use só números reais.', list: 'hero.trust', itemLabel: function (it) { return (it.num || '') + ' ' + (it.label || ''); },
           blank: { num: '', label: '' },
           fields: [{ p: 'num', l: 'Número' }, { p: 'label', l: 'Descrição' }] }
       ]
     },
+    filosofia: {
+      title: 'Filosofia', desc: 'Capítulo 2: a forma de trabalhar da Dra. Millena.', icon: 'sparkle', color: '#d4b88a',
+      groups: [
+        { label: 'Filosofia', fields: [
+          { p: 'filosofia.title', l: 'Título', s: 'Use | para quebrar linha' },
+          { p: 'filosofia.lead', l: 'Frase de destaque', t: 'textarea' },
+          { p: 'filosofia.texto', l: 'Texto', t: 'textarea' }
+        ] },
+        { label: 'Princípios', list: 'metodo.pilares', itemLabel: function (it) { return it.titulo; },
+          blank: { titulo: '', texto: '' },
+          fields: [{ p: 'titulo', l: 'Princípio' }, { p: 'texto', l: 'Descrição', t: 'textarea' }] }
+      ]
+    },
+    explorer: {
+      title: 'Face Explorer', desc: 'Capítulo 4: as regiões do rosto no desenho interativo.', icon: 'person', color: '#d4b88a',
+      groups: [
+        { label: 'Seção', fields: [
+          { p: 'explorer.title', l: 'Título' },
+          { p: 'explorer.intro', l: 'Introdução', t: 'textarea' }
+        ] },
+        { label: 'Regiões', hint: 'O ponto no desenho é escolhido pelo nome: terço superior, malar, lábios, mento e mandibular. Valide os textos com a Dra. Millena.', list: 'explorer.regioes',
+          itemLabel: function (it) { return it.nome; },
+          blank: { nome: '', texto: '', tratamentos: '' },
+          fields: [
+            { p: 'nome', l: 'Região' },
+            { p: 'texto', l: 'Como é avaliada', t: 'textarea' },
+            { p: 'tratamentos', l: 'Tratamentos relacionados', s: 'Separados por vírgula' }
+          ] }
+      ]
+    },
+    ciencia: {
+      title: 'Ciência', desc: 'Capítulo 6: camadas, colágeno e avaliação.', icon: 'sparkle', color: '#d4b88a',
+      groups: [
+        { label: 'Ciência', fields: [
+          { p: 'ciencia.title', l: 'Título' },
+          { p: 'ciencia.intro', l: 'Introdução', t: 'textarea' },
+          { p: 'ciencia.camadas', l: 'Texto sobre camadas', t: 'textarea' },
+          { p: 'ciencia.colageno', l: 'Texto sobre colágeno', t: 'textarea' },
+          { p: 'ciencia.avaliacao', l: 'Texto sobre avaliação', t: 'textarea' }
+        ] }
+      ]
+    },
+    espaco: {
+      title: 'O espaço', desc: 'Capítulo 8: o consultório.', icon: 'home', color: '#d4b88a',
+      groups: [
+        { label: 'O espaço', fields: [
+          { p: 'espaco.title', l: 'Título' },
+          { p: 'espaco.texto', l: 'Texto', t: 'textarea' }
+        ] },
+        { label: 'Destaques', strings: 'espaco.itens', placeholder: 'Ex.: Uma paciente por horário' },
+        { label: 'Fotos do consultório', hint: 'Até 3 fotos. Enquanto não houver fotos, aparece uma composição de luz no lugar.', list: 'espaco.fotos',
+          itemLabel: function (it, i) { return 'Foto ' + ((i || 0) + 1); }, blank: { src: '' },
+          fields: [{ p: 'src', l: 'Foto', t: 'image' }] }
+      ]
+    },
     sobre: {
-      title: 'Sobre', desc: 'Apresentação da Dra. Millena.', icon: 'person', color: '#d4b88a',
+      title: 'A profissional', desc: 'Capítulo 3: apresentação da Dra. Millena.', icon: 'person', color: '#d4b88a',
       groups: [
         { label: 'Apresentação', fields: [
           { p: 'millena.foto', l: 'Foto', t: 'image' },
-          { p: 'millena.badge', l: 'Selo na foto', s: 'Ex.: CRO Certificada' },
-          { p: 'millena.title', l: 'Título', s: HINT },
+          { p: 'millena.title', l: 'Nome', s: 'Use | para quebrar linha' },
+          { p: 'millena.badge', l: 'Profissão', s: 'Ex.: Cirurgiã-dentista. O registro vem de Contato e marketing.' },
           { p: 'millena.bio1', l: 'Primeiro parágrafo', t: 'textarea' },
-          { p: 'millena.bio2', l: 'Segundo parágrafo', t: 'textarea' },
+          { p: 'millena.bio2', l: 'Citação', t: 'textarea' },
           { p: 'millena.cta', l: 'Link do WhatsApp' }
         ] },
-        { label: 'Diferenciais', strings: 'millena.credentials', placeholder: 'Ex.: Especialista em Harmonização Orofacial' }
+        { label: 'Formação e credenciais', hint: 'Só o que puder ser comprovado.', strings: 'millena.credentials', placeholder: 'Ex.: Especialista em Harmonização Orofacial' }
       ]
     },
     resultados: {
-      title: 'Resultados', desc: 'Galeria de antes e depois. Publique só com autorização da paciente.', icon: 'photo', color: '#d4b88a',
+      title: 'Confiança', desc: 'Capítulo 7: caso de antes e depois e textos. Publique só com autorização da paciente.', icon: 'photo', color: '#d4b88a',
       groups: [
         { label: 'Seção', fields: [
-          { p: 'galeria.title', l: 'Título', s: HINT },
+          { p: 'galeria.title', l: 'Título' },
           { p: 'galeria.intro', l: 'Introdução', t: 'textarea' },
-          { p: 'galeria.disclaimer', l: 'Aviso', t: 'textarea' },
-          { p: 'galeria.cta', l: 'Link abaixo da galeria' }
+          { p: 'galeria.disclaimer', l: 'Aviso abaixo do caso', t: 'textarea' }
         ] },
-        { label: 'Casos', hint: 'Os filtros aparecem sozinhos quando houver mais de uma categoria.', list: 'galeria.items',
+        { label: 'Casos', hint: 'O primeiro caso aparece no site. Só com consentimento da paciente.', list: 'galeria.items',
           itemLabel: function (it) { return it.titulo || 'Caso'; },
           blank: { before: '', after: '', titulo: '', categoria: '' },
           fields: [
@@ -162,13 +213,13 @@
       ]
     },
     procedimentos: {
-      title: 'Procedimentos', desc: 'Os cartões de procedimentos.', icon: 'sparkle', color: '#d4b88a',
+      title: 'Tratamentos', desc: 'Capítulo 5: a lista de tratamentos.', icon: 'sparkle', color: '#d4b88a',
       groups: [
-        { label: 'Seção', fields: [{ p: 'procedimentos.title', l: 'Título', s: HINT }, { p: 'procedimentos.cta', l: 'Link do WhatsApp' }] },
+        { label: 'Seção', fields: [{ p: 'procedimentos.title', l: 'Título' }, { p: 'procedimentos.intro', l: 'Introdução', t: 'textarea' }] },
         { label: 'Procedimentos', list: 'procedimentos.items', itemLabel: function (it) { return it.title; },
-          blank: { title: 'Novo procedimento', desc: '', icon: '' },
+          blank: { title: 'Novo tratamento', desc: '', foto: '' },
           fields: [
-            { p: 'icon', l: 'Ícone', t: 'image' },
+            { p: 'foto', l: 'Foto (opcional)', t: 'image', s: 'Aparece quando o tratamento é aberto' },
             { p: 'title', l: 'Nome' },
             { p: 'desc', l: 'Descrição', t: 'textarea' }
           ] }
@@ -177,7 +228,7 @@
     depoimentos: {
       title: 'Depoimentos', desc: 'O que as pacientes dizem.', icon: 'quote', color: '#d4b88a',
       groups: [
-        { label: 'Seção', fields: [{ p: 'depoimentos.title', l: 'Título', s: HINT }, { p: 'depoimentos.cta', l: 'Link do WhatsApp' }] },
+        { label: 'Seção', fields: [{ p: 'depoimentos.title', l: 'Título' }] },
         { label: 'Depoimentos', list: 'depoimentos.items', itemLabel: function (it) { return it.nome; },
           blank: { texto: '', nome: '', role: '' },
           fields: [{ p: 'texto', l: 'Depoimento', t: 'textarea' }, { p: 'nome', l: 'Nome' }, { p: 'role', l: 'Detalhe', s: 'Ex.: Cliente desde 2023' }] }
@@ -212,7 +263,7 @@
       ]
     },
     processo: {
-      title: 'Como funciona', desc: 'As etapas do atendimento.', icon: 'steps', color: '#d4b88a',
+      title: 'Etapas da avaliação', desc: 'Os passos que aparecem no capítulo de ciência.', icon: 'steps', color: '#d4b88a',
       groups: [
         { label: 'Seção', fields: [{ p: 'processo.title', l: 'Título' }] },
         { label: 'Etapas', list: 'processo.steps', itemLabel: function (it) { return it.title; },
@@ -233,8 +284,8 @@
       title: 'Agendamento', desc: 'O formulário no fim da página.', icon: 'calendar', color: '#d4b88a',
       groups: [
         { label: 'Formulário', fields: [
-          { p: 'form.title', l: 'Título', s: HINT },
-          { p: 'form.desc', l: 'Descrição', t: 'textarea' },
+          { p: 'form.title', l: 'Título do final', s: 'Cada frase com ponto vira uma linha' },
+          { p: 'form.desc', l: 'Frase abaixo do título', t: 'textarea' },
           { p: 'form.waTitle', l: 'Botão do WhatsApp' },
           { p: 'form.waSub', l: 'Legenda do botão' },
           { p: 'form.formTitle', l: 'Título do formulário', s: HINT },
@@ -255,7 +306,8 @@
           { p: 'settings.instagram', l: 'Instagram', s: 'Só o usuário, sem @' },
           { p: 'settings.email', l: 'Email' },
           { p: 'settings.cidade', l: 'Cidade' },
-          { p: 'settings.cro', l: 'Registro', s: 'Ex.: CRO-SP 123456. Aparece no rodapé.' }
+          { p: 'settings.endereco', l: 'Endereço', s: 'Aparece no rodapé. Deixe vazio para mostrar só a cidade.' },
+          { p: 'settings.cro', l: 'Registro profissional', s: 'Ex.: CRO-SP 123456. Aparece na apresentação e no rodapé.' }
         ] },
         { label: 'Google', fields: [
           { p: 'settings.seoTitle', l: 'Título no Google' },
@@ -277,7 +329,7 @@
       { id: 'reservas', title: 'Agenda', desc: 'Pré-reservas feitas pelo site.', icon: 'calendar', color: '#d4b88a' },
       { id: 'leads', title: 'Leads', desc: 'Todas as pessoas que deixaram contato.', icon: 'inbox', color: '#d4b88a' }
     ] },
-    { group: 'Conteúdo do site', items: ['inicio', 'sobre', 'metodo', 'procedimentos', 'processo', 'resultados', 'depoimentos', 'faq', 'agendar'].map(function (k) {
+    { group: 'Conteúdo do site', items: ['inicio', 'filosofia', 'sobre', 'explorer', 'procedimentos', 'ciencia', 'processo', 'resultados', 'depoimentos', 'faq', 'espaco', 'agendar'].map(function (k) {
       return { id: k, title: CONTENT[k].title, desc: CONTENT[k].desc, icon: CONTENT[k].icon, color: CONTENT[k].color };
     }) },
     { group: 'Ajustes', items: [
@@ -566,7 +618,7 @@
       box.innerHTML = '';
       var a = arr();
       a.forEach(function (item, i) {
-        var title = h('span', { class: 'item__title' }, (g.itemLabel(item) || '').trim() || 'Item ' + (i + 1));
+        var title = h('span', { class: 'item__title' }, (g.itemLabel(item, i) || '').trim() || 'Item ' + (i + 1));
         var head = h('div', { class: 'item__head' }, title,
           h('button', { class: 'icon-btn', type: 'button', title: 'Subir', 'aria-label': 'Subir', disabled: i === 0, html: ico('up'), onclick: function () { move(i, -1); } }),
           h('button', { class: 'icon-btn', type: 'button', title: 'Descer', 'aria-label': 'Descer', disabled: i === a.length - 1, html: ico('down'), onclick: function () { move(i, 1); } }),
@@ -575,7 +627,7 @@
             a.splice(i, 1); setDirty(true); draw();
           } }));
         box.appendChild(h('div', { class: 'item' }, head, fieldRows(g.fields, item, g.list + '.' + i + '.', function () {
-          title.textContent = (g.itemLabel(item) || '').trim() || 'Item ' + (i + 1);
+          title.textContent = (g.itemLabel(item, i) || '').trim() || 'Item ' + (i + 1);
         })));
       });
       box.appendChild(h('button', { class: 'add', type: 'button', onclick: function () { a.push(clone(g.blank)); setDirty(true); draw(); } }, '+ Adicionar'));

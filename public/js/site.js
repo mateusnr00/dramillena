@@ -150,50 +150,65 @@
   }, { passive: true });
   onScroll();
 
+
   /* =================================================================
-     Entrada do conteúdo com fade, seção por seção
+     Abertura: o retrato nasce da luz e os títulos sobem por máscaras.
      ================================================================= */
-  var REVEAL = [
-    '.hero__kicker', '.hero__title', '.hero__sub', '.hero__actions', '.hero__trust',
-    '.sobre__copy > *', '.idx__head > *', '.idx__row', '.results__head > *', '.result', '.results__quote',
-    '.method__intro > *', '.method__list > div', '.quotes__head', '.quotes__rail', '.faq .display', '.faq .link-wa', '.qa',
-    '.book__card', '.foot__brand', '.foot__cols > *'
-  ].join(',');
-  var revealEls = $$(REVEAL).filter(function (el) { return !el.closest('.booker'); });
+  var root = document.documentElement;
+  var heroEl = $('[data-hero]');
+  var heroImg = $('[data-hero-img]');
+  function ready() { root.classList.add('is-ready'); }
+  if (reduceMotion) ready();
+  else if (heroImg && !heroImg.complete) {
+    heroImg.addEventListener('load', ready, { once: true });
+    heroImg.addEventListener('error', ready, { once: true });
+    setTimeout(ready, 1800);
+  } else requestAnimationFrame(ready);
+
+  /* Revelações no scroll: só títulos e imagens; o texto corrido fica parado. */
+  var revealEls = $$('[data-reveal]');
   if ('IntersectionObserver' in window && !reduceMotion) {
-    revealEls.forEach(function (el) {
-      var i = Array.prototype.indexOf.call(el.parentElement.children, el);
-      el.style.setProperty('--d', Math.min(i, 6) * 80 + 'ms');
-      el.classList.add('rv');
-    });
     var revealIO = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) { e.target.classList.add('in'); revealIO.unobserve(e.target); }
       });
-    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+    }, { threshold: 0.2, rootMargin: '0px 0px -6% 0px' });
     revealEls.forEach(function (el) { revealIO.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('in'); });
   }
 
-  /* =================================================================
-     Parallax: a imagem anda mais devagar que a página
-     ================================================================= */
-  var parallaxEls = reduceMotion ? [] : $$('[data-parallax]');
-  if (parallaxEls.length) {
-    var pTick = false;
-    var runParallax = function () {
-      pTick = false;
-      var vh = window.innerHeight;
-      parallaxEls.forEach(function (el) {
-        var box = el.parentElement.getBoundingClientRect();
-        if (box.bottom < -200 || box.top > vh + 200) return;
-        var speed = Number(el.getAttribute('data-parallax')) || 0.1;
-        var offset = (box.top + box.height / 2 - vh / 2) * -speed;
-        el.style.transform = 'translate3d(0,' + offset.toFixed(1) + 'px,0) scale(1.12)';
+  /* Profundidade: a foto do topo anda mais devagar que a página e acompanha
+     o cursor de leve; as outras fotos com data-depth deslizam um pouco. */
+  var depthEls = reduceMotion ? [] : $$('[data-depth]');
+  var finePointer = window.matchMedia('(pointer: fine)').matches;
+  var mx = 0, my = 0, depthTick = false;
+  function runDepth() {
+    depthTick = false;
+    var vh = window.innerHeight;
+    if (heroImg && heroEl && !reduceMotion) {
+      var y = Math.min(window.scrollY, vh);
+      heroImg.style.transform = 'scale(1.08) translate3d(' + (mx * -12).toFixed(1) + 'px,' + (y * 0.12 + my * -8).toFixed(1) + 'px,0)';
+    }
+    depthEls.forEach(function (el) {
+      var box = el.parentElement.getBoundingClientRect();
+      if (box.bottom < 0 || box.top > vh) return;
+      var speed = Number(el.getAttribute('data-depth')) || 0.06;
+      el.style.transform = 'translate3d(0,' + ((box.top + box.height / 2 - vh / 2) * -speed).toFixed(1) + 'px,0)';
+    });
+  }
+  function queueDepth() { if (!depthTick) { depthTick = true; requestAnimationFrame(runDepth); } }
+  if (!reduceMotion) {
+    window.addEventListener('scroll', queueDepth, { passive: true });
+    window.addEventListener('resize', queueDepth);
+    if (finePointer && heroEl) {
+      heroEl.addEventListener('pointermove', function (e) {
+        mx = e.clientX / window.innerWidth - 0.5;
+        my = e.clientY / window.innerHeight - 0.5;
+        queueDepth();
       });
-    };
-    window.addEventListener('scroll', function () { if (!pTick) { pTick = true; requestAnimationFrame(runParallax); } }, { passive: true });
-    window.addEventListener('resize', runParallax);
-    runParallax();
+    }
+    runDepth();
   }
 
   /* =================================================================
@@ -241,43 +256,101 @@
     if (range) range.addEventListener('input', function () { el.dataset.touched = '1'; setPos(Number(range.value)); });
   });
 
-  // O único movimento automático da página: uma passada suave no antes e
-  // depois do topo, para mostrar que dá para arrastar.
-  var heroBa = $('.hero [data-ba]');
-  if (heroBa && !reduceMotion) {
-    var frames = [[0, 50], [1000, 72], [2000, 32], [2800, 50]];
-    var start = performance.now() + 900;
-    var tick = function (now) {
-      if (heroBa.dataset.touched) return;
-      var t = now - start;
-      if (t < 0) { requestAnimationFrame(tick); return; }
-      if (t >= frames[frames.length - 1][0]) { heroBa.style.setProperty('--pos', '50%'); return; }
-      for (var i = 0; i < frames.length - 1; i++) {
-        if (t >= frames[i][0] && t < frames[i + 1][0]) {
-          var k = (t - frames[i][0]) / (frames[i + 1][0] - frames[i][0]);
-          k = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
-          heroBa.style.setProperty('--pos', (frames[i][1] + (frames[i + 1][1] - frames[i][1]) * k) + '%');
-          break;
-        }
+  /* =================================================================
+     Face Explorer: escolher uma região aproxima o desenho e abre o painel.
+     ================================================================= */
+  var ex = $('[data-explorer]');
+  if (ex) {
+    var tabs = $$('[data-tab]', ex);
+    var cards = $$('[data-card]', ex);
+    var spots = $$('[data-spot]', ex);
+    var zoomG = $('[data-zoom]', ex);
+    var tilt = $('[data-tilt]', ex);
+    var shapes = $$('[data-region-shape]', ex);
+    var current = -1;
+    var select = function (i, opts) {
+      opts = opts || {};
+      current = i;
+      tabs.forEach(function (t, n) {
+        t.setAttribute('aria-selected', String(n === i));
+        t.tabIndex = n === i ? 0 : -1;
+      });
+      cards.forEach(function (c, n) { c.hidden = n !== i; });
+      var spot = spots.filter(function (sp) { return sp.getAttribute('data-spot') === String(i); })[0];
+      spots.forEach(function (sp) { sp.setAttribute('aria-pressed', String(sp === spot)); });
+      var shape = spot ? spot.getAttribute('data-shape') : null;
+      shapes.forEach(function (sh) { sh.classList.toggle('on', sh.getAttribute('data-region-shape') === shape); });
+      if (zoomG && spot && opts.zoom) {
+        var z = spot.getAttribute('data-zoom-to').split(',');
+        zoomG.style.setProperty('--zx', z[0] + 'px');
+        zoomG.style.setProperty('--zy', z[1] + 'px');
+        zoomG.style.setProperty('--zs', z[2]);
+        tilt.classList.add('is-zoomed');
+        moveSpots(z);
       }
-      requestAnimationFrame(tick);
+      if (opts.focus) tabs[i].focus();
+      if (opts.track) send('click', 'explorer_' + i);
     };
-    requestAnimationFrame(tick);
+    // Os botões acompanham o zoom do desenho para ficarem sobre a região certa.
+    var moveSpots = function (z) {
+      var zx = Number(z[0]), zy = Number(z[1]), zs = Number(z[2]);
+      spots.forEach(function (sp) {
+        var x = parseFloat(sp.style.getPropertyValue('--x')) / 100 * 400;
+        var y = parseFloat(sp.style.getPropertyValue('--y')) / 100 * 540;
+        sp.style.left = ((zx + (x - zx) * zs) / 400 * 100).toFixed(2) + '%';
+        sp.style.top = ((zy + (y - zy) * zs) / 540 * 100).toFixed(2) + '%';
+      });
+    };
+    var resetZoom = function () {
+      if (!zoomG) return;
+      zoomG.style.setProperty('--zs', '1');
+      tilt.classList.remove('is-zoomed');
+      spots.forEach(function (sp) { sp.style.left = ''; sp.style.top = ''; });
+    };
+    tabs.forEach(function (t, n) {
+      t.addEventListener('click', function () { select(n, { zoom: true, track: true }); });
+      t.addEventListener('keydown', function (ev) {
+        var k = ev.key, m = tabs.length;
+        if (k === 'ArrowRight' || k === 'ArrowDown') { ev.preventDefault(); select((n + 1) % m, { zoom: true, focus: true }); }
+        if (k === 'ArrowLeft' || k === 'ArrowUp') { ev.preventDefault(); select((n - 1 + m) % m, { zoom: true, focus: true }); }
+        if (k === 'Escape') resetZoom();
+      });
+    });
+    spots.forEach(function (sp) {
+      sp.addEventListener('click', function () {
+        var i = Number(sp.getAttribute('data-spot'));
+        if (i === current && tilt.classList.contains('is-zoomed')) { resetZoom(); return; }
+        select(i, { zoom: true, track: true });
+      });
+    });
+    select(0, {});
+    // Inclinação sutil acompanhando o cursor (só com mouse e movimento permitido).
+    if (finePointer && !reduceMotion && tilt) {
+      var stage = $('[data-stage]', ex);
+      stage.addEventListener('pointermove', function (e) {
+        var r = stage.getBoundingClientRect();
+        tilt.style.setProperty('--ry', ((e.clientX - r.left) / r.width - 0.5) * 10 + 'deg');
+        tilt.style.setProperty('--rx', ((e.clientY - r.top) / r.height - 0.5) * -8 + 'deg');
+      });
+      stage.addEventListener('pointerleave', function () {
+        tilt.style.setProperty('--ry', '0deg');
+        tilt.style.setProperty('--rx', '0deg');
+      });
+    }
   }
 
-  /* =================================================================
-     Filtro de resultados
-     ================================================================= */
-  var filters = $('.chips-filter');
-  if (filters) {
-    filters.addEventListener('click', function (ev) {
-      var b = ev.target.closest('button');
-      if (!b) return;
-      var f = b.getAttribute('data-filter');
-      $$('button', filters).forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
-      $$('.result').forEach(function (r) { r.hidden = Boolean(f) && r.getAttribute('data-cat') !== f; });
-      send('click', 'filtro_' + (f || 'todos'));
-    });
+  /* Colágeno: o controle mostra a rede ficando mais espaçada com o tempo. */
+  var col = $('[data-collagen]');
+  var colRange = $('[data-collagen-range]');
+  if (col && colRange) {
+    var fibers = $$('path', col);
+    var paint = function () {
+      var t = Number(colRange.value) / 100 * 0.7;
+      fibers.forEach(function (f) { f.classList.toggle('gone', Number(f.getAttribute('data-k')) < t); });
+    };
+    colRange.addEventListener('input', paint);
+    colRange.addEventListener('change', function () { send('click', 'colageno'); });
+    paint();
   }
 
   /* =================================================================
@@ -303,12 +376,30 @@
     update();
   });
 
+  /* Menu claro sobre capítulos claros, escuro sobre os escuros. */
+  var lights = $$('.ch--light');
+  if (nav && lights.length && 'IntersectionObserver' in window) {
+    var onLight = [];
+    var lightIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        onLight = onLight.filter(function (x) { return x !== e.target; });
+        if (e.isIntersecting) onLight.push(e.target);
+      });
+      nav.classList.toggle('is-light', onLight.length > 0);
+    }, { rootMargin: '0px 0px -94% 0px' });
+    lights.forEach(function (el) { lightIO.observe(el); });
+  }
+
+  /* Agendar fixo no celular: aparece depois da abertura e some no agendamento. */
   var dockEl = $('[data-dock]');
   var bookEl = $('#agendar');
-  if (dockEl && bookEl && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (entries) {
-      dockEl.classList.toggle('is-hidden', entries[0].isIntersecting);
-    }, { threshold: 0.15 }).observe(bookEl);
+  if (dockEl && 'IntersectionObserver' in window) {
+    var heroIn = true, bookIn = false;
+    var paintDock = function () {
+      dockEl.classList.toggle('is-shown', !heroIn && !bookIn);
+    };
+    if (heroEl) new IntersectionObserver(function (e) { heroIn = e[0].isIntersecting; paintDock(); }, { threshold: 0.4 }).observe(heroEl);
+    if (bookEl) new IntersectionObserver(function (e) { bookIn = e[0].isIntersecting; paintDock(); }, { threshold: 0.1 }).observe(bookEl);
   }
 
   /* =================================================================
