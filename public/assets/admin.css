@@ -322,8 +322,8 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var
   --bg: #f7f5f0;
   --ink: #1a1614;
   --ink-2: #4a4239;
-  --mute: #8a7f72;
-  --mute-2: #a39686;
+  --mute: #6f6357;
+  --mute-2: #7d7064;
   --line: rgba(26, 22, 20, .10);
   --line-2: rgba(26, 22, 20, .18);
   --accent: #8a6a3f;
@@ -361,14 +361,14 @@ strong, b, .card__title, .kpi__value, .top h1 { font-weight: 500; }
 }
 .side__brand { color: rgba(250, 247, 241, .92); font-weight: 400; border-bottom: 1px solid rgba(255, 255, 255, .06); padding-bottom: 20px; margin-bottom: 4px; }
 .side__brand em, .login__brand em { color: var(--accent-glow); }
-.side__group { color: rgba(250, 247, 241, .35); letter-spacing: .14em; text-transform: uppercase; font-size: 10px; }
+.side__group { color: rgba(250, 247, 241, .6); letter-spacing: .14em; text-transform: uppercase; font-size: 10px; }
 .side__item { color: rgba(250, 247, 241, .72); font-size: 13px; }
 .side__item:hover { background: rgba(255, 255, 255, .05); color: rgba(250, 247, 241, .95); }
 .side__item.is-active { background: rgba(212, 184, 138, .14); color: var(--accent-glow); font-weight: 400; }
 .side__ico { background: transparent !important; color: currentColor; width: 18px; }
 .side__foot { border-top-color: rgba(255, 255, 255, .06); }
 .side__link { color: var(--accent-glow); }
-.side__user { color: rgba(250, 247, 241, .5); }
+.side__user { color: rgba(250, 247, 241, .7); }
 .side__user button { color: var(--accent-glow); }
 .top { background: rgba(247, 245, 240, .85); }
 .seg button.is-on { color: var(--ink); }
@@ -391,4 +391,11 @@ strong, b, .card__title, .kpi__value, .top h1 { font-weight: 500; }
 @media (max-width: 860px) {
   .booking { grid-template-columns: 56px 1fr; }
   .booking select, .booking .btn { grid-column: 2; justify-self: start; }
+}
+
+/* Alvos de toque de 44 px em telas sensíveis ao toque. */
+@media (pointer: coarse) {
+  .icon-btn { width: 44px; height: 44px; }
+  .btn--sm { min-height: 44px; }
+  .side__item { padding-top: 12px; padding-bottom: 12px; }
 }

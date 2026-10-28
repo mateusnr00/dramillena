@@ -359,7 +359,13 @@
         if (cur === 1) {
           var sel = $('input[name="interesse"]:checked', booker);
           choice.interesse = sel ? sel.value : '';
-          loaded.then(function (ok) { if (ok) show(2); });
+          b.disabled = true;
+          b.textContent = 'Carregando horários…';
+          loaded.then(function (ok) {
+            b.disabled = false;
+            b.textContent = 'Ver horários livres';
+            if (ok) show(2);
+          });
         }
         if (cur === 2 && choice.time) {
           var day = slots.filter(function (d) { return d.date === choice.date; })[0];

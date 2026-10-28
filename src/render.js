@@ -2,7 +2,7 @@
 // Todo texto vindo do painel passa por esc() (ou fmt(), que escapa antes
 // de aplicar os marcadores *itálico* e |quebra).
 
-const ASSET_VERSION = '9';
+const ASSET_VERSION = '10';
 
 export function esc(s) {
   return String(s ?? '').replace(/[&<>"']/g, c => (
@@ -102,6 +102,7 @@ function head(cfg, origin) {
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#f3ede4" />
+<meta name="color-scheme" content="light" />
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}" />
 <link rel="canonical" href="${esc(origin)}/" />
@@ -210,7 +211,6 @@ function metodo(cfg) {
     <ul class="method__list">
       ${pilares.map(p => `
       <li>
-        <span class="method__glyph" aria-hidden="true"></span>
         <h3>${esc(p.titulo)}</h3>
         <p>${esc(p.texto)}</p>
       </li>`).join('')}
@@ -375,17 +375,17 @@ function agendar(cfg) {
           <div class="options">
             ${opts.map((o, i) => `<label class="option"><input type="radio" name="interesse" value="${esc(o)}"${i === opts.length - 1 ? ' checked' : ''} /><span>${esc(o)}</span></label>`).join('')}
           </div>
-          <button type="button" class="btn btn--bronze btn--block" data-next>Continuar</button>
+          <button type="button" class="btn btn--bronze btn--block" data-next>Ver horários livres</button>
         </fieldset>
 
         <fieldset class="booker__step" data-step="2" hidden>
           <legend class="booker__q">Escolha o melhor dia</legend>
-          <div class="days" data-days role="radiogroup" aria-label="Dias disponíveis"></div>
+          <div class="days" data-days role="radiogroup" aria-label="Dias disponíveis"><p class="booker__loading">Carregando horários…</p></div>
           <p class="booker__q booker__q--sm">Horários livres</p>
           <div class="times" data-times role="radiogroup" aria-label="Horários disponíveis"></div>
           <div class="booker__nav">
             <button type="button" class="btn btn--ghost" data-back>Voltar</button>
-            <button type="button" class="btn btn--bronze" data-next disabled>Continuar</button>
+            <button type="button" class="btn btn--bronze" data-next disabled>Escolher este horário</button>
           </div>
         </fieldset>
 
