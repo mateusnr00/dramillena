@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Proposta B · Suave e moderna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" />
+<style>
+  :root { --ink: #33262a; --muted: #75656a; --bg: #fbf6f4; --card: #f3e8e5; --pink: #f2d6d6; --btn: #33262a; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font: 1rem/1.5rem Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  .serif { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; letter-spacing: -.01em; }
+  em { font-style: italic; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+  .top { position: sticky; top: 16px; z-index: 5; display: flex; align-items: center; justify-content: space-between; height: 64px; margin: 16px auto 0; padding: 0 8px 0 24px; max-width: 1232px; background: rgba(255,255,255,.8); backdrop-filter: blur(16px); border-radius: 999px; }
+  .top .name { font-family: "Instrument Serif", serif; font-size: 1.5rem; }
+  .top nav { display: flex; gap: 24px; align-items: center; font-size: .875rem; }
+  .pill { display: inline-flex; align-items: center; height: 48px; padding: 0 24px; border-radius: 999px; background: var(--btn); color: #fff; font-weight: 500; }
+  .pill--light { background: #fff; color: var(--ink); }
+  .hero { position: relative; margin-top: 16px; border-radius: 32px; overflow: hidden; min-height: 720px; display: flex; align-items: flex-end; background: var(--card); }
+  .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 25%; }
+  .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(51,38,42,.72), rgba(51,38,42,0) 60%); }
+  .hero__text { position: relative; z-index: 1; padding: 48px; color: #fff; max-width: 720px; }
+  .hero h1 { font-size: 6rem; line-height: 5.5rem; }
+  .hero p { margin: 24px 0 32px; font-size: 1.125rem; line-height: 1.75rem; max-width: 30em; opacity: .92; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .tags span { padding: 8px 16px; border-radius: 999px; background: rgba(255,255,255,.18); backdrop-filter: blur(8px); font-size: .875rem; }
+  .sec { padding: 112px 0; }
+  .h2 { font-size: 4rem; line-height: 4rem; max-width: 14ch; }
+  .lead { color: var(--muted); max-width: 32em; margin-top: 16px; font-size: 1.125rem; line-height: 1.75rem; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; }
+  .card { background: #fff; border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 16px; min-height: 280px; }
+  .card h3 { font-family: "Instrument Serif", serif; font-weight: 400; font-size: 2.25rem; line-height: 2.5rem; }
+  .card p { color: var(--muted); flex: 1; }
+  .card a { font-weight: 500; font-size: .875rem; }
+  .card--pink { background: var(--pink); }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .ba { position: relative; aspect-ratio: 4 / 5; overflow: hidden; --p: 50%; border-radius: 24px; background: var(--card); }
+  .ba img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .ba img + img { clip-path: inset(0 0 0 var(--p)); }
+  .ba::after { content: ""; position: absolute; top: 0; bottom: 0; left: var(--p); width: 2px; background: #fff; }
+  .ba input { position: absolute; inset: 0; width: 100%; opacity: 0; cursor: ew-resize; }
+  .ba span { position: absolute; top: 16px; padding: 4px 12px; border-radius: 999px; background: #fff; font-size: .75rem; font-weight: 600; z-index: 1; }
+  .ba span:first-of-type { left: 16px; } .ba span:last-of-type { right: 16px; }
+  .panel { background: #fff; border-radius: 24px; padding: 48px; display: flex; flex-direction: column; justify-content: space-between; gap: 32px; }
+  .panel blockquote { font-family: "Instrument Serif", serif; font-size: 2.5rem; line-height: 3rem; }
+  .panel small { color: var(--muted); }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; }
+  .steps div { border-top: 1px solid #e3d3d0; padding-top: 16px; }
+  .steps b { font-family: "Instrument Serif", serif; font-weight: 400; font-size: 1.75rem; line-height: 2.5rem; display: block; }
+  .steps p { color: var(--muted); }
+  .cta { background: var(--pink); border-radius: 32px; padding: 96px 48px; text-align: center; }
+  .cta .h2 { margin: 0 auto 32px; }
+  .foot { padding: 48px 0; font-size: .875rem; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  @media (max-width: 860px) {
+    .wrap { padding: 0 16px; }
+    .top { margin: 8px 8px 0; }
+    .top nav a:not(.pill) { display: none; }
+    .hero { min-height: 640px; border-radius: 24px; }
+    .hero__text { padding: 24px; }
+    .hero h1 { font-size: 3.5rem; line-height: 3.5rem; }
+    .sec { padding: 72px 0; }
+    .h2 { font-size: 2.75rem; line-height: 3rem; }
+    .grid, .split, .steps { grid-template-columns: 1fr; }
+    .panel { padding: 32px 24px; }
+    .panel blockquote { font-size: 2rem; line-height: 2.5rem; }
+    .cta { padding: 64px 24px; }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="name" href="#">Millena Curty</a>
+  <nav><a href="#tratamentos">Tratamentos</a><a href="#resultados">Resultados</a><a class="pill" href="#agendar">Agendar</a></nav>
+</header>
+
+<div class="wrap">
+  <section class="hero">
+    <img src="/img/millena.webp" alt="Dra. Millena Curty" />
+    <div class="hero__text">
+      <h1 class="serif">Você, mais você. <em>Sem parecer feita.</em></h1>
+      <p>Harmonização facial com a Dra. Millena Curty, em São Paulo. Resultado natural, do jeito que você é.</p>
+      <a class="pill pill--light" href="#agendar">Agendar avaliação gratuita</a>
+      <div class="tags"><span>+800 pacientes</span><span>7 anos de experiência</span><span>Nota 5,0</span></div>
+    </div>
+  </section>
+
+  <section class="sec" id="tratamentos">
+    <h2 class="h2 serif">O que dá pra <em>cuidar</em> com a Dra. Millena</h2>
+    <p class="lead">Tudo começa por uma avaliação gratuita. Ela olha para o seu rosto inteiro antes de sugerir qualquer coisa.</p>
+    <div class="grid">
+      <article class="card card--pink"><h3>Full Face</h3><p>Várias técnicas no mesmo plano. Reestruturação completa com resultado natural.</p><a href="#">Perguntar no WhatsApp →</a></article>
+      <article class="card"><h3>Lábios</h3><p>Volume sob medida, em proporção com o resto do rosto. Nada de “lábio de novela”.</p><a href="#">Perguntar no WhatsApp →</a></article>
+      <article class="card"><h3>Nariz sem cirurgia</h3><p>Rinomodelação: correção sutil do contorno, respeitando o seu perfil.</p><a href="#">Perguntar no WhatsApp →</a></article>
+      <article class="card"><h3>Colágeno</h3><p>Bioestimulador que reativa a firmeza da pele. Aparece devagar e dura anos.</p><a href="#">Perguntar no WhatsApp →</a></article>
+      <article class="card"><h3>Ulthera</h3><p>Ultrassom que estimula colágeno nas camadas profundas. Efeito lifting sem cirurgia.</p><a href="#">Perguntar no WhatsApp →</a></article>
+      <article class="card card--pink"><h3>Não sabe por onde começar?</h3><p>Na avaliação você descobre o que faz sentido para você, sem compromisso.</p><a href="#agendar">Agendar avaliação →</a></article>
+    </div>
+  </section>
+
+  <section class="sec" id="resultados" style="padding-top:0">
+    <div class="split">
+      <div class="ba" data-ba><img src="/img/antes1.webp" alt="Antes" /><img src="/img/depois1.webp" alt="Depois" /><span>Antes</span><span>Depois</span><input type="range" min="0" max="100" value="50" aria-label="Comparar antes e depois" /></div>
+      <div class="panel">
+        <h2 class="h2 serif" style="font-size:3rem;line-height:3rem">Pequenas mudanças, <em>grandes revelações.</em></h2>
+        <div>
+          <blockquote>“Saí me sentindo eu mesma, só que descansada. Ninguém percebe que fiz algo, mas todos notam.”</blockquote>
+          <small>Ana Beatriz, paciente desde 2023</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <h2 class="h2 serif">Como funciona</h2>
+    <div class="steps">
+      <div><b>1. Conversa</b><p>Você chama no WhatsApp e escolhemos o melhor horário.</p></div>
+      <div><b>2. Avaliação gratuita</b><p>A Dra. Millena analisa o seu rosto e monta um plano só seu.</p></div>
+      <div><b>3. Procedimento e retorno</b><p>Com calma, uma paciente por horário, e retorno incluso.</p></div>
+    </div>
+  </section>
+
+  <section class="cta" id="agendar">
+    <h2 class="h2 serif">Vamos <em>conversar?</em></h2>
+    <a class="pill" href="#">Agendar avaliação gratuita</a>
+  </section>
+  <div class="foot"><span>© 2026 Dra. Millena Curty</span><span>Os resultados variam de pessoa para pessoa.</span></div>
+</div>
+<script src="/conceitos/ba.js"></script>
+</body>
+</html>

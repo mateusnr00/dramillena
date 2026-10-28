@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Proposta C · Campanha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&display=swap" />
+<style>
+  :root { --wine: #4a1626; --wine-2: #5c2234; --blush: #f6dfe3; --blush-2: #fbeff1; --ink: #2a1219; --muted: #6f4f58; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--blush-2); color: var(--ink); font: 1rem/1.5rem Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  .serif { font-family: "DM Serif Display", Georgia, serif; font-weight: 400; }
+  em { font-style: italic; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+  .hero { background: var(--wine); color: var(--blush); display: grid; grid-template-columns: 1fr 1fr; min-height: 100svh; }
+  .hero__text { display: flex; flex-direction: column; justify-content: space-between; padding: 32px 64px 64px max(40px, calc((100vw - 1200px) / 2)); }
+  .top { display: flex; justify-content: space-between; align-items: center; font-size: .875rem; }
+  .top b { font-family: "DM Serif Display", serif; font-weight: 400; font-size: 1.5rem; }
+  .hero h1 { font-size: 6.5rem; line-height: 6rem; letter-spacing: -.02em; }
+  .hero h1 em { color: #f0b7c4; }
+  .hero p { margin: 32px 0 40px; max-width: 28em; font-size: 1.125rem; line-height: 1.75rem; color: #f3d3da; }
+  .btn { display: inline-flex; align-items: center; height: 56px; padding: 0 32px; border-radius: 999px; background: var(--blush); color: var(--wine); font-weight: 600; }
+  .btn--wine { background: var(--wine); color: var(--blush); }
+  .hero__photo { position: relative; overflow: hidden; background: var(--wine-2); }
+  .hero__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+  .marquee { background: var(--blush); color: var(--wine); overflow: hidden; white-space: nowrap; padding: 16px 0; font-family: "DM Serif Display", serif; font-size: 1.5rem; line-height: 2rem; }
+  .marquee div { display: inline-block; animation: m 40s linear infinite; }
+  .marquee span { margin: 0 24px; }
+  @keyframes m { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .marquee div { animation: none; } }
+  .sec { padding: 128px 0; }
+  .h2 { font-size: 4.5rem; line-height: 4.5rem; letter-spacing: -.01em; }
+  .h2 em { color: #9b3a55; }
+  .about { display: grid; grid-template-columns: 7fr 5fr; gap: 80px; align-items: center; }
+  .about p { color: var(--muted); font-size: 1.125rem; line-height: 2rem; margin-top: 24px; }
+  .about .facts { display: grid; gap: 24px; }
+  .about .facts div { background: var(--blush); border-radius: 24px; padding: 24px 32px; }
+  .about .facts b { display: block; font-family: "DM Serif Display", serif; font-weight: 400; font-size: 3rem; line-height: 3.5rem; color: var(--wine); }
+  .treat { background: var(--wine); color: var(--blush); }
+  .treat ul { list-style: none; margin-top: 64px; }
+  .treat li { display: flex; justify-content: space-between; align-items: baseline; gap: 32px; padding: 24px 0; border-top: 1px solid rgba(246,223,227,.24); }
+  .treat li h3 { font-family: "DM Serif Display", serif; font-weight: 400; font-size: 3rem; line-height: 3.5rem; }
+  .treat li p { max-width: 28em; color: #f0ccd4; text-align: right; }
+  .treat .h2 em { color: #f0b7c4; }
+  .res { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .ba { position: relative; aspect-ratio: 4 / 5; overflow: hidden; --p: 50%; border-radius: 240px 240px 24px 24px; background: var(--blush); }
+  .ba img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .ba img + img { clip-path: inset(0 0 0 var(--p)); }
+  .ba::after { content: ""; position: absolute; top: 0; bottom: 0; left: var(--p); width: 2px; background: #fff; }
+  .ba input { position: absolute; inset: 0; width: 100%; opacity: 0; cursor: ew-resize; }
+  .res blockquote { font-family: "DM Serif Display", serif; font-size: 2.25rem; line-height: 2.75rem; margin: 32px 0 16px; }
+  .res small { color: var(--muted); }
+  .cta { background: var(--blush); text-align: center; padding: 128px 0; }
+  .cta .h2 { margin-bottom: 40px; }
+  .foot { padding: 40px 0; font-size: .875rem; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  @media (max-width: 860px) {
+    .wrap { padding: 0 16px; }
+    .hero { grid-template-columns: 1fr; min-height: 0; }
+    .hero__photo { order: -1; aspect-ratio: 4 / 5; }
+    .hero__text { padding: 24px 16px 48px; gap: 32px; }
+    .top { order: -1; }
+    .hero h1 { font-size: 3.5rem; line-height: 3.5rem; }
+    .sec, .cta { padding: 80px 0; }
+    .h2 { font-size: 3rem; line-height: 3rem; }
+    .about, .res { grid-template-columns: 1fr; gap: 40px; }
+    .treat li { flex-direction: column; gap: 8px; }
+    .treat li h3 { font-size: 2.25rem; line-height: 2.75rem; }
+    .treat li p { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<section class="hero">
+  <div class="hero__text">
+    <div class="top"><b>Millena Curty</b><a href="#agendar">Agendar</a></div>
+    <div>
+      <h1 class="serif">Você, mais você. <em>Sem parecer feita.</em></h1>
+      <p>Harmonização facial com a Dra. Millena Curty, em São Paulo. Para quem quer ficar bonita sem ficar diferente.</p>
+      <a class="btn" href="#agendar">Agendar avaliação gratuita</a>
+    </div>
+  </div>
+  <figure class="hero__photo"><img src="/img/millena.webp" alt="Dra. Millena Curty" /></figure>
+</section>
+
+<div class="marquee" aria-hidden="true"><div>
+  <span>Full Face</span>✦<span>Lábios</span>✦<span>Rinomodelação</span>✦<span>Bioestimulador</span>✦<span>Ulthera</span>✦<span>Avaliação gratuita</span>✦
+  <span>Full Face</span>✦<span>Lábios</span>✦<span>Rinomodelação</span>✦<span>Bioestimulador</span>✦<span>Ulthera</span>✦<span>Avaliação gratuita</span>✦
+</div></div>
+
+<section class="sec">
+  <div class="wrap about">
+    <div>
+      <h2 class="h2 serif">Prazer, eu sou <em>a Millena.</em></h2>
+      <p>Cirurgiã-dentista especialista em Harmonização Orofacial. Há 7 anos faço um trabalho só: fazer você se olhar no espelho e se reconhecer. Só que com um brilho a mais.</p>
+      <p>Atendo uma paciente por horário, sem pressa e sem venda forçada.</p>
+    </div>
+    <div class="facts">
+      <div><b>+800</b>pacientes atendidas</div>
+      <div><b>7 anos</b>de harmonização facial</div>
+      <div><b>5,0</b>de nota das pacientes</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec treat" id="tratamentos">
+  <div class="wrap">
+    <h2 class="h2 serif">O que eu <em>faço.</em></h2>
+    <ul>
+      <li><h3>Full Face</h3><p>Várias técnicas no mesmo plano, conversando entre si.</p></li>
+      <li><h3>Lábios</h3><p>Volume sob medida. Nada de “lábio de novela”.</p></li>
+      <li><h3>Rinomodelação</h3><p>Nariz mais harmônico, sem cirurgia.</p></li>
+      <li><h3>Bioestimulador</h3><p>Firmeza que aparece devagar e dura anos.</p></li>
+      <li><h3>Ulthera</h3><p>Efeito lifting com ultrassom, sem cirurgia.</p></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap res">
+    <div class="ba" data-ba><img src="/img/antes1.webp" alt="Antes" /><img src="/img/depois1.webp" alt="Depois" /><input type="range" min="0" max="100" value="50" aria-label="Comparar antes e depois" /></div>
+    <div>
+      <h2 class="h2 serif">Ninguém percebe o procedimento. <em>Todo mundo percebe você.</em></h2>
+      <blockquote>“Meu marido só falou que eu estava brilhando.”</blockquote>
+      <small>Fernanda P., paciente desde 2024</small>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="agendar">
+  <div class="wrap">
+    <h2 class="h2 serif">Sua avaliação é <em>por minha conta.</em></h2>
+    <a class="btn btn--wine" href="#">Agendar avaliação gratuita</a>
+  </div>
+</section>
+<div class="wrap foot"><span>© 2026 Dra. Millena Curty</span><span>Os resultados variam de pessoa para pessoa.</span></div>
+<script src="/conceitos/ba.js"></script>
+</body>
+</html>
