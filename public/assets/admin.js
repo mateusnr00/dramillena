@@ -80,6 +80,18 @@
 
   function clone(o) { return JSON.parse(JSON.stringify(o)); }
   function getPath(obj, path) { return path.split('.').reduce(function (o, k) { return o == null ? undefined : o[k]; }, obj); }
+  // Conteúdo de exemplo: valor igual ao padrão do site, ainda não substituído pela doutora.
+  function same(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
+  function isDemo(path, val) {
+    if (val == null || val === '' || typeof val === 'boolean' || !state.defaults) return false;
+    return same(getPath(state.defaults, path), val);
+  }
+  function inDemoList(path, val) {
+    if (val == null || val === '' || !state.defaults) return false;
+    var d = getPath(state.defaults, path);
+    return Array.isArray(d) && d.some(function (x) { return same(x, val); });
+  }
+  function demoTag() { return h('span', { class: 'demo', title: 'Conteúdo de demonstração. Substitua pelo real.' }, 'Exemplo'); }
   function setPath(obj, path, val) {
     var ks = path.split('.');
     var o = obj;
@@ -109,23 +121,26 @@
   var HINT = 'Use *palavra* para destacar em itálico e | para quebrar linha.';
   var CONTENT = {
     inicio: {
-      title: 'Abertura', desc: 'O topo da página: retrato, título e números.', icon: 'home', color: '#d4b88a',
+      title: 'Abertura', desc: 'O topo da página inicial: foto ou vídeo, título e subtítulo.', icon: 'home', color: '#d4b88a',
       groups: [
         { label: 'Abertura', fields: [
-          { p: 'hero.foto', l: 'Retrato da abertura', t: 'image', s: 'Foto editorial vertical, de preferência com luz lateral e fundo neutro' },
-          { p: 'hero.eyebrow', l: 'Chamada', s: 'Texto pequeno acima do título' },
+          { p: 'hero.foto', l: 'Foto da abertura', t: 'image', s: 'Retrato editorial vertical, com luz lateral e fundo neutro' },
+          { p: 'hero.video', l: 'Vídeo da abertura (opcional)', t: 'video', s: 'MP4 curto e silencioso, até 40 MB. Quando houver vídeo, ele substitui a foto e a foto vira a capa.' },
+          { p: 'hero.eyebrow', l: 'Complemento ao nome', s: 'Aparece ao lado do nome da doutora. Ex.: Harmonização facial em São Paulo' },
           { p: 'hero.title', l: 'Título', s: 'Use | para quebrar linha. A segunda linha fica em itálico.' },
-          { p: 'hero.sub', l: 'Frase abaixo do título', t: 'textarea' },
-          { p: 'hero.ctaPrimary', l: 'Botão de agendar' },
-          { p: 'hero.ctaSecondary', l: 'Link para a filosofia' }
+          { p: 'hero.sub', l: 'Subtítulo', t: 'textarea' },
+          { p: 'hero.ctaPrimary', l: 'Botão de agendar' }
         ] },
-        { label: 'Números', hint: 'Aparecem no capítulo de confiança. Use só números reais.', list: 'hero.trust', itemLabel: function (it) { return (it.num || '') + ' ' + (it.label || ''); },
+        { label: 'Indicadores', fields: [
+          { p: 'hero.mostrarIndicadores', l: 'Mostrar indicadores no site', t: 'bool', s: 'Aparecem na página da doutora. Itens de exemplo não são publicados.' }
+        ] },
+        { label: 'Números', hint: 'Use só números reais e comprováveis.', list: 'hero.trust', itemLabel: function (it) { return (it.num || '') + ' ' + (it.label || ''); },
           blank: { num: '', label: '' },
           fields: [{ p: 'num', l: 'Número' }, { p: 'label', l: 'Descrição' }] }
       ]
     },
     filosofia: {
-      title: 'Filosofia', desc: 'Capítulo 2: a forma de trabalhar da Dra. Millena.', icon: 'sparkle', color: '#d4b88a',
+      title: 'Filosofia', desc: 'Página da doutora: a forma de trabalhar.', icon: 'sparkle', color: '#d4b88a',
       groups: [
         { label: 'Filosofia', fields: [
           { p: 'filosofia.title', l: 'Título', s: 'Use | para quebrar linha' },
@@ -138,7 +153,7 @@
       ]
     },
     explorer: {
-      title: 'Face Explorer', desc: 'Capítulo 4: as regiões do rosto no desenho interativo.', icon: 'person', color: '#d4b88a',
+      title: 'Leitura facial', desc: 'Página de procedimentos: as regiões do rosto no desenho interativo.', icon: 'person', color: '#d4b88a',
       groups: [
         { label: 'Seção', fields: [
           { p: 'explorer.title', l: 'Título' },
@@ -155,7 +170,7 @@
       ]
     },
     ciencia: {
-      title: 'Ciência', desc: 'Capítulo 6: camadas, colágeno e avaliação.', icon: 'sparkle', color: '#d4b88a',
+      title: 'Ciência', desc: 'Página de procedimentos: camadas e colágeno.', icon: 'sparkle', color: '#d4b88a',
       groups: [
         { label: 'Ciência', fields: [
           { p: 'ciencia.title', l: 'Título' },
@@ -167,7 +182,7 @@
       ]
     },
     espaco: {
-      title: 'O espaço', desc: 'Capítulo 8: o consultório.', icon: 'home', color: '#d4b88a',
+      title: 'O consultório', desc: 'Página da doutora: o espaço de atendimento.', icon: 'home', color: '#d4b88a',
       groups: [
         { label: 'O espaço', fields: [
           { p: 'espaco.title', l: 'Título' },
@@ -180,23 +195,25 @@
       ]
     },
     sobre: {
-      title: 'A profissional', desc: 'Capítulo 3: apresentação da Dra. Millena.', icon: 'person', color: '#d4b88a',
+      title: 'A doutora', desc: 'Nome, formação, biografia e fotos.', icon: 'person', color: '#d4b88a',
       groups: [
         { label: 'Apresentação', fields: [
           { p: 'millena.foto', l: 'Foto', t: 'image' },
           { p: 'millena.title', l: 'Nome', s: 'Use | para quebrar linha' },
           { p: 'millena.badge', l: 'Profissão', s: 'Ex.: Cirurgiã-dentista. O registro vem de Contato e marketing.' },
-          { p: 'millena.bio1', l: 'Primeiro parágrafo', t: 'textarea' },
+          { p: 'millena.resumo', l: 'Apresentação curta', t: 'textarea', s: 'Aparece na página inicial. Uma ou duas frases.' },
+          { p: 'millena.bio1', l: 'Biografia', t: 'textarea', s: 'Aparece na página da doutora' },
           { p: 'millena.bio2', l: 'Citação', t: 'textarea' },
-          { p: 'millena.cta', l: 'Link do WhatsApp' }
+          { p: 'millena.cta', l: 'Botão da página inicial' }
         ] },
-        { label: 'Formação e credenciais', hint: 'Só o que puder ser comprovado.', strings: 'millena.credentials', placeholder: 'Ex.: Especialista em Harmonização Orofacial' }
+        { label: 'Formação, especializações e credenciais', hint: 'Só o que puder ser comprovado. Itens de exemplo não são publicados. O registro (CRO) fica em Contato e marketing.', strings: 'millena.credentials', placeholder: 'Ex.: Especialista em Harmonização Orofacial' }
       ]
     },
     resultados: {
-      title: 'Confiança', desc: 'Capítulo 7: caso de antes e depois e textos. Publique só com autorização da paciente.', icon: 'photo', color: '#d4b88a',
+      title: 'Resultados', desc: 'Antes e depois. Publique só com autorização da paciente.', icon: 'photo', color: '#d4b88a',
       groups: [
         { label: 'Seção', fields: [
+          { p: 'galeria.ativo', l: 'Publicar resultados', t: 'bool', s: 'Ligue só com autorização por escrito da paciente' },
           { p: 'galeria.title', l: 'Título' },
           { p: 'galeria.intro', l: 'Introdução', t: 'textarea' },
           { p: 'galeria.disclaimer', l: 'Aviso abaixo do caso', t: 'textarea' }
@@ -213,13 +230,14 @@
       ]
     },
     procedimentos: {
-      title: 'Tratamentos', desc: 'Capítulo 5: a lista de tratamentos.', icon: 'sparkle', color: '#d4b88a',
+      title: 'Procedimentos', desc: 'Os três destaques da página inicial e a página completa.', icon: 'sparkle', color: '#d4b88a',
       groups: [
-        { label: 'Seção', fields: [{ p: 'procedimentos.title', l: 'Título' }, { p: 'procedimentos.intro', l: 'Introdução', t: 'textarea' }] },
+        { label: 'Seção', fields: [{ p: 'procedimentos.destaqueTitulo', l: 'Título na página inicial', s: 'Use | para quebrar linha' }, { p: 'procedimentos.title', l: 'Título da página de procedimentos' }, { p: 'procedimentos.intro', l: 'Introdução', t: 'textarea' }] },
         { label: 'Procedimentos', list: 'procedimentos.items', itemLabel: function (it) { return it.title; },
-          blank: { title: 'Novo tratamento', desc: '', foto: '' },
+          blank: { title: 'Novo procedimento', desc: '', foto: '', destaque: false },
           fields: [
-            { p: 'foto', l: 'Foto (opcional)', t: 'image', s: 'Aparece quando o tratamento é aberto' },
+            { p: 'destaque', l: 'Destaque na página inicial', t: 'bool', s: 'A página inicial mostra três. Se marcar menos, completa com os primeiros da lista.' },
+            { p: 'foto', l: 'Foto', t: 'image', s: 'Imagem grande do destaque e da página de procedimentos' },
             { p: 'title', l: 'Nome' },
             { p: 'desc', l: 'Descrição', t: 'textarea' }
           ] }
@@ -228,7 +246,7 @@
     depoimentos: {
       title: 'Depoimentos', desc: 'O que as pacientes dizem.', icon: 'quote', color: '#d4b88a',
       groups: [
-        { label: 'Seção', fields: [{ p: 'depoimentos.title', l: 'Título' }] },
+        { label: 'Seção', fields: [{ p: 'depoimentos.ativo', l: 'Publicar depoimentos', t: 'bool', s: 'Ligue só com depoimentos reais e autorizados' }, { p: 'depoimentos.title', l: 'Título' }] },
         { label: 'Depoimentos', list: 'depoimentos.items', itemLabel: function (it) { return it.nome; },
           blank: { texto: '', nome: '', role: '' },
           fields: [{ p: 'texto', l: 'Depoimento', t: 'textarea' }, { p: 'nome', l: 'Nome' }, { p: 'role', l: 'Detalhe', s: 'Ex.: Cliente desde 2023' }] }
@@ -263,7 +281,7 @@
       ]
     },
     processo: {
-      title: 'Etapas da avaliação', desc: 'Os passos que aparecem no capítulo de ciência.', icon: 'steps', color: '#d4b88a',
+      title: 'Como funciona', desc: 'Página da doutora: as etapas do atendimento.', icon: 'steps', color: '#d4b88a',
       groups: [
         { label: 'Seção', fields: [{ p: 'processo.title', l: 'Título' }] },
         { label: 'Etapas', list: 'processo.steps', itemLabel: function (it) { return it.title; },
@@ -281,17 +299,13 @@
       ]
     },
     agendar: {
-      title: 'Agendamento', desc: 'O formulário no fim da página.', icon: 'calendar', color: '#d4b88a',
+      title: 'Agendamento', desc: 'A chamada final da página inicial.', icon: 'calendar', color: '#d4b88a',
       groups: [
         { label: 'Formulário', fields: [
-          { p: 'form.title', l: 'Título do final', s: 'Cada frase com ponto vira uma linha' },
-          { p: 'form.desc', l: 'Frase abaixo do título', t: 'textarea' },
-          { p: 'form.waTitle', l: 'Botão do WhatsApp' },
-          { p: 'form.waSub', l: 'Legenda do botão' },
-          { p: 'form.formTitle', l: 'Título do formulário', s: HINT },
-          { p: 'form.formSub', l: 'Subtítulo do formulário' },
-          { p: 'form.submit', l: 'Botão de enviar' },
-          { p: 'form.legal', l: 'Texto de privacidade', t: 'textarea' }
+          { p: 'form.title', l: 'Título', s: 'Use | para quebrar linha' },
+          { p: 'form.desc', l: 'Texto curto', t: 'textarea' },
+          { p: 'form.cta', l: 'Botão do WhatsApp' },
+          { p: 'form.legal', l: 'Texto de privacidade da pré-reserva', t: 'textarea' }
         ] },
         { label: 'Rodapé', fields: [{ p: 'footer.tag', l: 'Frase do rodapé', t: 'textarea' }] }
       ]
@@ -300,13 +314,15 @@
       title: 'Contato e marketing', desc: 'WhatsApp, redes, Google e Meta.', icon: 'gear', color: '#d4b88a',
       groups: [
         { label: 'Contato', fields: [
-          { p: 'settings.nome', l: 'Nome' },
+          { p: 'settings.nome', l: 'Nome profissional', s: 'Ex.: Dra. Millena Curty' },
           { p: 'settings.whatsapp', l: 'WhatsApp', s: 'Só números, com 55 e DDD. Ex.: 5511987654321' },
           { p: 'settings.whatsappMsg', l: 'Mensagem inicial', t: 'textarea', s: 'Texto que já aparece escrito no WhatsApp' },
           { p: 'settings.instagram', l: 'Instagram', s: 'Só o usuário, sem @' },
           { p: 'settings.email', l: 'Email' },
           { p: 'settings.cidade', l: 'Cidade' },
-          { p: 'settings.endereco', l: 'Endereço', s: 'Aparece no rodapé. Deixe vazio para mostrar só a cidade.' },
+          { p: 'settings.endereco', l: 'Endereço', s: 'Rua, número e bairro. Aparece no agendamento.' },
+          { p: 'settings.mapa', l: 'Link do mapa', s: 'Link do Google Maps. O endereço vira um link para ele.' },
+          { p: 'settings.horario', l: 'Horário de atendimento', s: 'Ex.: Segunda a sexta, das 9h às 19h' },
           { p: 'settings.cro', l: 'Registro profissional', s: 'Ex.: CRO-SP 123456. Aparece na apresentação e no rodapé.' }
         ] },
         { label: 'Google', fields: [
@@ -329,7 +345,7 @@
       { id: 'reservas', title: 'Agenda', desc: 'Pré-reservas feitas pelo site.', icon: 'calendar', color: '#d4b88a' },
       { id: 'leads', title: 'Leads', desc: 'Todas as pessoas que deixaram contato.', icon: 'inbox', color: '#d4b88a' }
     ] },
-    { group: 'Conteúdo do site', items: ['inicio', 'filosofia', 'sobre', 'explorer', 'procedimentos', 'ciencia', 'processo', 'resultados', 'depoimentos', 'faq', 'espaco', 'agendar'].map(function (k) {
+    { group: 'Conteúdo do site', items: ['inicio', 'sobre', 'procedimentos', 'agendar', 'filosofia', 'processo', 'depoimentos', 'resultados', 'faq', 'espaco', 'explorer', 'ciencia'].map(function (k) {
       return { id: k, title: CONTENT[k].title, desc: CONTENT[k].desc, icon: CONTENT[k].icon, color: CONTENT[k].color };
     }) },
     { group: 'Ajustes', items: [
@@ -396,7 +412,9 @@
     $('#login').hidden = true;
     $('#app').hidden = false;
     $('#me-email').textContent = state.me.email;
-    state.config = await api('/api/config');
+    var both = await Promise.all([api('/api/config'), api('/api/defaults').catch(function () { return {}; })]);
+    state.config = both[0];
+    state.defaults = both[1];
     state.draft = clone(state.config);
     renderNav();
     var fromHash = location.hash.slice(1);
@@ -511,6 +529,11 @@
       view.appendChild(wrap);
     });
 
+    if (view.querySelector('.demo')) {
+      view.insertBefore(h('p', { class: 'demo-note' }, h('span', { class: 'demo' }, 'Exemplo'),
+        ' marca conteúdo de demonstração. Credenciais, números, depoimentos e resultados de exemplo não aparecem no site. Textos de exemplo aparecem até serem substituídos.'), view.firstChild);
+    }
+
     if (schema.danger) {
       view.appendChild(h('section', { class: 'card' },
         h('div', { class: 'card__head' },
@@ -545,34 +568,40 @@
         control = h('input', { class: 'input', id: id, type: 'number', min: 0, value: val == null ? '' : val, oninput: function (e) { update(e.target.value === '' ? '' : Number(e.target.value)); } });
       } else if (f.t === 'image') {
         control = imageField(id, val, update);
+      } else if (f.t === 'video') {
+        control = imageField(id, val, update, true);
       } else {
         control = h('input', { class: 'input', id: id, type: 'text', value: val == null ? '' : val, oninput: function (e) { update(e.target.value); } });
       }
       rows.appendChild(h('div', { class: 'row' },
-        h('label', { for: id }, f.l, f.s ? h('small', null, f.s) : null),
+        h('label', { for: id }, f.l, !prefix && isDemo(path, val) ? demoTag() : null, f.s ? h('small', null, f.s) : null),
         control));
     });
     return rows;
   }
 
-  function imageField(id, val, update) {
+  function imageField(id, val, update, video) {
     var thumb = h('div', { class: 'img-field__thumb' });
-    var input = h('input', { class: 'input', id: id, type: 'text', value: val || '', placeholder: '/img/foto.webp', oninput: function (e) { update(e.target.value); paint(e.target.value); } });
-    var file = h('input', { type: 'file', accept: 'image/*', hidden: true });
+    var input = h('input', { class: 'input', id: id, type: 'text', value: val || '', placeholder: video ? '/media/uploads/video.mp4' : '/img/foto.webp', oninput: function (e) { update(e.target.value); paint(e.target.value); } });
+    var file = h('input', { type: 'file', accept: video ? 'video/mp4,video/webm' : 'image/*', hidden: true });
     var wrap = h('div', { class: 'img-field' }, thumb, h('div', { class: 'img-field__body' }, input,
       h('div', { class: 'img-field__btns' },
-        h('button', { class: 'btn btn--ghost btn--sm', type: 'button', onclick: function () { file.click(); } }, 'Enviar imagem…'))), file);
-    function paint(u) { thumb.style.backgroundImage = u ? 'url("' + String(u).replace(/"/g, '') + '")' : ''; }
+        h('button', { class: 'btn btn--ghost btn--sm', type: 'button', onclick: function () { file.click(); } }, video ? 'Enviar vídeo…' : 'Enviar imagem…'),
+        h('button', { class: 'btn btn--ghost btn--sm', type: 'button', onclick: function () { input.value = ''; update(''); paint(''); } }, 'Remover'))), file);
+    function paint(u) {
+      if (video) { thumb.textContent = u ? '▶' : ''; return; }
+      thumb.style.backgroundImage = u ? 'url("' + String(u).replace(/"/g, '') + '")' : '';
+    }
     paint(val);
     file.addEventListener('change', async function () {
       var f = file.files && file.files[0];
       if (!f) return;
       wrap.classList.add('is-uploading');
       try {
-        var blob = await shrink(f);
+        var blob = video ? f : await shrink(f);
         var r = await api('/api/upload', { method: 'POST', raw: true, body: blob, type: blob.type });
         input.value = r.url; update(r.url); paint(r.url);
-        toast('Imagem enviada. Lembre de salvar.');
+        toast((video ? 'Vídeo' : 'Imagem') + ' enviado. Lembre de salvar.');
       } catch (e) {
         toast(e.message, true);
       } finally {
@@ -619,7 +648,7 @@
       var a = arr();
       a.forEach(function (item, i) {
         var title = h('span', { class: 'item__title' }, (g.itemLabel(item, i) || '').trim() || 'Item ' + (i + 1));
-        var head = h('div', { class: 'item__head' }, title,
+        var head = h('div', { class: 'item__head' }, title, inDemoList(g.list, item) ? demoTag() : null,
           h('button', { class: 'icon-btn', type: 'button', title: 'Subir', 'aria-label': 'Subir', disabled: i === 0, html: ico('up'), onclick: function () { move(i, -1); } }),
           h('button', { class: 'icon-btn', type: 'button', title: 'Descer', 'aria-label': 'Descer', disabled: i === a.length - 1, html: ico('down'), onclick: function () { move(i, 1); } }),
           h('button', { class: 'icon-btn icon-btn--danger', type: 'button', title: 'Remover', 'aria-label': 'Remover', html: ico('trash'), onclick: function () {
@@ -657,6 +686,7 @@
       a.forEach(function (s, i) {
         inner.appendChild(h('div', { class: 'str-item' },
           h('input', { class: 'input', type: 'text', value: s, placeholder: g.placeholder, 'aria-label': 'Item ' + (i + 1), oninput: function (e) { a[i] = e.target.value; setDirty(true); } }),
+          inDemoList(g.strings, s) ? demoTag() : null,
           h('button', { class: 'icon-btn', type: 'button', 'aria-label': 'Subir', disabled: i === 0, html: ico('up'), onclick: function () { a.splice(i - 1, 0, a.splice(i, 1)[0]); setDirty(true); draw(); } }),
           h('button', { class: 'icon-btn icon-btn--danger', type: 'button', 'aria-label': 'Remover', html: ico('trash'), onclick: function () { a.splice(i, 1); setDirty(true); draw(); } })));
       });

@@ -15,13 +15,14 @@ Depois de cada mudança:
 
 ## Design
 
-Direção atual, pedida pelo dono no briefing **"The Art of the Face"**: luxury editorial + scientific futurism + cinematic minimalism. Base escura de cinema com capítulos claros para respiro.
+Direção atual: **site brasileiro premium, compacto e cinematográfico**. Base escura de cinema com momentos claros, fotografia editorial e tipografia de luxo.
 
-- Paleta: Obsidian #10100F, Deep Charcoal #222321, Warm Ivory #F5F0E7, Champagne #D5C9B5, Muted Stone #8B8278 (só sobre obsidian), Soft White #FAF8F4. Texto secundário sobre ivory: #625a52. Nada de dourado chamativo, rosa clichê ou neon.
-- Tipografia: Newsreader light nos títulos (tamanho óptico fixo em 36 para os traços finos não sumirem), Manrope no texto, DM Mono só em legendas técnicas. Cormorant quebra o "ê" no Chromium, não usar.
-- Página em capítulos (01 a 10): abertura com retrato e luz lateral, filosofia, a profissional, Face Explorer (desenho de proporções em SVG, não 3D), tratamentos (índice que abre), ciência (camadas, colágeno, etapas), confiança, o espaço, agendamento, rodapé.
-- Movimento: só títulos sobem por máscara e imagens abrem por recorte; texto corrido fica parado. Sem scroll hijacking, sem quique, sem partículas. Tudo desligado com movimento reduzido e o conteúdo aparece sem JavaScript.
-- Conteúdo: não inventar credenciais, resultados ou depoimentos. Antes e depois só com consentimento e aviso. O Explorer não mostra pontos de aplicação nem prevê resultado.
-- Grade de 8 px para espaços, controles e raios. Texto em rem, aguenta letra em 200%. Contraste mínimo de 4,5:1.
-- Metas: Lighthouse acessibilidade 95+, performance 90+, LCP até 2,5 s, CLS até 0,1.
-- Versões rejeitadas: Apple clara com SF/Inter, creme e bronze original, creme e bronze refinada com arco, mapa do rosto colorido, preto e branco com Archivo condensada, rosé com Bodoni, layout de landing page com cara de template. Não volte a elas sem pedido.
+- **Tudo em português.** Nada de títulos, slogans, menus ou nomes de seção em inglês. Título da abertura: "A beleza da sua essência."
+- **Início com 4 seções só**: abertura (foto ou vídeo, nome, título, subtítulo, botão), a doutora (retrato, resumo, credenciais, botão para /doutora), três procedimentos em destaque (composição assimétrica, botão para /procedimentos) e agendamento (WhatsApp e dados da clínica) com rodapé compacto. Não volte a encher a página inicial.
+- **Páginas internas** guardam os módulos: /doutora (perfil, filosofia, etapas, indicadores, depoimentos, resultados, perguntas, consultório), /procedimentos (lista completa, leitura facial, camadas e colágeno), /agendar (pré-reserva online), /privacidade.
+- **Dados de exemplo**: o painel marca com "Exemplo" o que ainda é demonstrativo. Credenciais, números, depoimentos e resultados de exemplo não são publicados (função `real()` em `src/render.js`); depoimentos, resultados e indicadores também dependem de um botão "Publicar" no painel.
+- Paleta: Obsidian #10100F, Charcoal #222321, Ivory #F5F0E7, Champagne #D5C9B5, Stone #8B8278 (só sobre obsidian), texto secundário sobre ivory #625a52.
+- Tipografia: Newsreader light nos títulos (tamanho óptico fixo em 36), Manrope no texto, DM Mono só em legendas técnicas. Cormorant quebra o "ê" no Chromium.
+- Movimento: títulos sobem por máscara e imagens abrem por recorte, rápido (até cerca de 1 s). Sem scroll preso, sem quique. Tudo desligado com movimento reduzido e o conteúdo aparece sem JavaScript.
+- Grade de 8 px, texto em rem que aguenta letra em 200%, contraste mínimo de 4,5:1. Metas: Lighthouse acessibilidade 95+, performance 90+.
+- Versões rejeitadas: Apple clara com SF/Inter, creme e bronze, mapa do rosto colorido, preto e branco com Archivo condensada, rosé com Bodoni, landing page com cara de template, versão em inglês com 10 capítulos (longa demais).

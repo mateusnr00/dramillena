@@ -16,21 +16,25 @@ export const DEFAULT_CONFIG = {
     cro: '',
     cidade: 'São Paulo',
     endereco: '',
+    horario: 'Segunda a sábado, com hora marcada',
+    mapa: '',
     seoTitle: 'Dra. Millena Curty | Harmonização Facial em São Paulo',
-    seoDescription: 'The Art of the Face: harmonização facial com a Dra. Millena Curty, em São Paulo. Avaliação individual, resultado natural. Agende pelo WhatsApp.',
+    seoDescription: 'A beleza da sua essência. Harmonização facial com a Dra. Millena Curty, em São Paulo: técnica, cuidado e respeito à sua individualidade.',
     ogImage: '/img/millena.webp',
     pixelId: '',
     ga4Id: ''
   },
 
   hero: {
-    eyebrow: 'Harmonização facial e estética avançada, em São Paulo',
-    title: 'The Art|of the Face',
-    sub: 'A arte de valorizar o que torna você única.',
+    eyebrow: '',
+    title: 'A beleza|da sua essência.',
+    sub: 'Harmonização facial com técnica, cuidado e respeito à sua individualidade.',
     foto: '/img/millena.webp',
+    video: '',
     frase: 'Ninguém percebe o procedimento. Todo mundo percebe você.',
     ctaPrimary: 'Agendar avaliação',
-    ctaSecondary: 'Conheça nossa filosofia',
+    ctaSecondary: 'Conheça a doutora',
+    mostrarIndicadores: false,
     antes: '/img/antes1.webp',
     depois: '/img/depois1.webp',
     note: 'Arraste para comparar o antes e o depois.',
@@ -42,13 +46,13 @@ export const DEFAULT_CONFIG = {
   },
 
   filosofia: {
-    title: 'Beauty is individual.',
-    lead: 'Nenhum rosto se repete. Por isso nenhum plano se repete.',
+    title: 'Cada rosto|é único.',
+    lead: 'Nenhum rosto se repete. Por isso, nenhum plano se repete.',
     texto: 'Antes de qualquer procedimento, existe uma leitura: das proporções, da estrutura óssea, da pele e de como o seu rosto se move quando você fala e sorri. O objetivo nunca é aproximar você de um padrão, e sim devolver equilíbrio ao que já é seu.'
   },
 
   explorer: {
-    title: 'The Face Explorer',
+    title: 'Leitura facial',
     intro: 'Toque em uma região para entender como ela é avaliada. É um mapa de conversa, não uma previsão de resultado.',
     regioes: [
       { nome: 'Terço superior', texto: 'Testa, têmporas e sobrancelhas. Aqui a avaliação olha para linhas de expressão e para o quanto a região sustenta o olhar.', tratamentos: 'Toxina botulínica, bioestimulador de colágeno' },
@@ -60,7 +64,7 @@ export const DEFAULT_CONFIG = {
   },
 
   ciencia: {
-    title: 'The Science',
+    title: 'Por dentro da pele',
     intro: 'Estética facial é anatomia antes de ser técnica. Três ideias que guiam cada avaliação.',
     camadas: 'O rosto é feito de camadas: pele, gordura, músculo e osso. Cada uma envelhece de um jeito, e cada tratamento atua em uma profundidade diferente.',
     colageno: 'O colágeno é a rede que dá firmeza à pele. Com o passar dos anos, o corpo produz menos, e a rede fica mais espaçada. Alguns tratamentos estimulam a própria pele a produzir de novo.',
@@ -68,7 +72,7 @@ export const DEFAULT_CONFIG = {
   },
 
   espaco: {
-    title: 'The Space',
+    title: 'O consultório',
     texto: 'Um consultório pensado para a calma: atendimento com hora marcada, uma paciente por vez e tempo para conversar antes de qualquer decisão.',
     itens: ['Uma paciente por horário', 'Privacidade do início ao fim', 'Retorno incluso para acompanhar o resultado', 'São Paulo, SP'],
     fotos: []
@@ -79,14 +83,15 @@ export const DEFAULT_CONFIG = {
     foto: '/img/millena.webp',
     badge: 'Cirurgiã-dentista',
     title: 'Dra. Millena Curty',
-    bio1: 'Há 7 anos dedico meu trabalho a um único propósito: fazer você se olhar no espelho e reconhecer a si mesma. Só que com um brilho a mais.',
+    resumo: 'Dedicada à harmonização facial, com um olhar que parte da anatomia e respeita a identidade de cada paciente.',
+    bio1: 'Meu trabalho tem um único propósito: fazer você se olhar no espelho e reconhecer a si mesma. Só que com um brilho a mais.',
     bio2: '"O melhor procedimento é aquele que ninguém percebe, mas todos sentem. Harmonização não é mudar quem você é, é devolver a você o que o tempo, o cansaço ou a genética te tiraram."',
     credentials: [
       'Especialista em Harmonização Orofacial',
       '7 anos de atuação em harmonização facial',
       '+800 pacientes atendidas'
     ],
-    cta: 'Conversar com a Dra. Millena'
+    cta: 'Conheça a doutora'
   },
 
   metodo: {
@@ -114,7 +119,8 @@ export const DEFAULT_CONFIG = {
 
   galeria: {
     eyebrow: 'Resultados',
-    title: 'Results & Trust',
+    ativo: false,
+    title: 'Resultados',
     intro: 'Confiança se constrói com transparência: quem cuida de você, como é o atendimento e o que dizem as pacientes.',
     disclaimer: 'Resultados variam de pessoa para pessoa e dependem de avaliação individual.',
     cta: 'Quero conversar sobre o meu caso',
@@ -125,20 +131,22 @@ export const DEFAULT_CONFIG = {
 
   procedimentos: {
     eyebrow: 'Procedimentos',
-    title: 'Treatments',
+    title: 'Procedimentos',
+    destaqueTitulo: 'Cuidados que respeitam|o seu desenho.',
     intro: 'Cada tratamento é uma ferramenta, não um pacote. A avaliação decide quais fazem sentido para você, e quais não fazem.',
     cta: 'Tirar dúvidas no WhatsApp',
     items: [
-      { title: 'Full Face', desc: 'Plano integrado com múltiplas técnicas conversando entre si. Reestruturação facial completa com resultado natural e duradouro.', icon: '', foto: '' },
-      { title: 'Rinomodelação', desc: 'Correção sutil do contorno nasal sem cirurgia. Preenchimento estratégico que harmoniza o perfil respeitando sua identidade.', icon: '', foto: '' },
-      { title: 'Preenchimento Labial', desc: 'Lábios em proporção com o resto do rosto. Volume sob medida. Nada de "lábio de novela".', icon: '', foto: '' },
-      { title: 'Bioestimulador de Colágeno', desc: 'Reativa o colágeno que a sua pele produz cada vez menos. Firmeza que aparece devagar e dura anos.', icon: '', foto: '' },
-      { title: 'Ulthera', desc: 'Ultrassom microfocado que estimula colágeno em camadas profundas. Lifting sem cirurgia, sem downtime.', icon: '', foto: '' }
+      { title: 'Full Face', desc: 'Plano integrado com múltiplas técnicas conversando entre si. Reestruturação facial completa com resultado natural e duradouro.', icon: '', foto: '', destaque: true },
+      { title: 'Rinomodelação', desc: 'Correção sutil do contorno nasal sem cirurgia. Preenchimento estratégico que harmoniza o perfil respeitando sua identidade.', icon: '', foto: '', destaque: true },
+      { title: 'Preenchimento Labial', desc: 'Lábios em proporção com o resto do rosto. Volume sob medida. Nada de "lábio de novela".', icon: '', foto: '', destaque: true },
+      { title: 'Bioestimulador de Colágeno', desc: 'Reativa o colágeno que a sua pele produz cada vez menos. Firmeza que aparece devagar e dura anos.', icon: '', foto: '', destaque: false },
+      { title: 'Ulthera', desc: 'Ultrassom microfocado que estimula colágeno em camadas profundas. Lifting sem cirurgia, sem downtime.', icon: '', foto: '', destaque: false }
     ]
   },
 
   depoimentos: {
     eyebrow: 'Depoimentos',
+    ativo: false,
     title: 'Em palavras das pacientes',
     cta: 'Quero minha história',
     items: [
@@ -176,8 +184,9 @@ export const DEFAULT_CONFIG = {
 
   form: {
     eyebrow: 'Agendamento',
-    title: 'Your beauty. Your story.',
-    desc: 'Cada rosto é único. Seu cuidado também deve ser.',
+    title: 'Sua avaliação começa|por uma conversa.',
+    desc: 'Conte o que você deseja. A Dra. Millena avalia o seu rosto e indica, com honestidade, o que faz sentido para você.',
+    cta: 'Agendar pelo WhatsApp',
     waTitle: 'Falar no WhatsApp',
     waSub: 'resposta em até 1 hora',
     formTitle: 'Reserve sua avaliação gratuita',

@@ -394,7 +394,7 @@
   var dockEl = $('[data-dock]');
   var bookEl = $('#agendar');
   if (dockEl && 'IntersectionObserver' in window) {
-    var heroIn = true, bookIn = false;
+    var heroIn = !!heroEl, bookIn = false;
     var paintDock = function () {
       dockEl.classList.toggle('is-shown', !heroIn && !bookIn);
     };
