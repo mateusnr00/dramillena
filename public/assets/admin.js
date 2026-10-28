@@ -109,116 +109,97 @@
   var HINT = 'Use *palavra* para destacar em itálico e | para quebrar linha.';
   var CONTENT = {
     inicio: {
-      title: 'Início', desc: 'O topo da página, os números e a frase de destaque.', icon: 'home', color: '#0071e3',
+      title: 'Início', desc: 'O topo da página, com o antes e depois e os números.', icon: 'home', color: '#d4b88a',
       groups: [
         { label: 'Topo da página', fields: [
           { p: 'hero.eyebrow', l: 'Chamada', s: 'Texto pequeno acima do título' },
           { p: 'hero.title', l: 'Título', s: HINT },
-          { p: 'hero.titleMuted', l: 'Segunda linha', s: 'Aparece em cinza, abaixo do título' },
           { p: 'hero.sub', l: 'Subtítulo', t: 'textarea' },
-          { p: 'hero.ctaPrimary', l: 'Botão principal' },
-          { p: 'hero.ctaSecondary', l: 'Link do WhatsApp' },
+          { p: 'hero.ctaPrimary', l: 'Botão do WhatsApp' },
+          { p: 'hero.ctaSecondary', l: 'Botão de agendar' },
           { p: 'hero.antes', l: 'Foto antes', t: 'image' },
           { p: 'hero.depois', l: 'Foto depois', t: 'image' },
           { p: 'hero.note', l: 'Legenda da foto' }
         ] },
-        { label: 'Números', list: 'stats', itemLabel: function (it) { return (it.num || '') + ' ' + (it.label || ''); },
+        { label: 'Números', list: 'hero.trust', itemLabel: function (it) { return (it.num || '') + ' ' + (it.label || ''); },
           blank: { num: '', label: '' },
-          fields: [{ p: 'num', l: 'Número' }, { p: 'label', l: 'Descrição' }] },
-        { label: 'Frase de destaque', fields: [{ p: 'manifesto.text', l: 'Frase', t: 'textarea', s: 'As palavras acendem conforme a pessoa rola a página' }] }
+          fields: [{ p: 'num', l: 'Número' }, { p: 'label', l: 'Descrição' }] }
       ]
     },
     sobre: {
-      title: 'Sobre', desc: 'Apresentação da Dra. Millena.', icon: 'person', color: '#9c7a4d',
+      title: 'Sobre', desc: 'Apresentação da Dra. Millena.', icon: 'person', color: '#d4b88a',
       groups: [
         { label: 'Apresentação', fields: [
-          { p: 'sobre.foto', l: 'Foto', t: 'image' },
-          { p: 'sobre.eyebrow', l: 'Chamada' },
-          { p: 'sobre.title', l: 'Título', s: HINT },
-          { p: 'sobre.bio1', l: 'Primeiro parágrafo', t: 'textarea' },
-          { p: 'sobre.bio2', l: 'Segundo parágrafo', t: 'textarea' }
+          { p: 'millena.foto', l: 'Foto', t: 'image' },
+          { p: 'millena.badge', l: 'Selo na foto', s: 'Ex.: CRO Certificada' },
+          { p: 'millena.title', l: 'Título', s: HINT },
+          { p: 'millena.bio1', l: 'Primeiro parágrafo', t: 'textarea' },
+          { p: 'millena.bio2', l: 'Segundo parágrafo', t: 'textarea' },
+          { p: 'millena.cta', l: 'Link do WhatsApp' }
         ] },
-        { label: 'Diferenciais', strings: 'sobre.credentials', placeholder: 'Ex.: Especialista em Harmonização Orofacial' }
-      ]
-    },
-    procedimentos: {
-      title: 'Procedimentos', desc: 'Cartões que abrem com os detalhes de cada procedimento.', icon: 'sparkle', color: '#bf5af2',
-      groups: [
-        { label: 'Seção', fields: [{ p: 'procedimentos.eyebrow', l: 'Chamada' }, { p: 'procedimentos.title', l: 'Título', s: HINT }] },
-        { label: 'Procedimentos', list: 'procedimentos.items', itemLabel: function (it) { return it.title; },
-          blank: { title: 'Novo procedimento', short: '', desc: '', icon: '', duracao: '', resultado: '', recuperacao: '' },
-          fields: [
-            { p: 'icon', l: 'Ícone', t: 'image' },
-            { p: 'title', l: 'Nome' },
-            { p: 'short', l: 'Frase curta' },
-            { p: 'desc', l: 'Descrição', t: 'textarea' },
-            { p: 'duracao', l: 'Duração' },
-            { p: 'resultado', l: 'Resultado' },
-            { p: 'recuperacao', l: 'Recuperação' }
-          ] }
-      ]
-    },
-    processo: {
-      title: 'Como funciona', desc: 'As etapas do atendimento.', icon: 'steps', color: '#30b0c7',
-      groups: [
-        { label: 'Seção', fields: [{ p: 'processo.eyebrow', l: 'Chamada' }, { p: 'processo.title', l: 'Título', s: HINT }] },
-        { label: 'Etapas', list: 'processo.steps', itemLabel: function (it) { return it.title; },
-          blank: { title: '', desc: '' },
-          fields: [{ p: 'title', l: 'Etapa' }, { p: 'desc', l: 'Descrição', t: 'textarea' }] }
+        { label: 'Diferenciais', strings: 'millena.credentials', placeholder: 'Ex.: Especialista em Harmonização Orofacial' }
       ]
     },
     resultados: {
-      title: 'Resultados', desc: 'Antes e depois. Publique só com autorização da paciente.', icon: 'photo', color: '#34c759',
+      title: 'Resultados', desc: 'Galeria de antes e depois. Publique só com autorização da paciente.', icon: 'photo', color: '#d4b88a',
       groups: [
         { label: 'Seção', fields: [
-          { p: 'resultados.eyebrow', l: 'Chamada' },
-          { p: 'resultados.title', l: 'Título', s: HINT },
-          { p: 'resultados.intro', l: 'Introdução', t: 'textarea' },
-          { p: 'resultados.disclaimer', l: 'Aviso', t: 'textarea' }
+          { p: 'galeria.title', l: 'Título', s: HINT },
+          { p: 'galeria.intro', l: 'Introdução', t: 'textarea' },
+          { p: 'galeria.disclaimer', l: 'Aviso', t: 'textarea' },
+          { p: 'galeria.cta', l: 'Link abaixo da galeria' }
         ] },
-        { label: 'Casos', hint: 'Use a mesma categoria em vários casos para aparecer o filtro.', list: 'resultados.items',
+        { label: 'Casos', hint: 'Os filtros aparecem sozinhos quando houver mais de uma categoria.', list: 'galeria.items',
           itemLabel: function (it) { return it.titulo || 'Caso'; },
           blank: { before: '', after: '', titulo: '', categoria: '' },
           fields: [
             { p: 'before', l: 'Antes', t: 'image' },
             { p: 'after', l: 'Depois', t: 'image' },
-            { p: 'titulo', l: 'Título', s: 'Ex.: Harmonização global' },
-            { p: 'categoria', l: 'Categoria', s: 'Ex.: Lábios' }
+            { p: 'titulo', l: 'Título', s: 'Ex.: Ana, 34' },
+            { p: 'categoria', l: 'Procedimento', s: 'Ex.: Lábios. Também vira o filtro.' }
+          ] }
+      ]
+    },
+    procedimentos: {
+      title: 'Procedimentos', desc: 'Os cartões de procedimentos.', icon: 'sparkle', color: '#d4b88a',
+      groups: [
+        { label: 'Seção', fields: [{ p: 'procedimentos.title', l: 'Título', s: HINT }, { p: 'procedimentos.cta', l: 'Link do WhatsApp' }] },
+        { label: 'Procedimentos', list: 'procedimentos.items', itemLabel: function (it) { return it.title; },
+          blank: { title: 'Novo procedimento', desc: '', icon: '' },
+          fields: [
+            { p: 'icon', l: 'Ícone', t: 'image' },
+            { p: 'title', l: 'Nome' },
+            { p: 'desc', l: 'Descrição', t: 'textarea' }
           ] }
       ]
     },
     depoimentos: {
-      title: 'Depoimentos', desc: 'O que as pacientes dizem.', icon: 'quote', color: '#ff9f0a',
+      title: 'Depoimentos', desc: 'O que as pacientes dizem.', icon: 'quote', color: '#d4b88a',
       groups: [
-        { label: 'Seção', fields: [{ p: 'depoimentos.eyebrow', l: 'Chamada' }, { p: 'depoimentos.title', l: 'Título', s: HINT }] },
+        { label: 'Seção', fields: [{ p: 'depoimentos.title', l: 'Título', s: HINT }, { p: 'depoimentos.cta', l: 'Link do WhatsApp' }] },
         { label: 'Depoimentos', list: 'depoimentos.items', itemLabel: function (it) { return it.nome; },
           blank: { texto: '', nome: '', role: '' },
-          fields: [{ p: 'texto', l: 'Depoimento', t: 'textarea' }, { p: 'nome', l: 'Nome' }, { p: 'role', l: 'Detalhe', s: 'Ex.: Paciente desde 2023' }] }
-      ]
-    },
-    faq: {
-      title: 'Dúvidas', desc: 'Perguntas frequentes. Também aparecem no Google.', icon: 'help', color: '#5e5ce6',
-      groups: [
-        { label: 'Seção', fields: [{ p: 'faq.eyebrow', l: 'Chamada' }, { p: 'faq.title', l: 'Título', s: HINT }] },
-        { label: 'Perguntas', list: 'faq.items', itemLabel: function (it) { return it.q; },
-          blank: { q: '', a: '' },
-          fields: [{ p: 'q', l: 'Pergunta' }, { p: 'a', l: 'Resposta', t: 'textarea' }] }
+          fields: [{ p: 'texto', l: 'Depoimento', t: 'textarea' }, { p: 'nome', l: 'Nome' }, { p: 'role', l: 'Detalhe', s: 'Ex.: Cliente desde 2023' }] }
       ]
     },
     agendar: {
-      title: 'Agendamento', desc: 'O formulário no fim da página.', icon: 'calendar', color: '#ff375f',
+      title: 'Agendamento', desc: 'O formulário no fim da página.', icon: 'calendar', color: '#d4b88a',
       groups: [
         { label: 'Formulário', fields: [
-          { p: 'agendar.eyebrow', l: 'Chamada' },
-          { p: 'agendar.title', l: 'Título', s: HINT },
-          { p: 'agendar.desc', l: 'Descrição', t: 'textarea' },
-          { p: 'agendar.submit', l: 'Botão' },
-          { p: 'agendar.legal', l: 'Texto de privacidade', t: 'textarea' }
-        ] }
+          { p: 'form.title', l: 'Título', s: HINT },
+          { p: 'form.desc', l: 'Descrição', t: 'textarea' },
+          { p: 'form.waTitle', l: 'Botão do WhatsApp' },
+          { p: 'form.waSub', l: 'Legenda do botão' },
+          { p: 'form.formTitle', l: 'Título do formulário', s: HINT },
+          { p: 'form.formSub', l: 'Subtítulo do formulário' },
+          { p: 'form.submit', l: 'Botão de enviar' },
+          { p: 'form.legal', l: 'Texto de privacidade', t: 'textarea' }
+        ] },
+        { label: 'Rodapé', fields: [{ p: 'footer.tag', l: 'Frase do rodapé', t: 'textarea' }] }
       ]
     },
     ajustes: {
-      title: 'Contato e marketing', desc: 'WhatsApp, redes, endereço, Google e Meta.', icon: 'gear', color: '#8e8e93',
+      title: 'Contato e marketing', desc: 'WhatsApp, redes, Google e Meta.', icon: 'gear', color: '#d4b88a',
       groups: [
         { label: 'Contato', fields: [
           { p: 'settings.nome', l: 'Nome' },
@@ -226,10 +207,8 @@
           { p: 'settings.whatsappMsg', l: 'Mensagem inicial', t: 'textarea', s: 'Texto que já aparece escrito no WhatsApp' },
           { p: 'settings.instagram', l: 'Instagram', s: 'Só o usuário, sem @' },
           { p: 'settings.email', l: 'Email' },
-          { p: 'settings.horario', l: 'Horário' },
-          { p: 'settings.endereco', l: 'Endereço' },
           { p: 'settings.cidade', l: 'Cidade' },
-          { p: 'settings.cro', l: 'Registro', s: 'Ex.: CRO-SP 123456' }
+          { p: 'settings.cro', l: 'Registro', s: 'Ex.: CRO-SP 123456. Aparece no rodapé.' }
         ] },
         { label: 'Google', fields: [
           { p: 'settings.seoTitle', l: 'Título no Google' },
@@ -247,15 +226,15 @@
 
   var NAV = [
     { group: 'Acompanhamento', items: [
-      { id: 'painel', title: 'Painel', desc: 'Visitas, contatos e de onde vêm as pacientes.', icon: 'chart', color: '#0071e3' },
-      { id: 'leads', title: 'Leads', desc: 'Quem preencheu o formulário de agendamento.', icon: 'inbox', color: '#34c759' }
+      { id: 'painel', title: 'Painel', desc: 'Visitas, contatos e de onde vêm as pacientes.', icon: 'chart', color: '#d4b88a' },
+      { id: 'leads', title: 'Leads', desc: 'Quem preencheu o formulário de agendamento.', icon: 'inbox', color: '#d4b88a' }
     ] },
-    { group: 'Conteúdo do site', items: ['inicio', 'sobre', 'procedimentos', 'processo', 'resultados', 'depoimentos', 'faq', 'agendar'].map(function (k) {
+    { group: 'Conteúdo do site', items: ['inicio', 'sobre', 'resultados', 'procedimentos', 'depoimentos', 'agendar'].map(function (k) {
       return { id: k, title: CONTENT[k].title, desc: CONTENT[k].desc, icon: CONTENT[k].icon, color: CONTENT[k].color };
     }) },
     { group: 'Ajustes', items: [
-      { id: 'ajustes', title: CONTENT.ajustes.title, desc: CONTENT.ajustes.desc, icon: 'gear', color: '#8e8e93' },
-      { id: 'usuarios', title: 'Usuários', desc: 'Quem pode entrar no painel.', icon: 'users', color: '#636366' }
+      { id: 'ajustes', title: CONTENT.ajustes.title, desc: CONTENT.ajustes.desc, icon: 'gear', color: '#d4b88a' },
+      { id: 'usuarios', title: 'Usuários', desc: 'Quem pode entrar no painel.', icon: 'users', color: '#d4b88a' }
     ] }
   ];
 
@@ -586,11 +565,10 @@
     var procs = (state.config.procedimentos && state.config.procedimentos.items) || [];
     var faq = (state.config.faq && state.config.faq.items) || [];
     var fixed = {
-      hero_whatsapp: 'WhatsApp · topo da página', hero_agendar: 'Agendar · topo da página',
-      nav_agendar: 'Agendar · menu', menu_agendar: 'Agendar · menu do celular', menu_whatsapp: 'WhatsApp · menu do celular',
-      dock_agendar: 'Agendar · barra fixa', dock_whatsapp: 'WhatsApp · barra fixa',
-      sobre_whatsapp: 'WhatsApp · seção Sobre', agendar_whatsapp: 'WhatsApp · seção Agendamento',
-      agendar_instagram: 'Instagram · Agendamento', footer_whatsapp: 'WhatsApp · rodapé', footer_instagram: 'Instagram · rodapé',
+      hero_wa: 'WhatsApp · topo da página', hero_agendar: 'Agendar · topo da página', nav_cta: 'Agendar · menu',
+      sobre_wa: 'WhatsApp · seção Sobre', proc_wa: 'WhatsApp · Procedimentos', depoimentos_wa: 'WhatsApp · Depoimentos',
+      galeria_cta: 'Conversar sobre meu caso · galeria', lead_hero_wa: 'WhatsApp · Agendamento', form_success_wa: 'WhatsApp · após o formulário',
+      float_wa: 'WhatsApp · botão flutuante', footer_wa: 'WhatsApp · rodapé', footer_instagram: 'Instagram · rodapé',
       footer_email: 'Email · rodapé', form_inicio: 'Começou o formulário', antes_depois: 'Arrastou o antes e depois', whatsapp: 'WhatsApp'
     };
     if (fixed[l]) return fixed[l];

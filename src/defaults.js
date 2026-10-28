@@ -1,169 +1,106 @@
-// Conteúdo padrão do site. Tudo aqui pode ser editado pelo painel /admin;
-// o que for salvo lá substitui estes valores (merge profundo, ver mergeConfig).
+// Conteúdo padrão do site (os mesmos textos do site original). Tudo aqui pode
+// ser editado pelo painel /admin; o que for salvo lá substitui estes valores
+// (merge profundo, ver mergeConfig).
 //
 // Marcadores de texto aceitos nos títulos:
-//   *palavra*  → destaque em itálico serifado
+//   *palavra*  → destaque em itálico
 //   |          → quebra de linha
 
 export const DEFAULT_CONFIG = {
   settings: {
     nome: 'Dra. Millena Curty',
     whatsapp: '5511999999999',
-    whatsappMsg: 'Olá, Dra. Millena! Gostaria de agendar uma avaliação.',
+    whatsappMsg: 'Olá, gostaria de agendar uma avaliação com a Dra. Millena',
     instagram: 'dra.millenacurty',
     email: 'contato@millenacurty.com.br',
-    endereco: '',
-    cidade: 'São Paulo, SP',
     cro: '',
-    horario: 'Segunda a sábado, com hora marcada',
-    seoTitle: 'Dra. Millena Curty · Harmonização Facial em São Paulo',
-    seoDescription: 'Harmonização facial autoral com a Dra. Millena Curty. Resultados naturais, técnica refinada e avaliação gratuita pelo WhatsApp.',
+    cidade: 'São Paulo',
+    seoTitle: 'Dra. Millena Curty · Harmonização Facial em São Paulo | Avaliação Gratuita',
+    seoDescription: 'Harmonização facial autoral com a Dra. Millena Curty. Resultados naturais, técnica refinada. Agende sua avaliação gratuita pelo WhatsApp.',
     ogImage: '/img/millena.webp',
     pixelId: '',
     ga4Id: ''
   },
 
   hero: {
-    eyebrow: 'Harmonização Facial · São Paulo',
-    title: 'Você, mais *você*.',
-    titleMuted: 'Sem parecer feita.',
-    sub: 'Harmonização facial autoral, com resultado natural. Ninguém percebe o procedimento. Todo mundo percebe você.',
-    ctaPrimary: 'Agendar avaliação gratuita',
-    ctaSecondary: 'Falar no WhatsApp',
+    eyebrow: 'Avaliação gratuita · Vagas limitadas este mês',
+    title: 'Você, mais *você*.|Sem parecer "feita".',
+    sub: 'Harmonização facial autoral com a Dra. Millena Curty. Ninguém percebe o procedimento. Todo mundo percebe você.',
+    ctaPrimary: 'Falar no WhatsApp',
+    ctaSecondary: 'Agendar avaliação',
     antes: '/img/antes1.webp',
     depois: '/img/depois1.webp',
-    note: 'Arraste para comparar'
+    note: '↔ Arraste para comparar · Imagens ilustrativas',
+    trust: [
+      { num: '+800', label: 'rostos harmonizados' },
+      { num: '7 anos', label: 'de bisturi zero' },
+      { num: '5.0', label: '★★★★★' }
+    ]
   },
 
-  stats: [
-    { num: '+800', label: 'rostos harmonizados' },
-    { num: '7 anos', label: 'dedicados à harmonização' },
-    { num: '5,0', label: 'nota das pacientes' },
-    { num: '1', label: 'paciente por horário' }
-  ],
-
-  manifesto: {
-    text: 'O melhor procedimento é aquele que ninguém percebe, mas todo mundo sente.'
-  },
-
-  sobre: {
+  millena: {
     foto: '/img/millena.webp',
-    eyebrow: 'Quem cuida de você',
-    title: 'Conheça a *Dra. Millena*.',
+    badge: 'CRO Certificada',
+    title: 'Conheça a *Dra. Millena*',
     bio1: 'Cirurgiã-dentista, especialista em Harmonização Orofacial. Há 7 anos dedico meu trabalho a um único propósito: fazer você se olhar no espelho e reconhecer a si mesma. Só que com um brilho a mais.',
-    bio2: 'Harmonização não é mudar quem você é. É devolver o que o tempo, o cansaço ou a genética tiraram, respeitando a identidade do seu rosto.',
+    bio2: '"O melhor procedimento é aquele que ninguém percebe, mas todos sentem. Harmonização não é mudar quem você é, é devolver a você o que o tempo, o cansaço ou a genética te tiraram."',
     credentials: [
-      'Especialista em Harmonização Orofacial',
-      '+800 pacientes atendidas',
+      'Especialista em Harmonização Orofacial (CRO)',
+      '+800 pacientes atendidas com 100% de satisfação',
       'Atualização constante em técnicas internacionais',
-      'Uma paciente por horário. Sem correria, sem fila.'
-    ]
+      'Uma paciente por horário. Sem correria, sem fila'
+    ],
+    cta: 'Falar com a Millena'
   },
 
-  procedimentos: {
-    eyebrow: 'Procedimentos',
-    title: 'Cuidado *autoral*, do diagnóstico ao resultado.',
-    items: [
-      {
-        title: 'Full Face',
-        short: 'O rosto inteiro, em equilíbrio.',
-        desc: 'Plano integrado em que várias técnicas conversam entre si. Uma reestruturação facial completa, com resultado natural e duradouro.',
-        icon: '/img/icon-fullface.webp',
-        duracao: '60 a 90 min',
-        resultado: 'Imediato, com refinamento em 15 dias',
-        recuperacao: 'Rotina normal no mesmo dia'
-      },
-      {
-        title: 'Rinomodelação',
-        short: 'Perfil harmônico, sem cirurgia.',
-        desc: 'Correção sutil do contorno nasal com preenchimento estratégico. Harmoniza o perfil respeitando a sua identidade.',
-        icon: '/img/icon-rinomodelacao.webp',
-        duracao: '30 a 45 min',
-        resultado: 'Imediato',
-        recuperacao: 'Rotina normal no mesmo dia'
-      },
-      {
-        title: 'Preenchimento Labial',
-        short: 'Volume sob medida.',
-        desc: 'Lábios em proporção com o resto do rosto. Contorno e hidratação na medida certa. Nada de "lábio de novela".',
-        icon: '/img/icon-labios.webp',
-        duracao: '30 a 45 min',
-        resultado: 'Imediato, assenta em 7 a 15 dias',
-        recuperacao: 'Leve inchaço por 2 a 3 dias'
-      },
-      {
-        title: 'Bioestimulador de Colágeno',
-        short: 'Firmeza que aparece devagar e dura.',
-        desc: 'Reativa o colágeno que a sua pele produz cada vez menos. Melhora firmeza, textura e contorno de forma progressiva.',
-        icon: '/img/icon-bioestimulador.webp',
-        duracao: '40 min',
-        resultado: 'Progressivo, de 30 a 90 dias',
-        recuperacao: 'Rotina normal no mesmo dia'
-      },
-      {
-        title: 'Ulthera',
-        short: 'Lifting sem cirurgia.',
-        desc: 'Ultrassom microfocado que estimula colágeno nas camadas profundas da pele. Efeito lifting, sem cortes e sem downtime.',
-        icon: '/img/icon-ulthera.webp',
-        duracao: '60 a 90 min',
-        resultado: 'Progressivo, de 60 a 180 dias',
-        recuperacao: 'Sem afastamento'
-      }
-    ]
-  },
-
-  processo: {
-    eyebrow: 'Como funciona',
-    title: 'Simples, do primeiro *olá* ao resultado.',
-    steps: [
-      { title: 'Conversa', desc: 'Você chama no WhatsApp e a gente encontra o melhor horário para a sua avaliação.' },
-      { title: 'Avaliação gratuita', desc: 'Análise completa do rosto, escuta atenta e um plano feito só para você. Sem compromisso.' },
-      { title: 'Procedimento', desc: 'Técnica refinada, produtos de primeira linha e todo o tempo que o seu rosto merece.' },
-      { title: 'Acompanhamento', desc: 'Retorno incluso para avaliar o resultado e ajustar o que for preciso.' }
-    ]
-  },
-
-  resultados: {
-    eyebrow: 'Resultados',
+  galeria: {
     title: 'Pequenas mudanças. *Grandes* revelações.',
-    intro: 'Arraste o controle de cada imagem para comparar o antes e o depois.',
-    disclaimer: 'Resultados variam de acordo com cada paciente. Imagens publicadas com autorização.',
+    intro: 'Arraste o controle de cada imagem pra revelar o antes e o depois. Cada caso mostra o que muda quando o procedimento respeita a identidade do rosto.',
+    disclaimer: 'Resultados podem variar de acordo com cada paciente. Imagens ilustrativas.',
+    cta: 'Quero conversar sobre meu caso →',
     items: [
       { before: '/img/antes1.webp', after: '/img/depois1.webp', titulo: 'Harmonização global', categoria: 'Harmonização' }
     ]
   },
 
+  procedimentos: {
+    title: 'Cuidado *autoral*, do diagnóstico ao resultado.',
+    cta: 'Agendar minha avaliação',
+    items: [
+      { title: 'Full Face', desc: 'Plano integrado com múltiplas técnicas conversando entre si. Reestruturação facial completa com resultado natural e duradouro.', icon: '/img/icon-fullface.webp' },
+      { title: 'Rinomodelação', desc: 'Correção sutil do contorno nasal sem cirurgia. Preenchimento estratégico que harmoniza o perfil respeitando sua identidade.', icon: '/img/icon-rinomodelacao.webp' },
+      { title: 'Preenchimento Labial', desc: 'Lábios em proporção com o resto do rosto. Volume sob medida. Nada de "lábio de novela".', icon: '/img/icon-labios.webp' },
+      { title: 'Bioestimulador de Colágeno', desc: 'Reativa o colágeno que a sua pele produz cada vez menos. Firmeza que aparece devagar e dura anos.', icon: '/img/icon-bioestimulador.webp' },
+      { title: 'Ulthera', desc: 'Ultrassom microfocado que estimula colágeno em camadas profundas. Lifting sem cirurgia, sem downtime.', icon: '/img/icon-ulthera.webp' }
+    ]
+  },
+
   depoimentos: {
-    eyebrow: 'Depoimentos',
     title: 'Histórias que *moldaram* as minhas.',
+    cta: 'Quero minha história',
     items: [
-      { texto: 'Saí me sentindo eu mesma, só que descansada. Ninguém percebe que fiz algo, mas todos notam que estou diferente.', nome: 'Ana Beatriz', role: 'Paciente desde 2023' },
-      { texto: 'Mão delicada, olhar de artista. Ela tem essa rara capacidade de enxergar o que você ainda não enxergou em si.', nome: 'Carolina M.', role: 'Paciente desde 2022' },
-      { texto: 'Já tinha feito harmonização antes e não gostei. Aqui foi outra experiência, do atendimento ao resultado.', nome: 'Juliana R.', role: 'Paciente desde 2024' },
-      { texto: 'A diferença é enorme, mas ninguém consegue dizer o que mudou. Meu marido só falou que eu estava brilhando.', nome: 'Fernanda P.', role: 'Paciente desde 2024' },
-      { texto: 'Passei anos comparando clínicas e adiando. Se soubesse que seria essa experiência, teria ido muito antes.', nome: 'Marina C.', role: 'Paciente desde 2023' },
-      { texto: 'É como uma consulta com uma amiga que entende do assunto. Explica tudo, escuta tudo e só faz o que faz sentido.', nome: 'Beatriz L.', role: 'Paciente desde 2022' }
+      { texto: 'Saí me sentindo eu mesma, só que descansada. Ninguém percebe que fiz algo, mas todos notam que estou diferente.', nome: 'Ana Beatriz', role: 'Cliente desde 2023' },
+      { texto: 'Mão delicada, olhar de artista. Ela tem essa rara capacidade de enxergar o que você ainda não enxergou em si.', nome: 'Carolina M.', role: 'Cliente desde 2022' },
+      { texto: 'Já tinha feito harmonização antes e não gostei. Aqui foi outra experiência: desde o atendimento até o resultado.', nome: 'Juliana R.', role: 'Cliente desde 2024' },
+      { texto: "Tenho medo até de mostrar o antes. A diferença é enorme, mas ninguém consegue dizer o que mudou. Meu marido só falou que eu estava 'brilhando'.", nome: 'Fernanda P.', role: 'Cliente desde 2024' },
+      { texto: 'Passei anos comparando clínicas e adiando. Se soubesse que ia ser essa experiência, tinha ido muito antes. Sem exagero: mudou meu jeito de me olhar no espelho.', nome: 'Marina C.', role: 'Cliente desde 2023' },
+      { texto: 'O atendimento da Millena é uma consulta com uma amiga que entende do assunto. Ela explica tudo, escuta tudo, e só faz o que faz sentido. Zero venda forçada.', nome: 'Beatriz L.', role: 'Cliente desde 2022' }
     ]
   },
 
-  faq: {
-    eyebrow: 'Dúvidas frequentes',
-    title: 'Tudo o que você quer *saber*.',
-    items: [
-      { q: 'A avaliação é mesmo gratuita?', a: 'Sim. Na avaliação a Dra. Millena analisa o seu rosto, entende o que você deseja e monta um plano personalizado. Você decide com calma, sem compromisso.' },
-      { q: 'O resultado fica natural?', a: 'Esse é o princípio de todo o trabalho. A ideia é realçar os seus traços, não transformar. As pessoas notam que você está bem, sem saber exatamente o porquê.' },
-      { q: 'Dói?', a: 'Usamos anestésico tópico e, quando indicado, anestesia local. A maioria das pacientes descreve apenas um leve desconforto.' },
-      { q: 'Quanto tempo dura?', a: 'Depende do procedimento. Preenchimentos costumam durar de 12 a 18 meses, toxina botulínica de 4 a 6 meses e bioestimuladores até 2 anos.' },
-      { q: 'Posso voltar à rotina no mesmo dia?', a: 'Na maioria dos casos, sim. Você recebe todas as orientações de cuidados antes de sair do consultório.' }
-    ]
-  },
-
-  agendar: {
-    eyebrow: 'Agendamento',
+  form: {
     title: 'Vamos começar por uma *conversa*.',
-    desc: 'Deixe seu nome e WhatsApp. Respondemos em até 1 hora, em horário comercial.',
-    submit: 'Continuar no WhatsApp',
-    legal: 'Seus dados são usados apenas para entrarmos em contato com você.'
+    desc: 'Escolha o canal que preferir. Nossa equipe responde em até 1 hora.',
+    waTitle: 'Falar no WhatsApp',
+    waSub: 'resposta em até 1 hora',
+    formTitle: 'Reserve sua *conversa gratuita*',
+    formSub: 'Resposta em até 1h · Nenhum dado compartilhado',
+    submit: 'Quero conversar com a Millena',
+    legal: 'Ao enviar, você concorda em receber contato pelo WhatsApp. Seus dados são confidenciais.'
+  },
+
+  footer: {
+    tag: 'Harmonização facial autoral. Cirurgiã-dentista especializada em estética orofacial.'
   }
 };
 

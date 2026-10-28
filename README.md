@@ -2,7 +2,7 @@
 
 Site de harmonização facial com painel administrativo próprio.
 
-- **Site** (`/`): página única renderizada no servidor, rápida e otimizada para Google.
+- **Site** (`/`): o mesmo visual do site original, agora renderizado no servidor (mais rápido e melhor para o Google).
 - **Painel** (`/admin`): métricas de visitas e contatos, leads do formulário, edição de todo o conteúdo e das fotos, usuários.
 
 Tudo roda na **Cloudflare** (plano gratuito):
