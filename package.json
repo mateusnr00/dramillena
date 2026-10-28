@@ -1,0 +1,18 @@
+{
+  "name": "millena-curty",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Site e painel da Dra. Millena Curty (Vercel + Postgres + Blob, ou Cloudflare Pages + D1 + R2)",
+  "scripts": {
+    "dev": "wrangler pages dev public --d1 DB --r2 MEDIA --compatibility-date=2025-09-01 --port 8788",
+    "deploy": "wrangler pages deploy public --project-name millena-curty"
+  },
+  "devDependencies": {
+    "wrangler": "^4.40.0"
+  },
+  "dependencies": {
+    "@vercel/blob": "2.8.2",
+    "postgres": "3.4.9"
+  }
+}
