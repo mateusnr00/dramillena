@@ -37,7 +37,12 @@ export class HttpError extends Error {
 export function sameOrigin(request) {
   const origin = request.headers.get('origin');
   if (!origin) return true;
-  return origin === new URL(request.url).origin;
+  try {
+    // Compara só o host: atrás de proxy o protocolo interno pode ser http.
+    return new URL(origin).host === new URL(request.url).host;
+  } catch {
+    return false;
+  }
 }
 
 export function handleError(err) {
