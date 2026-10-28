@@ -4,7 +4,7 @@
 
 import { DEFAULT_CONFIG } from './defaults.js';
 
-const ASSET_VERSION = '17';
+const ASSET_VERSION = '18';
 
 export function esc(s) {
   return String(s ?? '').replace(/[&<>"']/g, c => (
@@ -71,6 +71,7 @@ function ba({ before, after, alt, cls = '', eager = false, parallax = false }) {
       <span class="ba__tag ba__tag--l" aria-hidden="true">Antes</span>
       <span class="ba__tag ba__tag--r" aria-hidden="true">Depois</span>
       <span class="ba__line" aria-hidden="true"><span class="ba__knob">${icon.left}${icon.right}</span></span>
+      <span class="ba__hint" aria-hidden="true">Arraste para comparar</span>
       <input class="ba__range" type="range" min="0" max="100" value="50" aria-label="Comparar antes e depois: ${esc(alt)}" />
     </div>`;
 }
@@ -278,6 +279,30 @@ function destaques(cfg) {
 </section>`;
 }
 
+// Antes e depois: arrastar a linha (ou o dedo) compara as fotos.
+function resultados(cfg) {
+  const g = cfg.galeria;
+  if (g.ativo === false || g.ativo === 'false') return '';
+  const casos = list(g.items).filter(i => safeUrl(i.before) && safeUrl(i.after)).slice(0, 3);
+  if (!casos.length) return '';
+  return `
+<section class="ch ch--light results" id="resultados">
+  <div class="wrap results__grid results__grid--${casos.length}">
+    <div class="results__copy">
+      ${chap('Resultados')}
+      <h2 class="t-display" data-reveal>${lines(g.title)}</h2>
+      ${g.intro ? `<p class="t-body">${esc(g.intro)}</p>` : ''}
+      ${g.disclaimer ? `<p class="results__note">${esc(g.disclaimer)}</p>` : ''}
+    </div>
+    ${casos.map(c => `
+    <figure class="results__case">
+      ${ba({ before: c.before, after: c.after, alt: plain(c.titulo) || 'Resultado' })}
+      ${c.titulo || c.categoria ? `<figcaption>${esc(c.titulo)}${c.categoria ? `<span>${esc(c.categoria)}</span>` : ''}</figcaption>` : ''}
+    </figure>`).join('')}
+  </div>
+</section>`;
+}
+
 // Informações essenciais da clínica (agendamento e rodapé).
 function clinicInfo(cfg) {
   const s = cfg.settings;
@@ -475,7 +500,7 @@ function confianca(cfg) {
   const g = cfg.galeria;
   const d = cfg.depoimentos;
   const trust = cfg.hero.mostrarIndicadores === true ? real(cfg.hero.trust, DEFAULT_CONFIG.hero.trust) : [];
-  const caso = g.ativo === true ? real(g.items, DEFAULT_CONFIG.galeria.items).find(i => safeUrl(i.before) && safeUrl(i.after)) : null;
+  const caso = null; // o antes e depois fica na página inicial
   const quotes = d.ativo === true ? real(d.items, DEFAULT_CONFIG.depoimentos.items) : [];
   const steps = list(cfg.processo && cfg.processo.steps);
   const faqItems = list(cfg.faq && cfg.faq.items);
@@ -800,7 +825,7 @@ ${consent(cfg)}
 
 export function renderPage(cfg, { origin }) {
   return shell(cfg, origin, { key: 'inicio', path: '/' },
-    hero(cfg) + doutoraResumo(cfg) + destaques(cfg) + agendamento(cfg));
+    hero(cfg) + doutoraResumo(cfg) + destaques(cfg) + resultados(cfg) + agendamento(cfg));
 }
 
 export function renderDoutora(cfg, { origin }) {

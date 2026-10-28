@@ -119,9 +119,9 @@ export const DEFAULT_CONFIG = {
 
   galeria: {
     eyebrow: 'Resultados',
-    ativo: false,
-    title: 'Resultados',
-    intro: 'Confiança se constrói com transparência: quem cuida de você, como é o atendimento e o que dizem as pacientes.',
+    ativo: true,
+    title: 'Antes e depois',
+    intro: 'Arraste a linha sobre a foto para comparar. Mudanças sutis, que respeitam os traços de cada paciente.',
     disclaimer: 'Resultados variam de pessoa para pessoa e dependem de avaliação individual.',
     cta: 'Quero conversar sobre o meu caso',
     items: [

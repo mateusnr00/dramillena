@@ -254,6 +254,31 @@
     el.addEventListener('pointerup', end);
     el.addEventListener('pointercancel', function () { dragging = false; });
     if (range) range.addEventListener('input', function () { el.dataset.touched = '1'; setPos(Number(range.value)); });
+    // Uma passada suave quando aparece na tela, para mostrar que dá para arrastar.
+    if (!reduceMotion && 'IntersectionObserver' in window) {
+      var hintIO = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        hintIO.disconnect();
+        var t0 = performance.now() + 400;
+        var keys = [[0, 50], [600, 68], [1300, 32], [1800, 50]];
+        var step = function (now) {
+          if (el.dataset.touched) return;
+          var t = now - t0;
+          if (t < 0) return requestAnimationFrame(step);
+          for (var k = 1; k < keys.length; k++) {
+            if (t <= keys[k][0]) {
+              var a = keys[k - 1], b = keys[k], u = (t - a[0]) / (b[0] - a[0]);
+              u = u < .5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;
+              setPos(a[1] + (b[1] - a[1]) * u);
+              return requestAnimationFrame(step);
+            }
+          }
+          setPos(50);
+        };
+        requestAnimationFrame(step);
+      }, { threshold: 0.6 });
+      hintIO.observe(el);
+    }
   });
 
   /* =================================================================

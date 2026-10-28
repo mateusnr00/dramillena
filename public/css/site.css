@@ -782,3 +782,28 @@ html.menu-open .nav.nav.nav { color: var(--ivory); background: none; }
   .strip__actions .btn { flex: 1 1 100%; }
   .foot__row { flex-direction: column; align-items: flex-start; }
 }
+
+/* ---------- Antes e depois na página inicial ---------- */
+.results__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--s-3); row-gap: var(--s-5); align-items: center; }
+.results__copy { grid-column: 1 / span 5; }
+.results__copy .t-body { margin-top: var(--s-4); }
+.results__note { margin-top: var(--s-3); font-size: .8125rem; line-height: 1.5rem; color: var(--ink-muted); }
+.results__grid--1 .results__case { grid-column: 7 / span 5; }
+.results__grid--2 .results__case:nth-of-type(1) { grid-column: 6 / span 3; }
+.results__grid--2 .results__case:nth-of-type(2) { grid-column: 9 / span 4; }
+.results__grid--3 .results__copy { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--s-3); align-items: end; }
+.results__grid--3 .results__copy .chap { grid-column: 1 / -1; }
+.results__grid--3 .results__copy .t-display { grid-column: 1 / span 6; }
+.results__grid--3 .results__copy .t-body, .results__grid--3 .results__copy .results__note { grid-column: 8 / span 5; }
+.results__grid--3 .results__case { grid-column: span 4; }
+.results__case figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s-1) var(--s-2); margin-top: var(--s-2); font-weight: 500; font-size: .9375rem; }
+.results__case figcaption span { font-weight: 400; color: var(--ink-muted); }
+/* Dica de arrastar: some no primeiro toque. */
+.ba__hint { position: absolute; left: 50%; bottom: var(--s-2); z-index: 3; transform: translateX(-50%); padding: 4px var(--s-2); border-radius: 999px; background: rgba(16, 16, 15, .62); color: var(--ivory); font-size: .8125rem; line-height: 1.5rem; white-space: nowrap; pointer-events: none; transition: opacity .5s var(--ease); }
+.ba[data-touched] .ba__hint { opacity: 0; }
+.ba__knob { box-shadow: 0 var(--s-1) var(--s-3) rgba(0, 0, 0, .25); transition: transform .3s var(--ease); }
+.ba:active .ba__knob { transform: translate(-50%, -50%) scale(1.1); }
+@media (max-width: 860px) {
+  .results__grid, .results__grid--3 .results__copy { display: block; }
+  .results__case { margin-top: var(--s-5); }
+}
