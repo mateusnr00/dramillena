@@ -1,0 +1,2425 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#1a1614" />
+<title>Dra. Millena Curty · Harmonização Facial em São Paulo | Avaliação Gratuita</title>
+<meta name="description" content="Harmonização facial autoral com a Dra. Millena Curty. Resultados naturais, técnica refinada. Agende sua avaliação gratuita pelo WhatsApp." />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Dra. Millena Curty · Harmonização Facial" />
+<meta property="og:description" content="A beleza que já existe em você, revelada com precisão. Avaliação gratuita pelo WhatsApp." />
+<meta property="og:image" content="https://millena-curty.vercel.app/millena.jpg" />
+<meta property="og:image:width" content="1440" />
+<meta property="og:image:height" content="1920" />
+<meta property="og:url" content="https://millena-curty.vercel.app" />
+<meta property="og:locale" content="pt_BR" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MedicalBusiness",
+  "name": "Dra. Millena Curty - Harmonização Facial",
+  "description": "Harmonização facial autoral. Cirurgiã-dentista especializada em estética orofacial.",
+  "image": "https://millena-curty.vercel.app/millena.jpg",
+  "telephone": "+5511999999999",
+  "priceRange": "$$$"
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://images.unsplash.com" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
+
+<!-- ===== Meta Pixel -SUBSTITUA PIXEL_ID PELO SEU ID REAL ===== -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', 'PIXEL_ID');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=PIXEL_ID&ev=PageView&noscript=1" alt=""/></noscript>
+<!-- ===== Fim Meta Pixel ===== -->
+
+<style>
+/* =================================================================
+   TOKENS
+   ================================================================= */
+:root {
+  --bg: #f5f1ea;
+  --bg-deep: #ebe5da;
+  --ink: #1a1614;
+  --ink-soft: #4a4239;
+  --ink-mute: #8a7f72;
+  --line: #1a161420;
+  --line-soft: #1a161410;
+  --accent: #8a6a3f;
+  --accent-deep: #5c4527;
+  --accent-glow: #d4b88a;
+  --paper: #faf7f1;
+  --wa: #25d366;
+  --wa-deep: #128c7e;
+  --danger: #c44;
+  --serif: "Fraunces", "Times New Roman", serif;
+  --sans: "Outfit", system-ui, -apple-system, sans-serif;
+  --r: cubic-bezier(.22,.61,.36,1);
+  --r-bounce: cubic-bezier(.34,1.56,.64,1);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+::selection { background: var(--ink); color: var(--bg); }
+img, svg { display: block; max-width: 100%; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+a { color: inherit; text-decoration: none; }
+input, textarea, select {
+  font-family: inherit;
+  font-size: 16px; /* prevents iOS zoom */
+  color: inherit;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+/* =================================================================
+   SCROLL PROGRESS
+   ================================================================= */
+.progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent-glow), var(--accent));
+  z-index: 200;
+  transition: width .15s linear;
+}
+
+/* =================================================================
+   NAV
+   ================================================================= */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  padding: 16px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  z-index: 100;
+  transition: background .4s var(--r), backdrop-filter .4s var(--r), padding .4s var(--r);
+}
+.nav.scrolled {
+  background: rgba(245,241,234,.85);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  padding: 12px 20px;
+}
+.nav__logo {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 400;
+  display: flex; gap: 6px;
+}
+.nav__logo span { font-style: italic; color: var(--accent); }
+.nav__menu { display: none; }
+.nav__cta {
+  border: 1px solid var(--ink);
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-size: 12px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  transition: all .3s var(--r);
+}
+.nav__cta:active { transform: scale(.95); }
+
+/* =================================================================
+   HERO -Antes/Depois background
+   ================================================================= */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  padding: 100px 20px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  background: var(--ink);
+}
+
+/* Before/After slider -full hero background */
+.ba {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  user-select: none;
+  touch-action: pan-y;
+}
+.ba__layer {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 1s var(--r);
+}
+.ba__before {
+  filter: brightness(.95) contrast(.95) saturate(.85);
+}
+.ba__after {
+  clip-path: inset(0 0 0 var(--pos, 50%));
+  filter: brightness(1.05) saturate(1.1);
+}
+.ba__handle {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: var(--pos, 50%);
+  width: 2px;
+  background: var(--paper);
+  z-index: 4;
+  pointer-events: none;
+  box-shadow: 0 0 20px rgba(0,0,0,.4);
+}
+.ba__handle::before {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: var(--paper);
+  transform: translate(-50%,-50%);
+  box-shadow: 0 6px 20px rgba(0,0,0,.3);
+}
+.ba__handle::after {
+  content: "⇆";
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 22px;
+  color: var(--ink);
+  font-weight: 400;
+  font-family: var(--sans);
+}
+.ba__labels {
+  position: absolute;
+  top: 50%; left: 0; right: 0;
+  transform: translateY(-50%);
+  display: flex; justify-content: space-between;
+  padding: 0 24px;
+  z-index: 3;
+  pointer-events: none;
+}
+.ba__labels span {
+  font-size: 10px;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: rgba(26,22,20,.7);
+  padding: 6px 12px;
+  border-radius: 100px;
+  backdrop-filter: blur(8px);
+}
+
+/* Hero dim overlay for legibility -ends in solid ink at bottom for seamless join with stats */
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top,
+      var(--ink) 0%,
+      rgba(26,22,20,.88) 10%,
+      rgba(26,22,20,.55) 40%,
+      rgba(26,22,20,.35) 70%,
+      rgba(26,22,20,.55) 100%);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 6;
+  color: var(--paper);
+}
+.hero__eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 11px; letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(250,247,241,.85);
+  margin-bottom: 18px;
+  padding: 8px 16px;
+  border: 1px solid rgba(250,247,241,.3);
+  border-radius: 100px;
+  backdrop-filter: blur(8px);
+  background: rgba(26,22,20,.3);
+}
+.hero__eyebrow::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent-glow);
+  box-shadow: 0 0 8px var(--accent-glow);
+  animation: pulse 2s var(--r) infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .5; transform: scale(1.3); }
+}
+
+.hero__title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(36px, 9vw, 64px);
+  line-height: 1;
+  letter-spacing: -.03em;
+  margin-bottom: 18px;
+  color: var(--paper);
+}
+.hero__title em { font-style: italic; color: var(--accent-glow); }
+
+.hero__sub {
+  font-size: 16px;
+  line-height: 1.55;
+  color: rgba(250,247,241,.85);
+  margin-bottom: 28px;
+  max-width: 520px;
+}
+
+.hero__cta {
+  display: flex; flex-direction: column; gap: 12px;
+  margin-bottom: 32px;
+}
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 18px 26px;
+  border-radius: 100px;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: .02em;
+  transition: all .3s var(--r);
+  text-align: center;
+  min-height: 56px;
+}
+.btn:active { transform: scale(.97); }
+.btn--primary {
+  background: var(--paper);
+  color: var(--ink);
+}
+.btn--primary:hover { background: var(--accent-glow); }
+.btn--wa {
+  background: var(--wa);
+  color: white;
+}
+.btn--wa:hover { background: var(--wa-deep); }
+.btn--ghost {
+  border: 1px solid rgba(250,247,241,.4);
+  color: var(--paper);
+}
+.btn--ghost:hover { background: rgba(250,247,241,.1); }
+
+.hero__trust {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.hero__trust-item {
+  display: flex; flex-direction: column;
+  color: rgba(250,247,241,.9);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.hero__trust-item strong {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--accent-glow);
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.hero__note {
+  position: relative;
+  z-index: 6;
+  font-size: 10px;
+  letter-spacing: .05em;
+  color: rgba(250,247,241,.55);
+  margin-top: 18px;
+  font-style: italic;
+}
+
+/* =================================================================
+   STATS STRIP (under hero)
+   ================================================================= */
+.stats {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 24px 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 20px;
+  border-top: 1px solid rgba(250,247,241,.08);
+}
+.stat {
+  display: flex; flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.stat__num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 28px;
+  color: var(--accent-glow);
+  line-height: 1;
+  font-weight: 400;
+}
+.stat__label {
+  font-size: 10px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: rgba(250,247,241,.6);
+  margin-top: 6px;
+}
+
+/* =================================================================
+   FADE TRANSITIONS -generic strip with exact-color endpoints
+   `--from` / `--to` define the two colors so the strip matches its
+   neighbors perfectly. `in oklab` keeps the midtones perceptually
+   clean instead of going through muddy gray-brown.
+   ================================================================= */
+.fade {
+  height: var(--fade-h, 140px);
+  background: linear-gradient(in oklab to bottom, var(--from, transparent), var(--to, transparent));
+  margin-top: -1px;
+  pointer-events: none;
+}
+/* Progressive enhancement: browsers without `in oklab` get standard interp */
+@supports not (background: linear-gradient(in oklab, red, blue)) {
+  .fade {
+    background: linear-gradient(to bottom, var(--from, transparent), var(--to, transparent));
+  }
+}
+
+/* =================================================================
+   SECTIONS BASE
+   ================================================================= */
+section { padding: 80px 20px; position: relative; }
+.section__head { margin-bottom: 40px; }
+.section__num {
+  font-family: var(--serif);
+  font-size: 12px;
+  font-style: italic;
+  color: var(--accent);
+  letter-spacing: .05em;
+  margin-bottom: 12px;
+}
+.section__title {
+  font-family: var(--serif);
+  font-size: clamp(30px, 7vw, 48px);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -.02em;
+}
+.section__title em { font-style: italic; color: var(--accent); }
+.section__intro {
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin-top: 16px;
+  max-width: 560px;
+}
+
+/* =================================================================
+   MILLENA (Conheça)
+   ================================================================= */
+.millena {
+  background: var(--paper);
+}
+.millena__photo {
+  position: relative;
+  aspect-ratio: 3/4;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 32px;
+  background: var(--bg-deep);
+  box-shadow: 0 30px 60px -30px rgba(26,22,20,.35);
+}
+.millena__photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+}
+.millena__badge {
+  position: absolute;
+  bottom: 16px; left: 16px;
+  background: var(--paper);
+  padding: 10px 14px;
+  border-radius: 4px;
+  display: flex; align-items: center; gap: 10px;
+  box-shadow: 0 8px 24px -8px rgba(26,22,20,.3);
+  font-size: 11px;
+  letter-spacing: .04em;
+}
+.millena__badge svg { width: 18px; color: var(--accent); }
+.millena__title {
+  font-family: var(--serif);
+  font-size: clamp(28px, 6vw, 40px);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  margin-bottom: 20px;
+}
+.millena__title em { font-style: italic; color: var(--accent); }
+.millena__bio p {
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin-bottom: 16px;
+  line-height: 1.65;
+}
+.millena__credentials {
+  list-style: none;
+  margin-top: 28px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+  display: flex; flex-direction: column;
+  gap: 14px;
+}
+.millena__credentials li {
+  display: flex; gap: 12px;
+  font-size: 14px;
+  color: var(--ink);
+  align-items: flex-start;
+}
+.millena__credentials svg {
+  flex-shrink: 0;
+  width: 18px; height: 18px;
+  color: var(--accent);
+  margin-top: 2px;
+}
+
+/* =================================================================
+   GALERIA -múltiplos antes/depois
+   ================================================================= */
+.galeria {
+  background: var(--bg);
+}
+.galeria__filters {
+  display: flex; gap: 8px;
+  overflow-x: auto;
+  margin: 0 -20px 28px;
+  padding: 4px 20px;
+  scrollbar-width: none;
+}
+.galeria__filters::-webkit-scrollbar { display: none; }
+.galeria__filter {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  font-size: 12px;
+  letter-spacing: .04em;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  background: transparent;
+  transition: all .3s var(--r);
+  white-space: nowrap;
+}
+.galeria__filter.active {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.galeria__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+.gcase {
+  position: relative;
+  aspect-ratio: 4/5;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--bg-deep);
+  touch-action: pan-y;
+  user-select: none;
+}
+.gcase__before, .gcase__after {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+.gcase__before { filter: brightness(.95) saturate(.9); }
+.gcase__after {
+  clip-path: inset(0 0 0 var(--pos, 50%));
+  filter: brightness(1.05) saturate(1.1);
+}
+.gcase__handle {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: var(--pos, 50%);
+  width: 2px;
+  background: var(--paper);
+  z-index: 4;
+  pointer-events: none;
+  box-shadow: 0 0 16px rgba(0,0,0,.3);
+}
+.gcase__handle::before {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--paper);
+  transform: translate(-50%,-50%);
+  box-shadow: 0 4px 12px rgba(0,0,0,.25);
+}
+.gcase__handle::after {
+  content: "⇆";
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 16px;
+  color: var(--ink);
+}
+.gcase__labels {
+  position: absolute;
+  top: 16px; left: 16px; right: 16px;
+  display: flex; justify-content: space-between;
+  z-index: 3; pointer-events: none;
+}
+.gcase__labels span {
+  font-size: 9px;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: rgba(26,22,20,.6);
+  padding: 4px 10px;
+  border-radius: 100px;
+  backdrop-filter: blur(8px);
+}
+.gcase__meta {
+  position: absolute;
+  bottom: 16px; left: 16px; right: 16px;
+  z-index: 3;
+  color: var(--paper);
+  pointer-events: none;
+}
+.gcase__meta strong {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 18px;
+  font-weight: 400;
+  display: block;
+  margin-bottom: 2px;
+}
+.gcase__meta span {
+  font-size: 10px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: rgba(250,247,241,.75);
+}
+
+.galeria__cta {
+  margin-top: 32px;
+  text-align: center;
+}
+.galeria__cta-link {
+  font-size: 14px;
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 4px;
+}
+
+/* Section-level WhatsApp mini-CTA */
+.section-wa {
+  display: flex;
+  justify-content: center;
+  margin-top: 44px;
+  padding-top: 8px;
+}
+.section-wa a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 26px;
+  border-radius: 100px;
+  background: var(--wa);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: .02em;
+  transition: all .3s var(--r);
+  box-shadow: 0 12px 30px -12px rgba(37,211,102,.5);
+}
+.section-wa a:hover {
+  background: var(--wa-deep);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px -14px rgba(37,211,102,.6);
+}
+.section-wa svg { width: 18px; height: 18px; }
+
+.galeria__disclaimer {
+  font-size: 11px;
+  text-align: center;
+  color: var(--ink-mute);
+  margin-top: 20px;
+  font-style: italic;
+}
+
+/* =================================================================
+   PROCEDIMENTOS
+   ================================================================= */
+.procedimentos { background: var(--paper); }
+.proc-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+.proc {
+  padding: 28px 24px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg);
+  transition: all .4s var(--r);
+  position: relative;
+}
+.proc:active { transform: scale(.98); }
+.proc__icon {
+  width: 72px; height: 72px;
+  margin-bottom: 20px;
+  object-fit: contain;
+  transition: transform .5s var(--r);
+}
+.proc:hover .proc__icon { transform: translateY(-4px) scale(1.05); }
+.proc__title {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.15;
+  margin-bottom: 8px;
+  letter-spacing: -.01em;
+}
+.proc__desc {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+.proc__num {
+  position: absolute;
+  top: 20px; right: 24px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-mute);
+}
+
+/* =================================================================
+   PROCESSO
+   ================================================================= */
+.processo { background: var(--bg-deep); }
+.processo__steps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 16px;
+}
+.step {
+  text-align: center;
+  padding: 16px 8px;
+}
+.step__num {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+}
+.step__title {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 6px;
+}
+.step__desc {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+/* =================================================================
+   DEPOIMENTOS
+   ================================================================= */
+.depoimentos {
+  background: var(--ink);
+  color: var(--paper);
+}
+.depoimentos .section__title { color: var(--paper); }
+.depoimentos .section__title em { color: var(--accent-glow); }
+.depoimentos .section__num { color: var(--accent-glow); }
+.testi-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+.testi {
+  padding: 28px 24px;
+  border: 1px solid rgba(250,247,241,.12);
+  border-radius: 6px;
+  background: rgba(250,247,241,.03);
+}
+.testi__stars {
+  display: flex; gap: 3px;
+  margin-bottom: 16px;
+  color: var(--accent-glow);
+}
+.testi__quote {
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.55;
+  margin-bottom: 20px;
+  color: rgba(250,247,241,.92);
+  font-style: italic;
+}
+.testi__author {
+  display: flex; align-items: center; gap: 12px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(250,247,241,.12);
+}
+.testi__avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-glow), var(--accent));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--ink);
+  font-size: 16px;
+}
+.testi__name {
+  font-size: 13px;
+  color: var(--paper);
+}
+.testi__role {
+  font-size: 10px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: rgba(250,247,241,.5);
+  margin-top: 2px;
+}
+
+/* =================================================================
+   FAQ
+   ================================================================= */
+.faq { background: var(--bg); }
+.faq__list {
+  border-top: 1px solid var(--line);
+}
+.faq__item {
+  border-bottom: 1px solid var(--line);
+}
+.faq__q {
+  width: 100%;
+  text-align: left;
+  padding: 22px 0;
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 400;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 16px;
+  color: var(--ink);
+  letter-spacing: -.005em;
+  cursor: pointer;
+}
+.faq__icon {
+  flex-shrink: 0;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--ink);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  font-weight: 300;
+  transition: transform .4s var(--r), background .4s var(--r), color .4s var(--r);
+}
+.faq__a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .5s var(--r), padding .5s var(--r);
+}
+.faq__a p {
+  padding-bottom: 22px;
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+.faq__item.open .faq__icon {
+  transform: rotate(45deg);
+  background: var(--accent);
+  color: var(--paper);
+  border-color: var(--accent);
+}
+.faq__item.open .faq__a {
+  max-height: 400px;
+}
+
+/* =================================================================
+   URGÊNCIA
+   ================================================================= */
+.urgencia {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 60px 20px;
+  text-align: center;
+}
+.urgencia__tag {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--accent-glow);
+  margin-bottom: 18px;
+  padding: 8px 16px;
+  border: 1px solid rgba(212,184,138,.3);
+  border-radius: 100px;
+}
+.urgencia__tag::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent-glow);
+  animation: pulse 1.5s var(--r) infinite;
+}
+.urgencia__title {
+  font-family: var(--serif);
+  font-size: clamp(28px, 7vw, 42px);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  margin-bottom: 16px;
+}
+.urgencia__title em { font-style: italic; color: var(--accent-glow); }
+.urgencia__sub {
+  font-size: 15px;
+  color: rgba(250,247,241,.75);
+  margin-bottom: 24px;
+  max-width: 480px;
+  margin-left: auto; margin-right: auto;
+}
+.urgencia__counter {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.urgencia__num {
+  background: rgba(250,247,241,.06);
+  border: 1px solid rgba(250,247,241,.15);
+  border-radius: 6px;
+  padding: 12px 16px;
+  min-width: 64px;
+}
+.urgencia__num strong {
+  display: block;
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--accent-glow);
+  line-height: 1;
+}
+.urgencia__num span {
+  display: block;
+  font-size: 9px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(250,247,241,.55);
+  margin-top: 6px;
+}
+.urgencia .btn--primary {
+  background: var(--accent-glow);
+  color: var(--ink);
+}
+.urgencia .btn--primary:hover { background: var(--paper); }
+
+/* =================================================================
+   FORM -Simplified (nome + whatsapp)
+   ================================================================= */
+.lead {
+  background: var(--bg-deep);
+  padding: 80px 20px;
+}
+.lead__intro {
+  margin-bottom: 32px;
+  text-align: center;
+}
+.lead__cta-hero {
+  max-width: 480px;
+  margin: 0 auto 32px;
+}
+.lead__wa {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px 28px;
+  background: linear-gradient(135deg, var(--wa) 0%, var(--wa-deep) 100%);
+  color: #fff;
+  border-radius: 14px;
+  transition: all .35s var(--r);
+  box-shadow: 0 24px 60px -20px rgba(37,211,102,.55);
+}
+.lead__wa:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 30px 70px -20px rgba(37,211,102,.7);
+}
+.lead__wa svg { width: 42px; height: 42px; flex-shrink: 0; }
+.lead__wa span { display: flex; flex-direction: column; gap: 2px; }
+.lead__wa strong {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -.01em;
+  font-family: var(--sans);
+}
+.lead__wa em {
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  opacity: .88;
+  font-style: normal;
+  font-weight: 400;
+}
+.lead__or {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 28px 0 18px;
+  color: var(--ink-mute);
+}
+.lead__or::before, .lead__or::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+.lead__or span {
+  font-size: 12px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+}
+.lead__intro .section__num { display: inline-block; margin-bottom: 10px; }
+.lead__title {
+  font-family: var(--serif);
+  font-size: clamp(28px, 7vw, 42px);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  margin-bottom: 12px;
+}
+.lead__title em { font-style: italic; color: var(--accent); }
+.lead__desc {
+  font-size: 15px;
+  color: var(--ink-soft);
+  max-width: 460px;
+  margin: 0 auto;
+}
+.form {
+  background: var(--paper);
+  padding: 32px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--line-soft);
+  box-shadow: 0 30px 60px -30px rgba(26,22,20,.2);
+  max-width: 480px;
+  margin: 0 auto;
+}
+.form::before {
+  content: "";
+  display: block;
+  width: 40px; height: 2px;
+  background: var(--accent);
+  margin-bottom: 20px;
+}
+.form__head h3 {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 400;
+  margin-bottom: 6px;
+}
+.form__head h3 em { font-style: italic; color: var(--accent); }
+.form__head p {
+  font-size: 12px;
+  color: var(--ink-mute);
+  margin-bottom: 24px;
+}
+.field {
+  margin-bottom: 20px;
+}
+.field label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 8px;
+}
+.field input {
+  width: 100%;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 16px;
+  transition: border-color .3s var(--r);
+}
+.field input:focus { border-bottom-color: var(--accent); }
+.field input::placeholder { color: var(--ink-mute); opacity: .55; }
+.form__submit {
+  width: 100%;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 18px 24px;
+  border-radius: 100px;
+  font-size: 14px;
+  letter-spacing: .04em;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  transition: all .3s var(--r);
+  margin-top: 12px;
+  min-height: 56px;
+}
+.form__submit:hover { background: var(--accent-deep); }
+.form__submit:active { transform: scale(.98); }
+.form__legal {
+  font-size: 11px;
+  color: var(--ink-mute);
+  margin-top: 16px;
+  text-align: center;
+  line-height: 1.5;
+}
+.form__legal a { color: var(--accent); text-decoration: underline; }
+.form__success {
+  display: none;
+  text-align: center;
+  padding: 16px 0;
+}
+.form__success.active { display: block; animation: fadeIn .5s var(--r); }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.form__success-icon {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--paper);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px;
+  animation: pop .5s var(--r-bounce);
+}
+@keyframes pop {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+.form__success h4 {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+.form__success p {
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin-bottom: 20px;
+}
+
+/* =================================================================
+   FOOTER
+   ================================================================= */
+footer {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 60px 20px 32px;
+}
+.foot__brand {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 300;
+  letter-spacing: -.02em;
+  margin-bottom: 16px;
+}
+.foot__brand em { font-style: italic; color: var(--accent-glow); }
+.foot__tag {
+  font-size: 13px;
+  color: rgba(250,247,241,.6);
+  line-height: 1.6;
+  max-width: 360px;
+  margin-bottom: 32px;
+}
+.foot__cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px 20px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid rgba(250,247,241,.1);
+}
+.foot__col h5 {
+  font-size: 10px;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: rgba(250,247,241,.5);
+  margin-bottom: 16px;
+}
+.foot__col ul {
+  list-style: none;
+  display: flex; flex-direction: column;
+  gap: 10px;
+}
+.foot__col a {
+  font-size: 13px;
+  color: rgba(250,247,241,.85);
+  transition: color .3s var(--r);
+}
+.foot__col a:hover { color: var(--accent-glow); }
+.foot__bottom {
+  margin-top: 24px;
+  display: flex; flex-direction: column;
+  gap: 8px;
+  font-size: 11px;
+  color: rgba(250,247,241,.4);
+}
+
+/* =================================================================
+   FLOATING WhatsApp button
+   ================================================================= */
+.wa-float {
+  position: fixed;
+  right: 16px;
+  bottom: calc(20px + var(--safe-bottom));
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: var(--wa);
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 90;
+  box-shadow: 0 8px 24px -4px rgba(37,211,102,.5);
+  transition: transform .3s var(--r);
+}
+.wa-float::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--wa);
+  animation: waPulse 3.6s ease-out infinite;
+  z-index: -1;
+  will-change: transform, opacity;
+}
+@keyframes waPulse {
+  0% { transform: scale(1); opacity: .35; }
+  70%, 100% { transform: scale(1.45); opacity: 0; }
+}
+.wa-float:hover { transform: scale(1.08); }
+.wa-float:active { transform: scale(.95); }
+.wa-float svg { width: 28px; height: 28px; }
+
+/* =================================================================
+   DESKTOP (≥ 768px)
+   ================================================================= */
+@media (min-width: 768px) {
+  section { padding: 100px 40px; }
+  .nav { padding: 22px 40px; }
+  .nav.scrolled { padding: 14px 40px; }
+  .nav__menu {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+  }
+  .nav__menu a {
+    font-size: 13px;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    position: relative;
+  }
+  .nav__menu a::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -4px;
+    width: 0; height: 1px;
+    background: var(--ink);
+    transition: width .4s var(--r);
+  }
+  .nav__menu a:hover::after { width: 100%; }
+  .nav__cta { padding: 10px 22px; font-size: 13px; }
+
+  .hero { padding: 140px 40px 80px; }
+  .hero__title { max-width: 800px; }
+  .hero__sub { font-size: 18px; }
+  .hero__cta { flex-direction: row; }
+  .hero__trust { gap: 32px; }
+  .hero__trust-item strong { font-size: 32px; }
+
+  .stats { grid-template-columns: repeat(4, 1fr); padding: 28px 40px; }
+  .stat__num { font-size: 36px; }
+
+  .millena-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .millena__photo { margin-bottom: 0; }
+
+  .galeria__grid { grid-template-columns: 1fr 1fr; }
+
+  .proc-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .proc { padding: 40px 32px; }
+  .proc__title { font-size: 24px; }
+
+  .processo__steps { grid-template-columns: repeat(4, 1fr); gap: 32px; }
+  .step__num { width: 48px; height: 48px; }
+  .step__title { font-size: 20px; }
+
+  .testi-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+  .faq__q { font-size: 19px; padding: 26px 0; }
+
+  .urgencia { padding: 100px 40px; }
+
+  .lead { padding: 120px 40px; }
+  .form { padding: 48px 40px; }
+
+  footer { padding: 80px 40px 32px; }
+  .foot__cols { grid-template-columns: 1.5fr 1fr 1fr; }
+  .foot__bottom { flex-direction: row; justify-content: space-between; }
+
+  .wa-float { bottom: 24px; right: 24px; width: 60px; height: 60px; }
+}
+
+@media (min-width: 1024px) {
+  .hero { padding: 160px 40px 100px; }
+  .hero__title { font-size: clamp(56px, 6vw, 84px); }
+  .galeria__grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* =================================================================
+   REVEAL on scroll
+   ================================================================= */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s var(--r), transform .9s var(--r); }
+.reveal.in { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+  <div class="nav__logo">Millena <span>Curty</span></div>
+  <div class="nav__menu">
+    <a href="#procedimentos">Procedimentos</a>
+    <a href="#galeria">Resultados</a>
+    <a href="#millena">Sobre</a>
+    <a href="#depoimentos">Depoimentos</a>
+  </div>
+  <a href="#agendar" class="nav__cta" data-track="nav_cta">Agendar</a>
+</nav>
+
+<!-- HERO with before/after background -->
+<header class="hero">
+  <div class="ba" id="ba">
+    <div class="ba__layer ba__before" style="background-image: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1400&q=80&auto=format');"></div>
+    <div class="ba__layer ba__after" style="background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1400&q=80&auto=format');"></div>
+    <div class="ba__labels">
+      <span>Antes</span>
+      <span>Depois</span>
+    </div>
+    <div class="ba__handle"></div>
+  </div>
+  <div class="hero__overlay"></div>
+
+  <div class="hero__content">
+    <div class="hero__eyebrow reveal">Avaliação gratuita · Vagas limitadas este mês</div>
+    <h1 class="hero__title reveal">Você, mais <em>você</em>.<br/>Sem parecer "feita".</h1>
+    <p class="hero__sub reveal">Harmonização facial autoral com a Dra. Millena Curty. Ninguém percebe o procedimento. Todo mundo percebe você.</p>
+
+    <div class="hero__cta reveal">
+      <a href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o%20com%20a%20Dra.%20Millena"
+         class="btn btn--wa wa-link" data-track="hero_wa" target="_blank" rel="noopener">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4l-2.2-1.1c-.3-.2-.7-.1-.9.2l-.7.9c-.2.2-.5.3-.8.2-1.4-.5-2.7-1.7-3.4-3-.2-.3-.1-.6.1-.8l.8-.6c.3-.2.4-.6.2-.9L9.5 6.6c-.2-.3-.6-.5-1-.4-1.8.3-3 1.9-2.8 3.7.5 4.1 4 7.4 8.1 7.6 1.8.1 3.4-1.2 3.7-3 .1-.4-.1-.8-.4-1.1z"/><path d="M12 22a10 10 0 1110-10c0 1.6-.4 3.2-1.1 4.6l1 4.4-4.5-1c-1.4.6-2.9 1-4.4 1zm0-18a8 8 0 00-7 12L4 19l3.1-1A8 8 0 1012 4z"/></svg>
+        Falar no WhatsApp
+      </a>
+      <a href="#agendar" class="btn btn--ghost" data-track="hero_agendar">
+        Agendar avaliação
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="hero__trust reveal">
+      <div class="hero__trust-item">
+        <strong>+800</strong>
+        <span>rostos harmonizados</span>
+      </div>
+      <div class="hero__trust-item">
+        <strong>7 anos</strong>
+        <span>de bisturi zero</span>
+      </div>
+      <div class="hero__trust-item">
+        <strong>5.0</strong>
+        <span>★★★★★</span>
+      </div>
+    </div>
+
+    <p class="hero__note">↔ Arraste para comparar · Imagens ilustrativas</p>
+  </div>
+</header>
+
+<div class="fade" style="--from: var(--ink); --to: var(--paper); --fade-h: 160px;" aria-hidden="true"></div>
+
+<!-- Conheça a Millena -->
+<section id="millena" class="millena">
+  <div class="millena-wrap">
+    <div class="millena__photo reveal">
+      <img src="millena.jpg" alt="Dra. Millena Curty, Cirurgiã-dentista especialista em harmonização facial" loading="lazy" />
+      <div class="millena__badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+        <span><strong>CRO Certificada</strong></span>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <h2 class="millena__title">Conheça a <em>Dra. Millena</em></h2>
+      <div class="millena__bio">
+        <p>Cirurgiã-dentista, especialista em Harmonização Orofacial. Há 7 anos dedico meu trabalho a um único propósito: fazer você se olhar no espelho e reconhecer a si mesma. Só que com um brilho a mais.</p>
+        <p>"O melhor procedimento é aquele que ninguém percebe, mas todos sentem. Harmonização não é mudar quem você é, é devolver a você o que o tempo, o cansaço ou a genética te tiraram."</p>
+      </div>
+
+      <ul class="millena__credentials">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          <span>Especialista em Harmonização Orofacial (CRO)</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          <span>+800 pacientes atendidas com 100% de satisfação</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          <span>Atualização constante em técnicas internacionais</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          <span>Uma paciente por horário. Sem correria, sem fila</span>
+        </li>
+      </ul>
+
+      <div class="section-wa reveal">
+        <a href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20gostaria%20de%20conversar%20com%20a%20Dra.%20Millena"
+           class="wa-link" target="_blank" rel="noopener" data-track="sobre_wa">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4l-2.2-1.1c-.3-.2-.7-.1-.9.2l-.7.9c-.2.2-.5.3-.8.2-1.4-.5-2.7-1.7-3.4-3-.2-.3-.1-.6.1-.8l.8-.6c.3-.2.4-.6.2-.9L9.5 6.6c-.2-.3-.6-.5-1-.4-1.8.3-3 1.9-2.8 3.7.5 4.1 4 7.4 8.1 7.6 1.8.1 3.4-1.2 3.7-3 .1-.4-.1-.8-.4-1.1z"/><path d="M12 22a10 10 0 1110-10c0 1.6-.4 3.2-1.1 4.6l1 4.4-4.5-1c-1.4.6-2.9 1-4.4 1zm0-18a8 8 0 00-7 12L4 19l3.1-1A8 8 0 1012 4z"/></svg>
+          Falar com a Millena
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="fade" style="--from: var(--paper); --to: var(--bg); --fade-h: 80px;" aria-hidden="true"></div>
+
+<!-- Galeria de Transformações -->
+<section id="galeria" class="galeria">
+  <div class="section__head reveal">
+    <h2 class="section__title">Pequenas mudanças. <em>Grandes</em> revelações.</h2>
+    <p class="section__intro">Arraste o controle de cada imagem pra revelar o antes e o depois. Cada caso mostra o que muda quando o procedimento respeita a identidade do rosto.</p>
+  </div>
+
+  <div class="galeria__filters">
+    <button class="galeria__filter active" data-filter="all">Todos</button>
+    <button class="galeria__filter" data-filter="harmonizacao">Harmonização</button>
+    <button class="galeria__filter" data-filter="labios">Lábios</button>
+    <button class="galeria__filter" data-filter="botox">Botox</button>
+    <button class="galeria__filter" data-filter="bioestimulador">Bioestimuladores</button>
+  </div>
+
+  <div class="galeria__grid">
+    <div class="gcase reveal" data-cat="harmonizacao">
+      <div class="gcase__before" style="background-image: url('antes1.png');"></div>
+      <div class="gcase__after" style="background-image: url('depois1.png');"></div>
+      <div class="gcase__labels"><span>Antes</span><span>Depois</span></div>
+      <div class="gcase__handle"></div>
+      <div class="gcase__meta"><strong>Ana, 34</strong><span>Harmonização global</span></div>
+    </div>
+
+    <div class="gcase reveal" data-cat="labios">
+      <div class="gcase__before" style="background-image: url('antes1.png');"></div>
+      <div class="gcase__after" style="background-image: url('depois1.png');"></div>
+      <div class="gcase__labels"><span>Antes</span><span>Depois</span></div>
+      <div class="gcase__handle"></div>
+      <div class="gcase__meta"><strong>Carolina, 28</strong><span>Preenchimento labial</span></div>
+    </div>
+
+    <div class="gcase reveal" data-cat="botox">
+      <div class="gcase__before" style="background-image: url('antes1.png');"></div>
+      <div class="gcase__after" style="background-image: url('depois1.png');"></div>
+      <div class="gcase__labels"><span>Antes</span><span>Depois</span></div>
+      <div class="gcase__handle"></div>
+      <div class="gcase__meta"><strong>Juliana, 41</strong><span>Toxina botulínica</span></div>
+    </div>
+
+    <div class="gcase reveal" data-cat="bioestimulador">
+      <div class="gcase__before" style="background-image: url('antes1.png');"></div>
+      <div class="gcase__after" style="background-image: url('depois1.png');"></div>
+      <div class="gcase__labels"><span>Antes</span><span>Depois</span></div>
+      <div class="gcase__handle"></div>
+      <div class="gcase__meta"><strong>Marina, 39</strong><span>Bioestimuladores</span></div>
+    </div>
+
+    <div class="gcase reveal" data-cat="harmonizacao">
+      <div class="gcase__before" style="background-image: url('antes1.png');"></div>
+      <div class="gcase__after" style="background-image: url('depois1.png');"></div>
+      <div class="gcase__labels"><span>Antes</span><span>Depois</span></div>
+      <div class="gcase__handle"></div>
+      <div class="gcase__meta"><strong>Beatriz, 37</strong><span>Harmonização sutil</span></div>
+    </div>
+
+    <div class="gcase reveal" data-cat="labios">
+      <div class="gcase__before" style="background-image: url('antes1.png');"></div>
+      <div class="gcase__after" style="background-image: url('depois1.png');"></div>
+      <div class="gcase__labels"><span>Antes</span><span>Depois</span></div>
+      <div class="gcase__handle"></div>
+      <div class="gcase__meta"><strong>Letícia, 26</strong><span>Lip lift + preenchimento</span></div>
+    </div>
+
+    <div class="gcase reveal" data-cat="harmonizacao">
+      <div class="gcase__before" style="background-image: url('antes1.png');"></div>
+      <div class="gcase__after" style="background-image: url('depois1.png');"></div>
+      <div class="gcase__labels"><span>Antes</span><span>Depois</span></div>
+      <div class="gcase__handle"></div>
+      <div class="gcase__meta"><strong>Fernanda, 45</strong><span>Harmonização madura</span></div>
+    </div>
+
+    <div class="gcase reveal" data-cat="botox">
+      <div class="gcase__before" style="background-image: url('antes1.png');"></div>
+      <div class="gcase__after" style="background-image: url('depois1.png');"></div>
+      <div class="gcase__labels"><span>Antes</span><span>Depois</span></div>
+      <div class="gcase__handle"></div>
+      <div class="gcase__meta"><strong>Priscila, 32</strong><span>Botox preventivo</span></div>
+    </div>
+
+    <div class="gcase reveal" data-cat="labios">
+      <div class="gcase__before" style="background-image: url('antes1.png');"></div>
+      <div class="gcase__after" style="background-image: url('depois1.png');"></div>
+      <div class="gcase__labels"><span>Antes</span><span>Depois</span></div>
+      <div class="gcase__handle"></div>
+      <div class="gcase__meta"><strong>Camila, 29</strong><span>Contorno labial</span></div>
+    </div>
+
+    <div class="gcase reveal" data-cat="bioestimulador">
+      <div class="gcase__before" style="background-image: url('antes1.png');"></div>
+      <div class="gcase__after" style="background-image: url('depois1.png');"></div>
+      <div class="gcase__labels"><span>Antes</span><span>Depois</span></div>
+      <div class="gcase__handle"></div>
+      <div class="gcase__meta"><strong>Renata, 42</strong><span>Bioestimulador facial</span></div>
+    </div>
+
+    <div class="gcase reveal" data-cat="harmonizacao">
+      <div class="gcase__before" style="background-image: url('antes1.png');"></div>
+      <div class="gcase__after" style="background-image: url('depois1.png');"></div>
+      <div class="gcase__labels"><span>Antes</span><span>Depois</span></div>
+      <div class="gcase__handle"></div>
+      <div class="gcase__meta"><strong>Isabella, 35</strong><span>Harmonização assinatura</span></div>
+    </div>
+  </div>
+
+  <p class="galeria__disclaimer">Resultados podem variar de acordo com cada paciente. Imagens ilustrativas.</p>
+
+  <div class="galeria__cta">
+    <a href="#agendar" class="galeria__cta-link" data-track="galeria_cta">Quero conversar sobre meu caso →</a>
+  </div>
+</section>
+
+<div class="fade" style="--from: var(--bg); --to: var(--paper); --fade-h: 80px;" aria-hidden="true"></div>
+
+<!-- Procedimentos -->
+<section id="procedimentos" class="procedimentos">
+  <div class="section__head reveal">
+    <h2 class="section__title">Cuidado <em>autoral</em>, do diagnóstico ao resultado.</h2>
+  </div>
+
+  <div class="proc-grid">
+    <div class="proc reveal">
+      <img class="proc__icon" src="icon-fullface.png" alt="" loading="lazy" width="72" height="72" />
+      <h3 class="proc__title">Full Face</h3>
+      <p class="proc__desc">Plano integrado com múltiplas técnicas conversando entre si. Reestruturação facial completa com resultado natural e duradouro.</p>
+    </div>
+    <div class="proc reveal">
+      <img class="proc__icon" src="icon-rinomodelacao.png" alt="" loading="lazy" width="72" height="72" />
+      <h3 class="proc__title">Rinomodelação</h3>
+      <p class="proc__desc">Correção sutil do contorno nasal sem cirurgia. Preenchimento estratégico que harmoniza o perfil respeitando sua identidade.</p>
+    </div>
+    <div class="proc reveal">
+      <img class="proc__icon" src="icon-labios.png" alt="" loading="lazy" width="72" height="72" />
+      <h3 class="proc__title">Preenchimento Labial</h3>
+      <p class="proc__desc">Lábios em proporção com o resto do rosto. Volume sob medida. Nada de "lábio de novela".</p>
+    </div>
+    <div class="proc reveal">
+      <img class="proc__icon" src="icon-bioestimulador.png" alt="" loading="lazy" width="72" height="72" />
+      <h3 class="proc__title">Bioestimulador de Colágeno</h3>
+      <p class="proc__desc">Reativa o colágeno que a sua pele produz cada vez menos. Firmeza que aparece devagar e dura anos.</p>
+    </div>
+    <div class="proc reveal">
+      <img class="proc__icon" src="icon-ulthera.png" alt="" loading="lazy" width="72" height="72" />
+      <h3 class="proc__title">Ulthera</h3>
+      <p class="proc__desc">Ultrassom microfocado que estimula colágeno em camadas profundas. Lifting sem cirurgia, sem downtime.</p>
+    </div>
+  </div>
+
+  <div class="section-wa reveal">
+    <a href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20os%20procedimentos"
+       class="wa-link" target="_blank" rel="noopener" data-track="proc_wa">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4l-2.2-1.1c-.3-.2-.7-.1-.9.2l-.7.9c-.2.2-.5.3-.8.2-1.4-.5-2.7-1.7-3.4-3-.2-.3-.1-.6.1-.8l.8-.6c.3-.2.4-.6.2-.9L9.5 6.6c-.2-.3-.6-.5-1-.4-1.8.3-3 1.9-2.8 3.7.5 4.1 4 7.4 8.1 7.6 1.8.1 3.4-1.2 3.7-3 .1-.4-.1-.8-.4-1.1z"/><path d="M12 22a10 10 0 1110-10c0 1.6-.4 3.2-1.1 4.6l1 4.4-4.5-1c-1.4.6-2.9 1-4.4 1zm0-18a8 8 0 00-7 12L4 19l3.1-1A8 8 0 1012 4z"/></svg>
+      Agendar minha avaliação
+    </a>
+  </div>
+</section>
+
+<div class="fade" style="--from: var(--paper); --to: var(--ink); --fade-h: 160px;" aria-hidden="true"></div>
+
+<!-- Depoimentos -->
+<section id="depoimentos" class="depoimentos">
+  <div class="section__head reveal">
+    <h2 class="section__title">Histórias que <em>moldaram</em> as minhas.</h2>
+  </div>
+
+  <div class="testi-grid">
+    <div class="testi reveal">
+      <div class="testi__stars">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+      </div>
+      <p class="testi__quote">"Saí me sentindo eu mesma, só que descansada. Ninguém percebe que fiz algo, mas todos notam que estou diferente."</p>
+      <div class="testi__author">
+        <div class="testi__avatar">A</div>
+        <div>
+          <div class="testi__name">Ana Beatriz</div>
+          <div class="testi__role">Cliente desde 2023</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi reveal">
+      <div class="testi__stars">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+      </div>
+      <p class="testi__quote">"Mão delicada, olhar de artista. Ela tem essa rara capacidade de enxergar o que você ainda não enxergou em si."</p>
+      <div class="testi__author">
+        <div class="testi__avatar">C</div>
+        <div>
+          <div class="testi__name">Carolina M.</div>
+          <div class="testi__role">Cliente desde 2022</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi reveal">
+      <div class="testi__stars">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+      </div>
+      <p class="testi__quote">"Já tinha feito harmonização antes e não gostei. Aqui foi outra experiência: desde o atendimento até o resultado."</p>
+      <div class="testi__author">
+        <div class="testi__avatar">J</div>
+        <div>
+          <div class="testi__name">Juliana R.</div>
+          <div class="testi__role">Cliente desde 2024</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi reveal">
+      <div class="testi__stars">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+      </div>
+      <p class="testi__quote">"Tenho medo até de mostrar o antes. A diferença é enorme, mas ninguém consegue dizer o que mudou. Meu marido só falou que eu estava 'brilhando'."</p>
+      <div class="testi__author">
+        <div class="testi__avatar">F</div>
+        <div>
+          <div class="testi__name">Fernanda P.</div>
+          <div class="testi__role">Cliente desde 2024</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi reveal">
+      <div class="testi__stars">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+      </div>
+      <p class="testi__quote">"Passei anos comparando clínicas e adiando. Se soubesse que ia ser essa experiência, tinha ido muito antes. Sem exagero: mudou meu jeito de me olhar no espelho."</p>
+      <div class="testi__author">
+        <div class="testi__avatar">M</div>
+        <div>
+          <div class="testi__name">Marina C.</div>
+          <div class="testi__role">Cliente desde 2023</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi reveal">
+      <div class="testi__stars">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+      </div>
+      <p class="testi__quote">"O atendimento da Millena é uma consulta com uma amiga que entende do assunto. Ela explica tudo, escuta tudo, e só faz o que faz sentido. Zero venda forçada."</p>
+      <div class="testi__author">
+        <div class="testi__avatar">B</div>
+        <div>
+          <div class="testi__name">Beatriz L.</div>
+          <div class="testi__role">Cliente desde 2022</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-wa reveal">
+    <a href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20quero%20ser%20a%20pr%C3%B3xima%20a%20contar%20minha%20hist%C3%B3ria"
+       class="wa-link" target="_blank" rel="noopener" data-track="depoimentos_wa">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4l-2.2-1.1c-.3-.2-.7-.1-.9.2l-.7.9c-.2.2-.5.3-.8.2-1.4-.5-2.7-1.7-3.4-3-.2-.3-.1-.6.1-.8l.8-.6c.3-.2.4-.6.2-.9L9.5 6.6c-.2-.3-.6-.5-1-.4-1.8.3-3 1.9-2.8 3.7.5 4.1 4 7.4 8.1 7.6 1.8.1 3.4-1.2 3.7-3 .1-.4-.1-.8-.4-1.1z"/><path d="M12 22a10 10 0 1110-10c0 1.6-.4 3.2-1.1 4.6l1 4.4-4.5-1c-1.4.6-2.9 1-4.4 1zm0-18a8 8 0 00-7 12L4 19l3.1-1A8 8 0 1012 4z"/></svg>
+      Quero minha história
+    </a>
+  </div>
+</section>
+
+<div class="fade" style="--from: var(--ink); --to: var(--bg-deep); --fade-h: 160px;" aria-hidden="true"></div>
+
+<!-- Form -->
+<section id="agendar" class="lead">
+  <div class="lead__intro reveal">
+    <h2 class="lead__title">Vamos começar por uma <em>conversa</em>.</h2>
+    <p class="lead__desc">Escolha o canal que preferir. Nossa equipe responde em até 1 hora.</p>
+  </div>
+
+  <div class="lead__cta-hero reveal">
+    <a href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20minha%20avalia%C3%A7%C3%A3o%20com%20a%20Dra.%20Millena"
+       class="lead__wa wa-link" target="_blank" rel="noopener" data-track="lead_hero_wa">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4l-2.2-1.1c-.3-.2-.7-.1-.9.2l-.7.9c-.2.2-.5.3-.8.2-1.4-.5-2.7-1.7-3.4-3-.2-.3-.1-.6.1-.8l.8-.6c.3-.2.4-.6.2-.9L9.5 6.6c-.2-.3-.6-.5-1-.4-1.8.3-3 1.9-2.8 3.7.5 4.1 4 7.4 8.1 7.6 1.8.1 3.4-1.2 3.7-3 .1-.4-.1-.8-.4-1.1z"/><path d="M12 22a10 10 0 1110-10c0 1.6-.4 3.2-1.1 4.6l1 4.4-4.5-1c-1.4.6-2.9 1-4.4 1zm0-18a8 8 0 00-7 12L4 19l3.1-1A8 8 0 1012 4z"/></svg>
+      <span>
+        <strong>Falar no WhatsApp</strong>
+        <em>resposta em até 1 hora</em>
+      </span>
+    </a>
+    <div class="lead__or"><span>ou</span></div>
+  </div>
+
+  <div class="form reveal">
+    <div class="form__head">
+      <h3>Reserve sua <em>conversa gratuita</em></h3>
+      <p>Resposta em até 1h · Nenhum dado compartilhado</p>
+    </div>
+
+    <form id="leadForm" novalidate>
+      <div class="field">
+        <label for="nome">Como você se chama?</label>
+        <input id="nome" type="text" placeholder="Seu nome" required autocomplete="name" />
+      </div>
+
+      <div class="field">
+        <label for="telefone">Seu WhatsApp</label>
+        <input id="telefone" type="tel" placeholder="(11) 99999-9999" required autocomplete="tel" inputmode="tel" />
+      </div>
+
+      <button type="submit" class="form__submit">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4l-2.2-1.1c-.3-.2-.7-.1-.9.2l-.7.9c-.2.2-.5.3-.8.2-1.4-.5-2.7-1.7-3.4-3-.2-.3-.1-.6.1-.8l.8-.6c.3-.2.4-.6.2-.9L9.5 6.6c-.2-.3-.6-.5-1-.4-1.8.3-3 1.9-2.8 3.7.5 4.1 4 7.4 8.1 7.6 1.8.1 3.4-1.2 3.7-3 .1-.4-.1-.8-.4-1.1z"/></svg>
+        Quero conversar com a Millena
+      </button>
+
+      <p class="form__legal">Ao enviar, você concorda em receber contato pelo WhatsApp. Seus dados são confidenciais.</p>
+    </form>
+
+    <div class="form__success" id="success">
+      <div class="form__success-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <h4>Perfeito!</h4>
+      <p>Já estamos te levando pro WhatsApp da Millena. Se não abrir sozinho, clique no botão abaixo.</p>
+      <a href="https://wa.me/5511999999999" class="btn btn--wa wa-link" id="successWa" target="_blank" rel="noopener" data-track="form_success_wa">
+        Abrir WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="fade" style="--from: var(--bg-deep); --to: var(--ink); --fade-h: 160px;" aria-hidden="true"></div>
+
+<!-- Footer -->
+<footer>
+  <div class="foot__brand">Millena <em>Curty</em></div>
+  <p class="foot__tag">Harmonização facial autoral. Cirurgiã-dentista especializada em estética orofacial.</p>
+
+  <div class="foot__cols">
+    <div class="foot__col">
+      <h5>Contato</h5>
+      <ul>
+        <li><a href="https://wa.me/5511999999999" target="_blank" rel="noopener" class="wa-link" data-track="footer_wa">WhatsApp</a></li>
+        <li><a href="https://www.instagram.com/dra.millenacurty/" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="mailto:contato@millenacurty.com.br">contato@millenacurty.com.br</a></li>
+      </ul>
+    </div>
+    <div class="foot__col">
+      <h5>Navegação</h5>
+      <ul>
+        <li><a href="#procedimentos">Procedimentos</a></li>
+        <li><a href="#galeria">Resultados</a></li>
+        <li><a href="#millena">Sobre</a></li>
+        <li><a href="#depoimentos">Depoimentos</a></li>
+        <li><a href="#agendar">Agendar</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot__bottom">
+    <span>© 2026 Dra. Millena Curty</span>
+    <span>CRO · Cirurgiã-Dentista</span>
+  </div>
+</footer>
+
+<!-- Floating WhatsApp -->
+<a href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o%20com%20a%20Dra.%20Millena"
+   class="wa-float wa-link" target="_blank" rel="noopener" aria-label="WhatsApp" data-track="float_wa">
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <path d="M17.5 14.4l-2.2-1.1c-.3-.2-.7-.1-.9.2l-.7.9c-.2.2-.5.3-.8.2-1.4-.5-2.7-1.7-3.4-3-.2-.3-.1-.6.1-.8l.8-.6c.3-.2.4-.6.2-.9L9.5 6.6c-.2-.3-.6-.5-1-.4-1.8.3-3 1.9-2.8 3.7.5 4.1 4 7.4 8.1 7.6 1.8.1 3.4-1.2 3.7-3 .1-.4-.1-.8-.4-1.1z"/>
+    <path d="M12 22a10 10 0 1110-10c0 1.6-.4 3.2-1.1 4.6l1 4.4-4.5-1c-1.4.6-2.9 1-4.4 1zm0-18a8 8 0 00-7 12L4 19l3.1-1A8 8 0 1012 4z"/>
+  </svg>
+</a>
+
+<script>
+// =================================================================
+// Dynamic config loader — pulls admin-managed content from /api/config.
+// Supports formatted text markers:
+//   *word*  → <em>word</em>   (italic accent)
+//   |       → <br/>            (line break)
+// Falls back silently to the hardcoded HTML if the API is unavailable.
+// =================================================================
+(async function loadDynamicConfig() {
+  function esc(s) {
+    return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  // Escape then apply *italic* and | line-break markers
+  function fmt(s) {
+    return esc(s).replace(/\*([^*]+)\*/g, '<em>$1</em>').replace(/\|/g, '<br/>');
+  }
+  function setText(sel, val) {
+    const el = document.querySelector(sel);
+    if (el && val != null) el.textContent = val;
+  }
+  function setHtml(sel, val) {
+    const el = document.querySelector(sel);
+    if (el && val != null) el.innerHTML = fmt(val);
+  }
+  function setAttr(sel, attr, val) {
+    const el = document.querySelector(sel);
+    if (el && val != null) el.setAttribute(attr, val);
+  }
+
+  try {
+    const res = await fetch('/api/config?t=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) return;
+    const cfg = await res.json();
+
+    // ---- HERO ----
+    if (cfg.hero) {
+      setText('.hero__eyebrow', cfg.hero.eyebrow);
+      setHtml('.hero__title', cfg.hero.title);
+      setText('.hero__sub', cfg.hero.sub);
+      setText('.hero__note', cfg.hero.note);
+
+      const beforeEl = document.querySelector('.ba__before');
+      const afterEl = document.querySelector('.ba__after');
+      if (beforeEl && cfg.hero.antes) beforeEl.style.backgroundImage = `url('${cfg.hero.antes}')`;
+      if (afterEl && cfg.hero.depois) afterEl.style.backgroundImage = `url('${cfg.hero.depois}')`;
+
+      if (Array.isArray(cfg.hero.trust)) {
+        const items = document.querySelectorAll('.hero__trust-item');
+        cfg.hero.trust.forEach((it, i) => {
+          const el = items[i]; if (!el) return;
+          const strong = el.querySelector('strong');
+          const span = el.querySelector('span');
+          if (strong && it.num != null) strong.textContent = it.num;
+          if (span && it.label != null) span.textContent = it.label;
+        });
+      }
+    }
+
+    // ---- STATS ----
+    if (Array.isArray(cfg.stats)) {
+      const cells = document.querySelectorAll('.stats .stat');
+      cfg.stats.forEach((s, i) => {
+        const el = cells[i]; if (!el) return;
+        const num = el.querySelector('.stat__num');
+        const label = el.querySelector('.stat__label');
+        if (num && s.num != null && !num.hasAttribute('data-count')) num.textContent = s.num;
+        if (num && s.num != null && num.hasAttribute('data-count')) num.setAttribute('data-count', String(s.num).replace(/\D/g, '') || s.num);
+        if (label && s.label != null) label.textContent = s.label;
+      });
+    }
+
+    // ---- MILLENA ----
+    if (cfg.millena) {
+      if (cfg.millena.foto) {
+        const img = document.querySelector('.millena__photo img');
+        if (img) img.src = cfg.millena.foto;
+      }
+      const secNum = document.querySelector('#millena .section__num');
+      if (secNum && cfg.millena.sectionNum) secNum.textContent = cfg.millena.sectionNum;
+      const title = document.querySelector('.millena__title');
+      if (title && cfg.millena.title) title.innerHTML = fmt(cfg.millena.title);
+      const bio = document.querySelector('.millena__bio');
+      if (bio) {
+        const ps = bio.querySelectorAll('p');
+        if (ps[0] && cfg.millena.bio1) ps[0].textContent = cfg.millena.bio1;
+        if (ps[1] && cfg.millena.bio2) ps[1].textContent = cfg.millena.bio2;
+      }
+      if (Array.isArray(cfg.millena.credentials)) {
+        const items = document.querySelectorAll('.millena__credentials li');
+        cfg.millena.credentials.forEach((txt, i) => {
+          const li = items[i]; if (!li) return;
+          const span = li.querySelector('span');
+          if (span) span.textContent = txt;
+        });
+      }
+    }
+
+    // ---- GALERIA header ----
+    if (cfg.galeria) {
+      const g = document.querySelector('#galeria');
+      if (g) {
+        const num = g.querySelector('.section__num');
+        if (num && cfg.galeria.sectionNum) num.textContent = cfg.galeria.sectionNum;
+        const title = g.querySelector('.section__title');
+        if (title && cfg.galeria.title) title.innerHTML = fmt(cfg.galeria.title);
+        const intro = g.querySelector('.section__intro');
+        if (intro && cfg.galeria.intro) intro.textContent = cfg.galeria.intro;
+        const disc = g.querySelector('.galeria__disclaimer');
+        if (disc && cfg.galeria.disclaimer) disc.textContent = cfg.galeria.disclaimer;
+        const cta = g.querySelector('.galeria__cta-link');
+        if (cta && cfg.galeria.cta) cta.textContent = cfg.galeria.cta;
+      }
+    }
+
+    // ---- GALLERY CARDS ----
+    if (Array.isArray(cfg.gallery)) {
+      const cards = document.querySelectorAll('.gcase');
+      cfg.gallery.forEach((item, i) => {
+        const card = cards[i];
+        if (!card) return;
+        const before = card.querySelector('.gcase__before');
+        const after = card.querySelector('.gcase__after');
+        if (before && item.before) before.style.backgroundImage = `url('${item.before}')`;
+        if (after && item.after) after.style.backgroundImage = `url('${item.after}')`;
+        const meta = card.querySelector('.gcase__meta');
+        if (meta) {
+          const nome = esc(item.nome || '');
+          const idade = esc(item.idade || '');
+          const proc = esc(item.procedimento || '');
+          meta.innerHTML = `<strong>${nome}${idade ? ', ' + idade : ''}</strong><span>${proc}</span>`;
+        }
+        if (item.categoria) card.dataset.cat = item.categoria;
+      });
+    }
+
+    // ---- PROCEDIMENTOS ----
+    if (cfg.procedimentos) {
+      const p = document.querySelector('#procedimentos');
+      if (p) {
+        const num = p.querySelector('.section__num');
+        if (num && cfg.procedimentos.sectionNum) num.textContent = cfg.procedimentos.sectionNum;
+        const title = p.querySelector('.section__title');
+        if (title && cfg.procedimentos.title) title.innerHTML = fmt(cfg.procedimentos.title);
+        if (Array.isArray(cfg.procedimentos.items)) {
+          const cards = p.querySelectorAll('.proc');
+          cfg.procedimentos.items.forEach((it, i) => {
+            const el = cards[i]; if (!el) return;
+            const t = el.querySelector('.proc__title');
+            const d = el.querySelector('.proc__desc');
+            const icon = el.querySelector('.proc__icon');
+            if (t && it.title) t.textContent = it.title;
+            if (d && it.desc) d.textContent = it.desc;
+            if (icon && it.icon) icon.src = it.icon;
+          });
+        }
+      }
+    }
+
+    // ---- PROCESSO ----
+    if (cfg.processo) {
+      const p = document.querySelector('#processo');
+      if (p) {
+        const num = p.querySelector('.section__num');
+        if (num && cfg.processo.sectionNum) num.textContent = cfg.processo.sectionNum;
+        const title = p.querySelector('.section__title');
+        if (title && cfg.processo.title) title.innerHTML = fmt(cfg.processo.title);
+        if (Array.isArray(cfg.processo.steps)) {
+          const steps = p.querySelectorAll('.step');
+          cfg.processo.steps.forEach((s, i) => {
+            const el = steps[i]; if (!el) return;
+            const n = el.querySelector('.step__num');
+            const t = el.querySelector('.step__title');
+            const d = el.querySelector('.step__desc');
+            if (n && s.num) n.textContent = s.num;
+            if (t && s.title) t.textContent = s.title;
+            if (d && s.desc) d.textContent = s.desc;
+          });
+        }
+      }
+    }
+
+    // ---- DEPOIMENTOS HEADER ----
+    if (cfg.depoimentos) {
+      const d = document.querySelector('#depoimentos');
+      if (d) {
+        const num = d.querySelector('.section__num');
+        if (num && cfg.depoimentos.sectionNum) num.textContent = cfg.depoimentos.sectionNum;
+        const title = d.querySelector('.section__title');
+        if (title && cfg.depoimentos.title) title.innerHTML = fmt(cfg.depoimentos.title);
+      }
+    }
+
+    // ---- TESTIMONIALS ----
+    if (Array.isArray(cfg.testimonials)) {
+      const testis = document.querySelectorAll('.testi');
+      cfg.testimonials.forEach((item, i) => {
+        const el = testis[i];
+        if (!el) return;
+        const quote = el.querySelector('.testi__quote');
+        if (quote && item.texto) quote.textContent = '"' + item.texto + '"';
+        const name = el.querySelector('.testi__name');
+        if (name && item.nome) name.textContent = item.nome;
+        const role = el.querySelector('.testi__role');
+        if (role && item.role) role.textContent = item.role;
+        const avatar = el.querySelector('.testi__avatar');
+        if (avatar) avatar.textContent = item.avatar || (item.nome ? item.nome[0] : '');
+      });
+    }
+
+    // ---- FAQ ----
+    if (cfg.faq) {
+      const f = document.querySelector('#faq');
+      if (f) {
+        const num = f.querySelector('.section__num');
+        if (num && cfg.faq.sectionNum) num.textContent = cfg.faq.sectionNum;
+        const title = f.querySelector('.section__title');
+        if (title && cfg.faq.title) title.innerHTML = fmt(cfg.faq.title);
+        if (Array.isArray(cfg.faq.items)) {
+          const items = f.querySelectorAll('.faq__item');
+          cfg.faq.items.forEach((it, i) => {
+            const el = items[i]; if (!el) return;
+            const q = el.querySelector('.faq__q > span:first-child');
+            const a = el.querySelector('.faq__a p');
+            if (q && it.question) q.textContent = it.question;
+            if (a && it.answer) a.textContent = it.answer;
+          });
+        }
+      }
+    }
+
+    // ---- URGÊNCIA ----
+    if (cfg.urgencia) {
+      const u = document.querySelector('.urgencia');
+      if (u) {
+        const tag = u.querySelector('.urgencia__tag');
+        if (tag && cfg.urgencia.tag) tag.textContent = cfg.urgencia.tag;
+        const title = u.querySelector('.urgencia__title');
+        if (title && cfg.urgencia.title) title.innerHTML = fmt(cfg.urgencia.title);
+        const sub = u.querySelector('.urgencia__sub');
+        if (sub && cfg.urgencia.sub) sub.textContent = cfg.urgencia.sub;
+        const cta = u.querySelector('.urgencia [data-track="urgencia_cta"]');
+        if (cta && cfg.urgencia.cta) {
+          // preserve trailing arrow SVG
+          const arrow = cta.querySelector('svg');
+          cta.innerHTML = esc(cfg.urgencia.cta);
+          if (arrow) cta.appendChild(arrow);
+        }
+      }
+    }
+
+    // ---- FORM ----
+    if (cfg.form) {
+      const l = document.querySelector('#agendar');
+      if (l) {
+        const num = l.querySelector('.section__num');
+        if (num && cfg.form.sectionNum) num.textContent = cfg.form.sectionNum;
+        const title = l.querySelector('.lead__title');
+        if (title && cfg.form.title) title.innerHTML = fmt(cfg.form.title);
+        const desc = l.querySelector('.lead__desc');
+        if (desc && cfg.form.desc) desc.textContent = cfg.form.desc;
+        const fTitle = l.querySelector('.form__head h3');
+        if (fTitle && cfg.form.formTitle) fTitle.innerHTML = fmt(cfg.form.formTitle);
+        const fSub = l.querySelector('.form__head p');
+        if (fSub && cfg.form.formSub) fSub.textContent = cfg.form.formSub;
+        const submit = l.querySelector('.form__submit');
+        if (submit && cfg.form.submit) {
+          const svg = submit.querySelector('svg');
+          submit.innerHTML = '';
+          if (svg) submit.appendChild(svg);
+          submit.appendChild(document.createTextNode(' ' + cfg.form.submit));
+        }
+      }
+    }
+  } catch (e) { /* silent: keep hardcoded fallback */ }
+})();
+
+// =================================================================
+// UTM capture (preserves campaign source across WhatsApp clicks)
+// =================================================================
+(function captureUTM() {
+  const params = new URLSearchParams(location.search);
+  const utm = {};
+  ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','fbclid','gclid'].forEach(k => {
+    if (params.get(k)) utm[k] = params.get(k);
+  });
+  if (Object.keys(utm).length) {
+    try { sessionStorage.setItem('utm', JSON.stringify(utm)); } catch(e){}
+  }
+})();
+
+function getStoredUTM() {
+  try { return JSON.parse(sessionStorage.getItem('utm') || '{}'); }
+  catch(e) { return {}; }
+}
+
+// Append UTM to WhatsApp links so you know which campaign generated the click
+function decorateWhatsAppLinks() {
+  const utm = getStoredUTM();
+  const utmStr = Object.entries(utm).map(([k,v]) => `${k}=${v}`).join(' ');
+  document.querySelectorAll('.wa-link').forEach(link => {
+    let href = link.getAttribute('href');
+    if (!href || !href.includes('wa.me')) return;
+    if (utmStr && href.includes('text=')) {
+      const separator = href.includes('text=') ? '%20%7C%20' : '';
+      href = href.replace(/text=([^&]*)/, (m, t) => `text=${t}${encodeURIComponent(' | ' + utmStr)}`);
+      link.setAttribute('href', href);
+    }
+  });
+}
+decorateWhatsAppLinks();
+
+// =================================================================
+// Meta Pixel events
+// =================================================================
+function track(eventName, params) {
+  if (typeof fbq !== 'undefined') fbq('track', eventName, params || {});
+}
+
+// Track clicks on important CTAs
+document.querySelectorAll('[data-track]').forEach(el => {
+  el.addEventListener('click', () => {
+    const where = el.dataset.track;
+    if (where.includes('wa')) track('Contact', { source: where });
+    else track('Lead', { source: where, step: 'click' });
+  });
+});
+
+// =================================================================
+// Nav scroll state + progress
+// =================================================================
+const nav = document.getElementById('nav');
+const progressBar = document.getElementById('progress');
+function onScrollUI() {
+  const y = window.scrollY;
+  nav.classList.toggle('scrolled', y > 30);
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.width = Math.min(100, (y/max)*100) + '%';
+}
+window.addEventListener('scroll', onScrollUI, { passive: true });
+onScrollUI();
+
+// =================================================================
+// Reveal on scroll
+// =================================================================
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// =================================================================
+// Counter animation
+// =================================================================
+const counterIO = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    const target = parseInt(el.dataset.count, 10);
+    const dur = 1600;
+    const start = performance.now();
+    const prefix = el.textContent.includes('+') || target > 99 ? '+' : '';
+    (function tick(now){
+      const t = Math.min(1, (now-start)/dur);
+      const eased = 1 - Math.pow(1-t, 3);
+      el.textContent = (target >= 100 ? '+' : '') + Math.floor(target*eased);
+      if (t < 1) requestAnimationFrame(tick);
+      else el.textContent = (target >= 100 ? '+' : '') + target;
+    })(performance.now());
+    counterIO.unobserve(el);
+  });
+}, { threshold: 0.4 });
+document.querySelectorAll('[data-count]').forEach(el => counterIO.observe(el));
+
+// =================================================================
+// Before/After slider -mouse + touch with intent detection
+// =================================================================
+function makeBA(el) {
+  let dragging = false;
+  let sX = 0, sY = 0, intent = null;
+
+  function setPos(clientX) {
+    const r = el.getBoundingClientRect();
+    const x = Math.max(0, Math.min(r.width, clientX - r.left));
+    el.style.setProperty('--pos', ((x / r.width) * 100) + '%');
+  }
+
+  // ----- Mouse: instant drag, click-to-snap
+  el.addEventListener('mousedown', e => {
+    dragging = true;
+    intent = 'h';
+    setPos(e.clientX);
+    e.preventDefault();
+  });
+  window.addEventListener('mousemove', e => {
+    if (dragging && intent === 'h') setPos(e.clientX);
+  });
+  window.addEventListener('mouseup', () => { dragging = false; intent = null; });
+  window.addEventListener('mouseleave', () => { dragging = false; intent = null; });
+
+  // ----- Touch: detect intent before hijacking the gesture
+  el.addEventListener('touchstart', e => {
+    const t = e.touches[0];
+    sX = t.clientX; sY = t.clientY;
+    intent = null;
+    dragging = true;
+  }, { passive: true });
+
+  window.addEventListener('touchmove', e => {
+    if (!dragging) return;
+    const t = e.touches[0];
+    if (intent === null) {
+      const dx = Math.abs(t.clientX - sX);
+      const dy = Math.abs(t.clientY - sY);
+      if (dx < 10 && dy < 10) return;          // wait for clear movement
+      intent = dx > dy ? 'h' : 'v';
+      if (intent === 'v') { dragging = false; return; } // release for scroll
+    }
+    if (intent === 'h') {
+      if (e.cancelable) e.preventDefault();
+      setPos(t.clientX);
+    }
+  }, { passive: false });
+
+  window.addEventListener('touchend', () => { dragging = false; intent = null; });
+  window.addEventListener('touchcancel', () => { dragging = false; intent = null; });
+
+  el.style.setProperty('--pos', '55%');
+}
+
+document.querySelectorAll('.ba, .gcase').forEach(makeBA);
+
+// Hero intro: one calm sweep, then stop forever. No flicker, no infinite loop.
+const ba = document.getElementById('ba');
+if (ba) {
+  let userTouched = false;
+  const cancel = () => { userTouched = true; };
+  ['mousedown','touchstart'].forEach(ev => ba.addEventListener(ev, cancel, { once: true }));
+
+  const keyframes = [
+    { t: 0,    pos: 50 },
+    { t: 1100, pos: 78 },
+    { t: 2200, pos: 28 },
+    { t: 3100, pos: 55 }
+  ];
+  const startAt = performance.now() + 700;
+  function intro(now) {
+    if (userTouched) return;
+    const elapsed = now - startAt;
+    if (elapsed < 0) { requestAnimationFrame(intro); return; }
+    if (elapsed >= keyframes[keyframes.length - 1].t) {
+      ba.style.setProperty('--pos', keyframes[keyframes.length - 1].pos + '%');
+      return;
+    }
+    let a, b;
+    for (let i = 0; i < keyframes.length - 1; i++) {
+      if (elapsed >= keyframes[i].t && elapsed < keyframes[i + 1].t) {
+        a = keyframes[i]; b = keyframes[i + 1]; break;
+      }
+    }
+    const segT = (elapsed - a.t) / (b.t - a.t);
+    const eased = segT < 0.5 ? 2*segT*segT : 1 - Math.pow(-2*segT+2,2)/2;
+    ba.style.setProperty('--pos', (a.pos + (b.pos - a.pos) * eased) + '%');
+    requestAnimationFrame(intro);
+  }
+  requestAnimationFrame(intro);
+}
+
+// =================================================================
+// Galeria filters
+// =================================================================
+document.querySelectorAll('.galeria__filter').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.galeria__filter').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    document.querySelectorAll('.gcase').forEach(c => {
+      const show = f === 'all' || c.dataset.cat === f;
+      c.style.display = show ? '' : 'none';
+    });
+  });
+});
+
+// =================================================================
+// FAQ accordion
+// =================================================================
+document.querySelectorAll('.faq__q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    const open = item.classList.contains('open');
+    document.querySelectorAll('.faq__item').forEach(i => i.classList.remove('open'));
+    if (!open) item.classList.add('open');
+  });
+});
+
+// =================================================================
+// Countdown -end of month
+// =================================================================
+function tickCountdown() {
+  const now = new Date();
+  const end = new Date(now.getFullYear(), now.getMonth() + 1, 1, 0, 0, 0);
+  const diff = Math.max(0, end - now);
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  const pad = n => String(n).padStart(2, '0');
+  const cd = document.getElementById('cDays');
+  if (!cd) return;
+  cd.textContent = pad(d);
+  document.getElementById('cHours').textContent = pad(h);
+  document.getElementById('cMin').textContent = pad(m);
+  document.getElementById('cSec').textContent = pad(s);
+}
+tickCountdown();
+setInterval(tickCountdown, 1000);
+
+// =================================================================
+// Phone mask
+// =================================================================
+const tel = document.getElementById('telefone');
+tel.addEventListener('input', e => {
+  let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+  if (v.length > 6) v = `(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
+  else if (v.length > 2) v = `(${v.slice(0,2)}) ${v.slice(2)}`;
+  else if (v.length > 0) v = `(${v}`;
+  e.target.value = v;
+});
+
+// =================================================================
+// Form submit -direct to WhatsApp + Pixel Lead event
+// =================================================================
+document.getElementById('leadForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const nome = document.getElementById('nome').value.trim();
+  const phone = document.getElementById('telefone').value.trim();
+
+  if (!nome || !phone) {
+    document.querySelectorAll('#leadForm input').forEach(i => {
+      if (!i.value.trim()) {
+        i.style.borderBottomColor = 'var(--danger)';
+        i.animate(
+          [{ transform: 'translateX(0)' },{ transform: 'translateX(-6px)' },{ transform: 'translateX(6px)' },{ transform: 'translateX(0)' }],
+          { duration: 300 }
+        );
+        setTimeout(() => i.style.borderBottomColor = '', 1500);
+      }
+    });
+    return;
+  }
+
+  // Track Pixel Lead event
+  track('Lead', { content_name: 'Form Submit', value: 1, currency: 'BRL' });
+
+  // Build WhatsApp link with the lead's info pre-filled
+  const utm = getStoredUTM();
+  const utmStr = Object.entries(utm).map(([k,v]) => `${k}=${v}`).join(' | ');
+  const msg = `Olá! Sou ${nome} e gostaria de agendar uma avaliação com a Dra. Millena.${utmStr ? '\n\nFonte: ' + utmStr : ''}`;
+  const waLink = `https://wa.me/5511999999999?text=${encodeURIComponent(msg)}`;
+  document.getElementById('successWa').setAttribute('href', waLink);
+
+  // Show success
+  document.getElementById('leadForm').style.display = 'none';
+  document.getElementById('success').classList.add('active');
+
+  // Auto-redirect to WhatsApp after 1.5s
+  setTimeout(() => {
+    window.open(waLink, '_blank');
+  }, 1500);
+});
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const h = a.getAttribute('href');
+    if (h.length > 1) {
+      const t = document.querySelector(h);
+      if (t) {
+        e.preventDefault();
+        const y = t.getBoundingClientRect().top + window.scrollY - 20;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }
+  });
+});
+</script>
+</body>
+</html>
