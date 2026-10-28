@@ -54,6 +54,32 @@ export const DEFAULT_CONFIG = {
     cta: 'Falar com a Millena'
   },
 
+  metodo: {
+    nome: 'Método Essência',
+    frase: 'Antes de pensar em agulhas, a Dra. Millena olha para quem você é.',
+    texto: 'Cada plano nasce de quatro princípios que guiam todas as decisões, da primeira conversa ao retorno.',
+    pilares: [
+      { titulo: 'Leitura facial', texto: 'Análise das proporções, da estrutura e de como o seu rosto se move quando você fala e sorri.' },
+      { titulo: 'Sutileza', texto: 'Doses e volumes na medida certa. O objetivo é que notem você, não o procedimento.' },
+      { titulo: 'Identidade', texto: 'O plano respeita os traços que fazem de você quem você é. Nada de rosto padrão.' },
+      { titulo: 'Cuidado contínuo', texto: 'Retorno e acompanhamento para ajustar e manter o resultado ao longo do tempo.' }
+    ]
+  },
+
+  mapa: {
+    title: 'Onde você quer cuidar?',
+    intro: 'Toque em uma região do rosto para ver o que pode ser feito nela.',
+    zonas: [
+      { id: 'testa', nome: 'Testa', titulo: 'Linhas de expressão', texto: 'Suaviza as linhas da testa e entre as sobrancelhas sem congelar a expressão.', procedimentos: 'Toxina botulínica' },
+      { id: 'olhos', nome: 'Olhar', titulo: 'Olhar descansado', texto: 'Atenua pés de galinha e sinais de cansaço, devolvendo leveza ao olhar.', procedimentos: 'Toxina botulínica, Ulthera' },
+      { id: 'nariz', nome: 'Nariz', titulo: 'Perfil harmônico', texto: 'Corrige pequenas irregularidades do dorso e da ponta do nariz, sem cirurgia.', procedimentos: 'Rinomodelação' },
+      { id: 'macas', nome: 'Maçãs do rosto', titulo: 'Sustentação e contorno', texto: 'Repõe o volume perdido com o tempo e devolve a sustentação do terço médio.', procedimentos: 'Full Face, Bioestimulador de Colágeno' },
+      { id: 'labios', nome: 'Lábios', titulo: 'Lábios em proporção', texto: 'Contorno, hidratação e volume sob medida, em harmonia com o resto do rosto.', procedimentos: 'Preenchimento Labial' },
+      { id: 'mandibula', nome: 'Mandíbula e queixo', titulo: 'Contorno definido', texto: 'Define a linha da mandíbula e equilibra o queixo com o perfil.', procedimentos: 'Full Face, Ulthera' },
+      { id: 'pele', nome: 'Pele', titulo: 'Firmeza e viço', texto: 'Estimula o colágeno da própria pele para mais firmeza, textura e luminosidade.', procedimentos: 'Bioestimulador de Colágeno, Ulthera' }
+    ]
+  },
+
   galeria: {
     eyebrow: 'Resultados',
     title: 'Pequenas mudanças, grandes revelações.',

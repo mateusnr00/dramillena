@@ -2,7 +2,7 @@
 // Todo texto vindo do painel passa por esc() (ou fmt(), que escapa antes
 // de aplicar os marcadores *itálico* e |quebra).
 
-const ASSET_VERSION = '6';
+const ASSET_VERSION = '7';
 
 export function esc(s) {
   return String(s ?? '').replace(/[&<>"']/g, c => (
@@ -123,7 +123,7 @@ ${safeUrl(cfg.hero.antes) ? `<link rel="preload" as="image" href="${esc(safeUrl(
 <link rel="stylesheet" href="/css/site.css?v=${ASSET_VERSION}" />`;
 }
 
-const NAV = [['#procedimentos', 'Procedimentos'], ['#resultados', 'Resultados'], ['#sobre', 'Sobre'], ['#duvidas', 'Dúvidas']];
+const NAV = [['#sobre', 'Sobre'], ['#metodo', 'Método'], ['#mapa', 'Tratamentos'], ['#resultados', 'Resultados'], ['#duvidas', 'Dúvidas']];
 
 function nav(cfg) {
   return `
@@ -190,6 +190,89 @@ function sobre(cfg) {
         ${list(m.credentials).map(c => `<li>${icon.check}<span>${esc(c)}</span></li>`).join('')}
       </ul>
       <a class="link-wa" href="${esc(waLink(cfg.settings, 'Olá, gostaria de conversar com a Dra. Millena'))}" target="_blank" rel="noopener" data-track="sobre_wa">${icon.wa}<span>${esc(m.cta)}</span></a>
+    </div>
+  </div>
+</section>`;
+}
+
+function metodo(cfg) {
+  const m = cfg.metodo;
+  const pilares = list(m && m.pilares);
+  if (!m || !pilares.length) return '';
+  return `
+<section class="method" id="metodo">
+  <div class="wrap method__grid">
+    <div class="method__intro">
+      <p class="method__name">${esc(m.nome)}</p>
+      <h2 class="h2">${fmt(m.frase)}</h2>
+      ${m.texto ? `<p class="sec-intro">${esc(m.texto)}</p>` : ''}
+    </div>
+    <ul class="method__list">
+      ${pilares.map(p => `
+      <li>
+        <span class="method__glyph" aria-hidden="true"></span>
+        <h3>${esc(p.titulo)}</h3>
+        <p>${esc(p.texto)}</p>
+      </li>`).join('')}
+    </ul>
+  </div>
+</section>`;
+}
+
+// Posição de cada região na ilustração (em % da largura e altura).
+const ZONE_POS = {
+  testa: [50, 24], olhos: [36.5, 42.5], nariz: [50, 54], macas: [27, 55],
+  labios: [50, 67.5], mandibula: [66, 79], pele: [73, 52]
+};
+
+const FACE_SVG = `
+<svg class="facemap__art" viewBox="0 0 400 520" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M200 58c86 0 128 74 127 168-1 92-37 172-82 212-22 19-68 19-90 0-45-40-81-120-82-212-1-94 41-168 127-168z"/>
+  <path d="M150 442c2 30 0 54-5 78M250 442c-2 30 0 54 5 78"/>
+  <path d="M118 198c18-14 44-16 64-8M282 198c-18-14-44-16-64-8"/>
+  <path d="M124 228c14-12 38-12 52 0-14 9-38 9-52 0zM224 228c14-12 38-12 52 0-14 9-38 9-52 0z"/>
+  <circle cx="150" cy="228" r="4.5" fill="currentColor" stroke="none"/>
+  <circle cx="250" cy="228" r="4.5" fill="currentColor" stroke="none"/>
+  <path d="M199 236c-3 26-10 50-16 64M183 300c8 10 26 10 34 0"/>
+  <path d="M160 350c14-9 28-11 40-5 12-6 26-4 40 5M160 350c20 18 60 18 80 0M163 351c20 5 54 5 74 0"/>
+  <path d="M100 268c12 30 28 46 48 52M300 268c-12 30-28 46-48 52" opacity=".45"/>
+  <path d="M170 418c18 8 42 8 60 0" opacity=".45"/>
+</svg>`;
+
+function mapa(cfg) {
+  const m = cfg.mapa;
+  const zonas = list(m && m.zonas);
+  if (!zonas.length) return '';
+  const first = zonas[0];
+  const panel = z => `
+        <p class="facemap__zone">${esc(z.nome)}</p>
+        <h3 class="facemap__title">${esc(z.titulo)}</h3>
+        <p class="facemap__text">${esc(z.texto)}</p>
+        ${z.procedimentos ? `<ul class="facemap__procs">${String(z.procedimentos).split(',').map(p => p.trim()).filter(Boolean).map(p => `<li>${esc(p)}</li>`).join('')}</ul>` : ''}
+        <a class="link-wa" href="${esc(waLink(cfg.settings, `Olá, gostaria de saber mais sobre tratamentos para ${plain(z.nome).toLowerCase()}.`))}" target="_blank" rel="noopener" data-track="mapa_${esc(z.id || 'zona')}_wa">${icon.wa}<span>Perguntar sobre ${esc(plain(z.nome).toLowerCase())}</span></a>`;
+  return `
+<section class="facemap" id="mapa">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="h2">${fmt(m.title)}</h2>
+      ${m.intro ? `<p class="sec-intro">${esc(m.intro)}</p>` : ''}
+    </div>
+    <div class="facemap__grid">
+      <div class="facemap__stage">
+        ${FACE_SVG}
+        ${zonas.map((z, i) => {
+          const pos = ZONE_POS[z.id];
+          if (!pos) return '';
+          return `<button type="button" class="facemap__dot" style="left:${pos[0]}%;top:${pos[1]}%" data-zone="${i}" aria-label="${esc(z.nome)}"${i === 0 ? ' aria-pressed="true"' : ' aria-pressed="false"'}><span></span></button>`;
+        }).join('')}
+      </div>
+      <div class="facemap__side">
+        <div class="facemap__tabs" role="group" aria-label="Regiões do rosto">
+          ${zonas.map((z, i) => `<button type="button" data-zone="${i}" aria-pressed="${i === 0}">${esc(z.nome)}</button>`).join('')}
+        </div>
+        <div class="facemap__panel" aria-live="polite" data-panel>${panel(first)}</div>
+        ${zonas.map((z, i) => `<template data-zone-tpl="${i}">${panel(z)}</template>`).join('')}
+      </div>
     </div>
   </div>
 </section>`;
@@ -421,6 +504,8 @@ ${nav(cfg)}
 <main id="conteudo">
 ${hero(cfg)}
 ${sobre(cfg)}
+${metodo(cfg)}
+${mapa(cfg)}
 ${procedimentos(cfg)}
 ${processo(cfg)}
 ${resultados(cfg)}

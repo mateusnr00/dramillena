@@ -259,6 +259,33 @@
   }
 
   /* =================================================================
+     Mapa do rosto
+     ================================================================= */
+  var facemap = $('#mapa');
+  if (facemap) {
+    var panelEl = $('[data-panel]', facemap);
+    var current = '0';
+    var pick = function (i, fromUser) {
+      if (i === current) return;
+      current = i;
+      var tpl = $('[data-zone-tpl="' + i + '"]', facemap);
+      if (tpl) panelEl.innerHTML = tpl.innerHTML;
+      $$('[data-zone]', facemap).forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-zone') === i)); });
+      if (!reduceMotion) { panelEl.classList.remove('is-changing'); void panelEl.offsetWidth; panelEl.classList.add('is-changing'); }
+      if (fromUser) send('click', 'mapa_' + i);
+    };
+    facemap.addEventListener('click', function (ev) {
+      var b = ev.target.closest('[data-zone]');
+      if (!b) return;
+      pick(b.getAttribute('data-zone'), true);
+      // No celular o texto fica abaixo do desenho: leva a pessoa até ele.
+      if (b.classList.contains('facemap__dot') && window.innerWidth < 860) {
+        $('.facemap__tabs', facemap).scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });
+      }
+    });
+  }
+
+  /* =================================================================
      Formulário: salva o lead e leva para o WhatsApp
      ================================================================= */
   var form = $('#leadForm');

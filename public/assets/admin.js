@@ -182,6 +182,35 @@
           fields: [{ p: 'texto', l: 'Depoimento', t: 'textarea' }, { p: 'nome', l: 'Nome' }, { p: 'role', l: 'Detalhe', s: 'Ex.: Cliente desde 2023' }] }
       ]
     },
+    metodo: {
+      title: 'Método', desc: 'O método com nome próprio e seus pilares.', icon: 'sparkle', color: '#d4b88a',
+      groups: [
+        { label: 'Método', fields: [
+          { p: 'metodo.nome', l: 'Nome do método' },
+          { p: 'metodo.frase', l: 'Frase principal' },
+          { p: 'metodo.texto', l: 'Texto de apoio', t: 'textarea' }
+        ] },
+        { label: 'Pilares', list: 'metodo.pilares', itemLabel: function (it) { return it.titulo; },
+          blank: { titulo: '', texto: '' },
+          fields: [{ p: 'titulo', l: 'Pilar' }, { p: 'texto', l: 'Descrição', t: 'textarea' }] }
+      ]
+    },
+    mapa: {
+      title: 'Mapa do rosto', desc: 'As regiões que a paciente toca no rosto ilustrado.', icon: 'person', color: '#d4b88a',
+      groups: [
+        { label: 'Seção', fields: [{ p: 'mapa.title', l: 'Título' }, { p: 'mapa.intro', l: 'Texto de apoio', t: 'textarea' }] },
+        { label: 'Regiões', hint: 'O ponto no rosto depende do código da região: testa, olhos, nariz, macas, labios, mandibula ou pele. Regiões com outro código aparecem só na lista de botões.',
+          list: 'mapa.zonas', itemLabel: function (it) { return it.nome; },
+          blank: { id: '', nome: '', titulo: '', texto: '', procedimentos: '' },
+          fields: [
+            { p: 'id', l: 'Código da região', s: 'testa, olhos, nariz, macas, labios, mandibula ou pele' },
+            { p: 'nome', l: 'Nome da região' },
+            { p: 'titulo', l: 'Título' },
+            { p: 'texto', l: 'Descrição', t: 'textarea' },
+            { p: 'procedimentos', l: 'Procedimentos', s: 'Separados por vírgula' }
+          ] }
+      ]
+    },
     processo: {
       title: 'Como funciona', desc: 'As etapas do atendimento.', icon: 'steps', color: '#d4b88a',
       groups: [
@@ -247,7 +276,7 @@
       { id: 'painel', title: 'Painel', desc: 'Visitas, contatos e de onde vêm as pacientes.', icon: 'chart', color: '#d4b88a' },
       { id: 'leads', title: 'Leads', desc: 'Quem preencheu o formulário de agendamento.', icon: 'inbox', color: '#d4b88a' }
     ] },
-    { group: 'Conteúdo do site', items: ['inicio', 'sobre', 'procedimentos', 'processo', 'resultados', 'depoimentos', 'faq', 'agendar'].map(function (k) {
+    { group: 'Conteúdo do site', items: ['inicio', 'sobre', 'metodo', 'mapa', 'procedimentos', 'processo', 'resultados', 'depoimentos', 'faq', 'agendar'].map(function (k) {
       return { id: k, title: CONTENT[k].title, desc: CONTENT[k].desc, icon: CONTENT[k].icon, color: CONTENT[k].color };
     }) },
     { group: 'Ajustes', items: [

@@ -229,6 +229,75 @@ em { font-style: italic; }
 .checks li:first-child { border-top: 1px solid var(--line); }
 .checks svg { color: var(--bronze); font-size: 18px; margin-top: 4px; }
 
+/* ---------- Método ---------- */
+.method { padding: var(--section) 0; }
+.method__grid { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(40px, 7vw, 112px); align-items: start; }
+.method__name {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: 22px; color: var(--bronze);
+  margin-bottom: 20px;
+}
+.method__name::before {
+  content: ""; width: 16px; height: 22px;
+  border: 1px solid var(--bronze); border-bottom: 0;
+  border-radius: 999px 999px 0 0;
+}
+.method__list { display: grid; grid-template-columns: 1fr 1fr; gap: 40px 48px; }
+.method__list li { padding-top: 24px; border-top: 1px solid var(--line); }
+.method__glyph {
+  display: block; width: 26px; height: 34px; margin-bottom: 18px;
+  border: 1px solid var(--bronze-soft); border-bottom-color: var(--bronze);
+  border-radius: 999px 999px 4px 4px;
+  background: linear-gradient(to top, rgba(201, 173, 128, .28), transparent 70%);
+}
+.method__list h3 { font-family: var(--serif); font-weight: 400; font-size: 24px; margin-bottom: 8px; }
+.method__list p { color: var(--taupe); }
+
+/* ---------- Mapa do rosto ---------- */
+.facemap { background: var(--porcelain); padding: var(--section) 0; }
+.facemap__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 7vw, 112px); align-items: center; }
+.facemap__stage {
+  position: relative;
+  width: 100%; max-width: 440px; justify-self: center;
+  aspect-ratio: 400 / 520;
+  color: var(--bronze-soft);
+  background: radial-gradient(60% 50% at 50% 42%, rgba(230, 220, 203, .7), transparent 75%);
+}
+.facemap__art { width: 100%; height: 100%; display: block; }
+.facemap__dot {
+  position: absolute; width: 44px; height: 44px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.facemap__dot span {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--porcelain);
+  border: 1.5px solid var(--bronze);
+  box-shadow: 0 0 0 6px rgba(138, 106, 63, .1);
+  transition: background-color .25s var(--ease), box-shadow .25s var(--ease), transform .25s var(--ease);
+}
+.facemap__dot:hover span { transform: scale(1.15); }
+.facemap__dot[aria-pressed="true"] span { background: var(--bronze); box-shadow: 0 0 0 8px rgba(138, 106, 63, .18); }
+.facemap__tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; }
+.facemap__tabs button {
+  padding: 8px 16px; border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: 14px; color: var(--taupe);
+  transition: background-color .2s, color .2s, border-color .2s;
+}
+.facemap__tabs button:hover { border-color: var(--bronze-soft); color: var(--ink); }
+.facemap__tabs button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--porcelain); }
+.facemap__panel { min-height: 260px; }
+.facemap__panel.is-changing { animation: panel-in .45s var(--ease); }
+@keyframes panel-in { from { opacity: 0; transform: translateY(8px); } }
+.facemap__zone { font-size: 15px; color: var(--bronze-deep); margin-bottom: 8px; }
+.facemap__title { font-family: var(--serif); font-weight: 300; font-size: clamp(30px, 3.4vw, 42px); line-height: 1.1; margin-bottom: 16px; }
+.facemap__text { color: var(--taupe); max-width: 30em; }
+.facemap__procs { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 26px; }
+.facemap__procs li { font-size: 14px; padding: 6px 14px; border-radius: 999px; background: var(--sand-soft); }
+
 /* ---------- Procedimentos ---------- */
 .procs { padding: var(--section) 0; }
 .procs__list { border-top: 1px solid var(--line); margin-bottom: 36px; }
@@ -424,7 +493,10 @@ em { font-style: italic; }
   .hero { padding-top: 28px; }
   .hero__grid { grid-template-columns: 1fr; gap: 40px; }
   .hero__figure { justify-self: center; max-width: 380px; }
-  .sobre__grid, .faq__grid { grid-template-columns: 1fr; }
+  .sobre__grid, .faq__grid, .method__grid, .facemap__grid { grid-template-columns: 1fr; }
+  .facemap__stage { max-width: 320px; }
+  .facemap__tabs { margin-bottom: 24px; }
+  .facemap__panel { min-height: 0; }
   .results--one .wrap { display: block; }
   .results--one .sec-head { margin-bottom: 36px; }
   .sobre__photo { max-width: 400px; margin-bottom: 24px; }
@@ -455,6 +527,7 @@ em { font-style: italic; }
   .trust div { padding-right: 12px; }
   .trust div + div { padding-left: 12px; }
   .steps__list { grid-template-columns: 1fr; row-gap: 32px; }
+  .method__list { grid-template-columns: 1fr; gap: 28px; }
   .results__grid { grid-template-columns: 1fr; }
   .qa p { padding-right: 0; }
   .book__card { padding: 28px 20px; }
