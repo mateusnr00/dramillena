@@ -9,10 +9,11 @@ export async function onRequestGet({ request, env }) {
   try {
     await requireUser(request, env);
     const past = new URL(request.url).searchParams.get('past') === '1';
+    const hoje = new Date(Date.now() - 3 * 3600 * 1000).toISOString().slice(0, 10); // dia em São Paulo
     const { results } = await (await db(env)).prepare(
-      `SELECT * FROM bookings WHERE date ${past ? '<' : '>='} date('now', '-3 hours')
+      `SELECT * FROM bookings WHERE date ${past ? '<' : '>='} ?
        ORDER BY date ${past ? 'DESC' : 'ASC'}, time ${past ? 'DESC' : 'ASC'} LIMIT 300`
-    ).all();
+    ).bind(hoje).all();
     return json({ bookings: results });
   } catch (err) {
     return handleError(err);

@@ -75,3 +75,13 @@ O site mede, sem cookies e sem guardar IP:
 - quem preencheu o formulário (lead), com nome, WhatsApp e interesse.
 
 Se o Pixel da Meta ou o Google Analytics forem configurados em **Contato e marketing**, o site mostra o aviso de cookies (LGPD) e só carrega essas ferramentas depois do aceite.
+
+
+## Publicar na Vercel
+
+O mesmo código roda na Vercel (projeto `millena-curty`):
+
+- `api/router.js` recebe tudo o que não é arquivo estático (veja `vercel.json`) e chama as mesmas funções da pasta `functions/`.
+- Banco: Postgres pela variável `DATABASE_URL` (ou `POSTGRES_URL`), criada ao ligar um banco Neon em Storage no painel da Vercel. As tabelas são criadas sozinhas na primeira visita. `src/pg-d1.js` traduz as consultas do SQLite.
+- Fotos e vídeos: Vercel Blob pela variável `BLOB_READ_WRITE_TOKEN` (`src/blob-r2.js`).
+- Também precisa de `AUTH_SECRET`, `ADMIN_EMAIL` e `ADMIN_PASSWORD`.

@@ -57,8 +57,10 @@ export function isValidSlot(rules, taken, date, time, now = Date.now()) {
 }
 
 export async function takenSlots(d) {
+  // Data calculada aqui (e não no SQL) para funcionar igual no D1 e no Postgres.
+  const desde = new Date(Date.now() - 24 * 3600 * 1000).toISOString().slice(0, 10);
   const { results } = await d.prepare(
-    "SELECT date, time FROM bookings WHERE status <> 'cancelado' AND date >= date('now', '-1 day')"
-  ).all();
+    "SELECT date, time FROM bookings WHERE status <> 'cancelado' AND date >= ?"
+  ).bind(desde).all();
   return new Set(results.map(r => `${r.date} ${r.time}`));
 }

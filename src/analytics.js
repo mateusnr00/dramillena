@@ -24,6 +24,10 @@ export function clip(v, n = 80) {
 }
 
 export function geo(request) {
+  // Cloudflare entrega em request.cf; a Vercel, em cabeçalhos x-vercel-ip-*.
   const cf = request.cf || {};
-  return { country: clip(cf.country, 2), city: clip(cf.city, 60) };
+  let city = cf.city || request.headers.get('x-vercel-ip-city') || '';
+  try { city = decodeURIComponent(city); } catch { /* mantém como veio */ }
+  const country = cf.country || request.headers.get('x-vercel-ip-country') || '';
+  return { country: clip(country, 2), city: clip(city, 60) };
 }
