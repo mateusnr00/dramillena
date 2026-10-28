@@ -195,20 +195,19 @@
           fields: [{ p: 'titulo', l: 'Pilar' }, { p: 'texto', l: 'Descrição', t: 'textarea' }] }
       ]
     },
-    mapa: {
-      title: 'Mapa do rosto', desc: 'As regiões que a paciente toca no rosto ilustrado.', icon: 'person', color: '#d4b88a',
+    agenda: {
+      title: 'Horários da agenda', desc: 'Quando a paciente pode pré-reservar pelo site.', icon: 'calendar', color: '#d4b88a',
       groups: [
-        { label: 'Seção', fields: [{ p: 'mapa.title', l: 'Título' }, { p: 'mapa.intro', l: 'Texto de apoio', t: 'textarea' }] },
-        { label: 'Regiões', hint: 'O ponto no rosto depende do código da região: testa, olhos, nariz, macas, labios, mandibula ou pele. Regiões com outro código aparecem só na lista de botões.',
-          list: 'mapa.zonas', itemLabel: function (it) { return it.nome; },
-          blank: { id: '', nome: '', titulo: '', texto: '', procedimentos: '' },
-          fields: [
-            { p: 'id', l: 'Código da região', s: 'testa, olhos, nariz, macas, labios, mandibula ou pele' },
-            { p: 'nome', l: 'Nome da região' },
-            { p: 'titulo', l: 'Título' },
-            { p: 'texto', l: 'Descrição', t: 'textarea' },
-            { p: 'procedimentos', l: 'Procedimentos', s: 'Separados por vírgula' }
-          ] }
+        { label: 'Agenda online', hint: 'Cada pré-reserva bloqueia o horário e aparece em Agenda e em Leads. A equipe confirma pelo WhatsApp.', fields: [
+          { p: 'agenda.ativo', l: 'Agenda online ligada', t: 'bool' },
+          { p: 'agenda.dias', l: 'Dias de atendimento', s: 'Ex.: seg, ter, qua, qui, sex, sab' },
+          { p: 'agenda.inicio', l: 'Primeiro horário', s: 'Ex.: 09:00' },
+          { p: 'agenda.fim', l: 'Fim do expediente', s: 'Ex.: 18:00' },
+          { p: 'agenda.duracao', l: 'Duração da avaliação', s: 'Em minutos. Ex.: 60', t: 'number' },
+          { p: 'agenda.antecedenciaHoras', l: 'Antecedência mínima', s: 'Em horas. Ex.: 12', t: 'number' },
+          { p: 'agenda.diasFuturos', l: 'Dias abertos', s: 'Quantos dias à frente aparecem. Ex.: 21', t: 'number' },
+          { p: 'agenda.bloqueios', l: 'Dias bloqueados', t: 'textarea', s: 'Datas sem atendimento, separadas por vírgula. Ex.: 2026-12-24, 2026-12-25' }
+        ] }
       ]
     },
     processo: {
@@ -274,12 +273,14 @@
   var NAV = [
     { group: 'Acompanhamento', items: [
       { id: 'painel', title: 'Painel', desc: 'Visitas, contatos e de onde vêm as pacientes.', icon: 'chart', color: '#d4b88a' },
-      { id: 'leads', title: 'Leads', desc: 'Quem preencheu o formulário de agendamento.', icon: 'inbox', color: '#d4b88a' }
+      { id: 'reservas', title: 'Agenda', desc: 'Pré-reservas feitas pelo site.', icon: 'calendar', color: '#d4b88a' },
+      { id: 'leads', title: 'Leads', desc: 'Todas as pessoas que deixaram contato.', icon: 'inbox', color: '#d4b88a' }
     ] },
-    { group: 'Conteúdo do site', items: ['inicio', 'sobre', 'metodo', 'mapa', 'procedimentos', 'processo', 'resultados', 'depoimentos', 'faq', 'agendar'].map(function (k) {
+    { group: 'Conteúdo do site', items: ['inicio', 'sobre', 'metodo', 'procedimentos', 'processo', 'resultados', 'depoimentos', 'faq', 'agendar'].map(function (k) {
       return { id: k, title: CONTENT[k].title, desc: CONTENT[k].desc, icon: CONTENT[k].icon, color: CONTENT[k].color };
     }) },
     { group: 'Ajustes', items: [
+      { id: 'agenda', title: CONTENT.agenda.title, desc: CONTENT.agenda.desc, icon: 'calendar', color: '#d4b88a' },
       { id: 'ajustes', title: CONTENT.ajustes.title, desc: CONTENT.ajustes.desc, icon: 'gear', color: '#d4b88a' },
       { id: 'usuarios', title: 'Usuários', desc: 'Quem pode entrar no painel.', icon: 'users', color: '#d4b88a' }
     ] }
@@ -395,6 +396,7 @@
     $('#top-actions').innerHTML = '';
     if (id === 'painel') renderDashboard(view);
     else if (id === 'leads') renderLeads(view);
+    else if (id === 'reservas') renderBookings(view);
     else if (id === 'usuarios') renderUsers(view);
     else renderContent(view, CONTENT[id]);
   }
@@ -482,6 +484,12 @@
       if (f.t === 'textarea') {
         control = h('textarea', { class: 'textarea', id: id, rows: 3, oninput: function (e) { update(e.target.value); } });
         control.value = val == null ? '' : val;
+      } else if (f.t === 'bool') {
+        control = h('label', { class: 'switch' },
+          h('input', { type: 'checkbox', id: id, checked: val === true || val === 'true', onchange: function (e) { update(e.target.checked); } }),
+          h('span', null, 'Ligada'));
+      } else if (f.t === 'number') {
+        control = h('input', { class: 'input', id: id, type: 'number', min: 0, value: val == null ? '' : val, oninput: function (e) { update(e.target.value === '' ? '' : Number(e.target.value)); } });
       } else if (f.t === 'image') {
         control = imageField(id, val, update);
       } else {
@@ -614,7 +622,7 @@
     var fixed = {
       hero_wa: 'WhatsApp · topo da página', hero_agendar: 'Agendar · topo da página', nav_agendar: 'Agendar · menu', menu_agendar: 'Agendar · menu do celular', menu_wa: 'WhatsApp · menu do celular', dock_agendar: 'Agendar · barra fixa', dock_wa: 'WhatsApp · botão fixo', faq_wa: 'WhatsApp · Dúvidas',
       sobre_wa: 'WhatsApp · seção Sobre', proc_wa: 'WhatsApp · Procedimentos', depoimentos_wa: 'WhatsApp · Depoimentos',
-      galeria_cta: 'Conversar sobre meu caso · galeria', lead_hero_wa: 'WhatsApp · Agendamento', form_success_wa: 'WhatsApp · após o formulário',
+      galeria_cta: 'Conversar sobre meu caso · galeria', lead_hero_wa: 'WhatsApp · Agendamento', form_success_wa: 'WhatsApp · após o formulário', reserva_wa: 'WhatsApp · após a pré-reserva', agenda_fechada_wa: 'WhatsApp · agenda fechada', reserva_passo_1: 'Agendamento · passo 1', reserva_passo_2: 'Agendamento · escolheu interesse', reserva_passo_3: 'Agendamento · escolheu horário',
       float_wa: 'WhatsApp · botão flutuante', footer_wa: 'WhatsApp · rodapé', footer_instagram: 'Instagram · rodapé',
       footer_email: 'Email · rodapé', form_inicio: 'Começou o formulário', antes_depois: 'Arrastou o antes e depois', whatsapp: 'WhatsApp'
     };
@@ -884,6 +892,63 @@
           catch (e) { toast(e.message, true); }
         } })),
       notes);
+  }
+
+  /* =================================================================
+     Agenda (pré-reservas)
+     ================================================================= */
+  var BOOK_STATUS = [['pendente', 'A confirmar'], ['confirmado', 'Confirmado'], ['cancelado', 'Cancelado']];
+  var WEEK_LONG = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+
+  async function renderBookings(view) {
+    var past = false;
+    var seg = h('div', { class: 'seg' });
+    var box = h('div', null, h('div', { class: 'empty' }, 'Carregando…'));
+    $('#top-actions').appendChild(seg);
+    view.appendChild(box);
+    function drawSeg() {
+      seg.innerHTML = '';
+      [[false, 'Próximas'], [true, 'Anteriores']].forEach(function (o) {
+        seg.appendChild(h('button', { type: 'button', class: past === o[0] ? 'is-on' : '', onclick: function () { past = o[0]; drawSeg(); load(); } }, o[1]));
+      });
+    }
+    async function load() {
+      var r;
+      try { r = await api('/api/bookings' + (past ? '?past=1' : '')); }
+      catch (e) { box.innerHTML = ''; box.appendChild(h('div', { class: 'card empty' }, e.message)); return; }
+      box.innerHTML = '';
+      if (!r.bookings.length) {
+        box.appendChild(h('div', { class: 'card empty' }, past ? 'Nenhuma reserva anterior.' : 'Nenhuma pré-reserva ainda. Quando alguém escolher um horário no site, aparece aqui.'));
+        return;
+      }
+      var byDay = {};
+      r.bookings.forEach(function (b) { (byDay[b.date] = byDay[b.date] || []).push(b); });
+      Object.keys(byDay).forEach(function (date) {
+        var d = new Date(date + 'T12:00:00Z');
+        var label = WEEK_LONG[d.getUTCDay()] + ', ' + d.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', timeZone: 'UTC' });
+        var rows = h('div', { class: 'rows' });
+        byDay[date].forEach(function (b) {
+          var sel = h('select', { class: 'select pill-select bk-' + b.status, 'aria-label': 'Status de ' + b.nome },
+            BOOK_STATUS.map(function (s) { return h('option', { value: s[0], selected: s[0] === b.status }, s[1]); }));
+          sel.addEventListener('change', async function () {
+            try {
+              await api('/api/bookings', { method: 'PATCH', body: { id: b.id, status: sel.value } });
+              sel.className = 'select pill-select bk-' + sel.value;
+              toast(sel.value === 'confirmado' ? 'Reserva confirmada' : sel.value === 'cancelado' ? 'Reserva cancelada, horário liberado' : 'Status atualizado');
+            } catch (e) { toast(e.message, true); }
+          });
+          var msg = 'Olá, ' + b.nome.split(' ')[0] + '! Aqui é da equipe da Dra. Millena. Confirmando sua avaliação ' + label + ' às ' + b.time + '. Podemos confirmar?';
+          rows.appendChild(h('div', { class: 'booking' },
+            h('span', { class: 'booking__time' }, b.time),
+            h('span', { class: 'booking__who' }, h('strong', null, b.nome), h('small', null, fmtPhone(b.telefone) + (b.interesse ? ' · ' + b.interesse : ''))),
+            sel,
+            h('a', { class: 'btn btn--ghost btn--sm', href: waFor(b.telefone) + '?text=' + encodeURIComponent(msg), target: '_blank', rel: 'noopener', html: ico('wa') + ' Confirmar' })));
+        });
+        box.appendChild(h('section', { class: 'group' }, h('div', { class: 'group__label' }, label), rows));
+      });
+    }
+    drawSeg();
+    load();
   }
 
   /* =================================================================

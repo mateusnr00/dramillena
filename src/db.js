@@ -50,6 +50,19 @@ const SCHEMA = [
      session TEXT
    )`,
   `CREATE INDEX IF NOT EXISTS leads_ts ON leads(ts)`,
+  `CREATE TABLE IF NOT EXISTS bookings (
+     id INTEGER PRIMARY KEY AUTOINCREMENT,
+     created_at INTEGER NOT NULL,
+     date TEXT NOT NULL,
+     time TEXT NOT NULL,
+     nome TEXT NOT NULL,
+     telefone TEXT NOT NULL,
+     interesse TEXT,
+     status TEXT NOT NULL DEFAULT 'pendente',
+     lead_id INTEGER
+   )`,
+  `CREATE INDEX IF NOT EXISTS bookings_date ON bookings(date)`,
+  `CREATE UNIQUE INDEX IF NOT EXISTS bookings_slot ON bookings(date, time) WHERE status <> 'cancelado'`,
   `CREATE TABLE IF NOT EXISTS login_attempts (
      key TEXT PRIMARY KEY,
      count INTEGER NOT NULL,

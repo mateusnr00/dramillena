@@ -258,41 +258,122 @@
     update();
   }
 
-  /* =================================================================
-     Mapa do rosto
-     ================================================================= */
-  var facemap = $('#mapa');
-  if (facemap) {
-    var panelEl = $('[data-panel]', facemap);
-    var current = '0';
-    var pick = function (i, fromUser) {
-      if (i === current) return;
-      current = i;
-      var tpl = $('[data-zone-tpl="' + i + '"]', facemap);
-      if (tpl) panelEl.innerHTML = tpl.innerHTML;
-      $$('[data-zone]', facemap).forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-zone') === i)); });
-      if (!reduceMotion) { panelEl.classList.remove('is-changing'); void panelEl.offsetWidth; panelEl.classList.add('is-changing'); }
-      if (fromUser) send('click', 'mapa_' + i);
-    };
-    facemap.addEventListener('click', function (ev) {
-      var b = ev.target.closest('[data-zone]');
-      if (!b) return;
-      pick(b.getAttribute('data-zone'), true);
-      // No celular o texto fica abaixo do desenho: leva a pessoa até ele.
-      if (b.classList.contains('facemap__dot') && window.innerWidth < 860) {
-        $('.facemap__tabs', facemap).scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });
-      }
-    });
+  var dockEl = $('[data-dock]');
+  var bookEl = $('#agendar');
+  if (dockEl && bookEl && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      dockEl.classList.toggle('is-hidden', entries[0].isIntersecting);
+    }, { threshold: 0.15 }).observe(bookEl);
   }
 
   /* =================================================================
-     Formulário: salva o lead e leva para o WhatsApp
+     Agendamento em 3 passos: interesse, dia e horário, dados
      ================================================================= */
-  var form = $('#leadForm');
-  if (form) {
+  var booker = $('[data-booker]');
+  if (booker) {
+    var steps = $$('[data-step]', booker);
+    var dots = $$('[data-step-dot]', booker);
+    var daysEl = $('[data-days]', booker);
+    var timesEl = $('[data-times]', booker);
+    var next2 = $('[data-step="2"] [data-next]', booker);
+    var form = $('#leadForm');
     var nomeEl = $('#nome');
     var tel = $('#telefone');
     var err = $('#formErr');
+    var slots = [];
+    var choice = { interesse: '', date: '', time: '' };
+    var WEEK = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
+    var WEEK_LONG = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+    var MONTHS = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+
+    var longDate = function (date, weekday) {
+      var p = date.split('-');
+      return WEEK_LONG[weekday] + ', ' + Number(p[2]) + ' de ' + MONTHS[Number(p[1]) - 1];
+    };
+
+    var show = function (n) {
+      steps.forEach(function (s) { s.hidden = s.getAttribute('data-step') !== String(n); });
+      dots.forEach(function (d) {
+        var k = Number(d.getAttribute('data-step-dot'));
+        if (k === n) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current');
+        d.classList.toggle('is-done', k < n);
+      });
+      var first = $('[data-step="' + n + '"] input, [data-step="' + n + '"] button', booker);
+      if (first && n > 1) first.focus({ preventScroll: true });
+      send('click', 'reserva_passo_' + n);
+    };
+
+    var closed = function () {
+      steps.forEach(function (s) { s.hidden = true; });
+      $('.booker__steps', booker).hidden = true;
+      $('[data-closed]', booker).hidden = false;
+    };
+
+    var renderTimes = function () {
+      timesEl.innerHTML = '';
+      var day = slots.filter(function (d) { return d.date === choice.date; })[0];
+      if (!day) { timesEl.innerHTML = '<p class="times__empty">Escolha um dia para ver os horários.</p>'; return; }
+      day.times.forEach(function (t) {
+        var l = document.createElement('label');
+        l.className = 'time';
+        l.innerHTML = '<input type="radio" name="time" value="' + t + '" /><span>' + t + '</span>';
+        timesEl.appendChild(l);
+      });
+    };
+
+    var renderDays = function () {
+      daysEl.innerHTML = '';
+      slots.forEach(function (d, i) {
+        var p = d.date.split('-');
+        var l = document.createElement('label');
+        l.className = 'day';
+        l.innerHTML = '<input type="radio" name="date" value="' + d.date + '"' + (i === 0 ? ' checked' : '') + ' />' +
+          '<span><small>' + WEEK[d.weekday] + '</small><b>' + Number(p[2]) + '</b><small>' + MONTHS[Number(p[1]) - 1].slice(0, 3) + '</small></span>';
+        l.querySelector('input').setAttribute('aria-label', longDate(d.date, d.weekday));
+        daysEl.appendChild(l);
+      });
+      choice.date = slots.length ? slots[0].date : '';
+      renderTimes();
+    };
+
+    var loaded = fetch('/api/slots', { headers: { accept: 'application/json' } })
+      .then(function (r) { return r.ok ? r.json() : { ativo: false }; })
+      .then(function (data) {
+        slots = (data && data.days) || [];
+        if (!data.ativo || !slots.length) { closed(); return false; }
+        renderDays();
+        return true;
+      })
+      .catch(function () { closed(); return false; });
+
+    booker.addEventListener('change', function (ev) {
+      var t = ev.target;
+      if (t.name === 'interesse') choice.interesse = t.value;
+      if (t.name === 'date') { choice.date = t.value; choice.time = ''; next2.disabled = true; renderTimes(); }
+      if (t.name === 'time') { choice.time = t.value; next2.disabled = false; }
+    });
+
+    $$('[data-next]', booker).forEach(function (b) {
+      b.addEventListener('click', function () {
+        var cur = Number(b.closest('[data-step]').getAttribute('data-step'));
+        if (cur === 1) {
+          var sel = $('input[name="interesse"]:checked', booker);
+          choice.interesse = sel ? sel.value : '';
+          loaded.then(function (ok) { if (ok) show(2); });
+        }
+        if (cur === 2 && choice.time) {
+          var day = slots.filter(function (d) { return d.date === choice.date; })[0];
+          $('[data-summary]', booker).innerHTML = '<strong>' + longDate(choice.date, day.weekday) + ' às ' + choice.time + '</strong>' +
+            (choice.interesse && choice.interesse !== 'Ainda não sei' ? 'Avaliação para ' + choice.interesse : 'Avaliação gratuita');
+          show(3);
+        }
+      });
+    });
+    $$('[data-back]', booker).forEach(function (b) {
+      b.addEventListener('click', function () {
+        show(Number(b.closest('[data-step]').getAttribute('data-step')) - 1);
+      });
+    });
 
     tel.addEventListener('input', function () {
       var v = tel.value.replace(/\D/g, '').slice(0, 11);
@@ -304,39 +385,52 @@
     });
     nomeEl.addEventListener('input', function () { nomeEl.removeAttribute('aria-invalid'); });
 
-    var started = false;
-    form.addEventListener('focusin', function () {
-      if (!started) { started = true; send('click', 'form_inicio'); }
-    });
-
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var nome = nomeEl.value.trim();
       var phone = tel.value.replace(/\D/g, '');
-      var interesse = $('#interesse').value;
       err.textContent = '';
       if (nome.length < 2) { nomeEl.setAttribute('aria-invalid', 'true'); err.textContent = 'Escreva seu nome para continuar.'; nomeEl.focus(); return; }
       if (phone.length < 10) { tel.setAttribute('aria-invalid', 'true'); err.textContent = 'Confira o WhatsApp com DDD, por exemplo (11) 99999-9999.'; tel.focus(); return; }
+      var btn = $('button[type="submit"]', form);
+      btn.disabled = true;
+      btn.textContent = 'Reservando…';
 
-      beacon('/api/lead', {
-        nome: nome, telefone: phone, procedimento: interesse,
-        visitor: visitor, session: session, ref: ref,
-        source: utm.source || '', medium: utm.medium || '', campaign: utm.campaign || ''
+      fetch('/api/booking', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          nome: nome, telefone: phone, interesse: choice.interesse, date: choice.date, time: choice.time,
+          visitor: visitor, session: session, ref: ref,
+          source: utm.source || '', medium: utm.medium || '', campaign: utm.campaign || ''
+        })
+      }).then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (data) { return { ok: r.ok, status: r.status, data: data }; });
+      }).then(function (res) {
+        if (!res.ok) {
+          err.textContent = (res.data && res.data.error) || 'Não foi possível reservar agora. Tente de novo ou chame no WhatsApp.';
+          if (res.status === 409) {
+            fetch('/api/slots').then(function (r) { return r.json(); }).then(function (d) { slots = d.days || []; renderDays(); show(2); });
+          }
+          return;
+        }
+        pixel('Lead', { content_name: choice.interesse });
+        gtagEvent('generate_lead', { procedimento: choice.interesse });
+        var day = slots.filter(function (d) { return d.date === choice.date; })[0];
+        var when = longDate(choice.date, day.weekday) + ' às ' + choice.time;
+        $('[data-done-text]', booker).textContent = 'Reservamos ' + when + ' para você. A equipe vai confirmar pelo WhatsApp em até 1 hora, em horário comercial.';
+        var msg = 'Olá! Sou ' + nome + ' e fiz uma pré-reserva pelo site para ' + when + '.' +
+          (choice.interesse && choice.interesse !== 'Ainda não sei' ? ' Interesse: ' + choice.interesse + '.' : '');
+        $('[data-done-wa]', booker).setAttribute('href', 'https://wa.me/' + (SITE.waNumber || '') + '?text=' + encodeURIComponent(msg));
+        steps.forEach(function (s) { s.hidden = true; });
+        $('.booker__steps', booker).hidden = true;
+        $('[data-done]', booker).hidden = false;
+      }).catch(function () {
+        err.textContent = 'Sem conexão. Tente de novo ou chame no WhatsApp.';
+      }).then(function () {
+        btn.disabled = false;
+        btn.textContent = 'Confirmar pré-reserva';
       });
-      pixel('Lead', { content_name: interesse });
-      gtagEvent('generate_lead', { procedimento: interesse });
-
-      var msg = 'Olá! Sou ' + nome + ' e gostaria de agendar uma avaliação com a Dra. Millena.' +
-        (interesse && interesse !== 'Ainda não sei' ? ' Tenho interesse em ' + interesse + '.' : '');
-      var waUrl = 'https://wa.me/' + (SITE.waNumber || '') + '?text=' + encodeURIComponent(msg);
-      $('#successWa').setAttribute('href', waUrl);
-      form.classList.add('is-sent');
-      $('#success').hidden = false;
-
-      setTimeout(function () {
-        var w = window.open(waUrl, '_blank');
-        if (!w) location.href = waUrl;
-      }, 1000);
     });
   }
 })();

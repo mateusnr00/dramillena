@@ -66,18 +66,15 @@ export const DEFAULT_CONFIG = {
     ]
   },
 
-  mapa: {
-    title: 'Onde você quer cuidar?',
-    intro: 'Toque em uma região do rosto para ver o que pode ser feito nela.',
-    zonas: [
-      { id: 'testa', nome: 'Testa', titulo: 'Linhas de expressão', texto: 'Suaviza as linhas da testa e entre as sobrancelhas sem congelar a expressão.', procedimentos: 'Toxina botulínica' },
-      { id: 'olhos', nome: 'Olhar', titulo: 'Olhar descansado', texto: 'Atenua pés de galinha e sinais de cansaço, devolvendo leveza ao olhar.', procedimentos: 'Toxina botulínica, Ulthera' },
-      { id: 'nariz', nome: 'Nariz', titulo: 'Perfil harmônico', texto: 'Corrige pequenas irregularidades do dorso e da ponta do nariz, sem cirurgia.', procedimentos: 'Rinomodelação' },
-      { id: 'macas', nome: 'Maçãs do rosto', titulo: 'Sustentação e contorno', texto: 'Repõe o volume perdido com o tempo e devolve a sustentação do terço médio.', procedimentos: 'Full Face, Bioestimulador de Colágeno' },
-      { id: 'labios', nome: 'Lábios', titulo: 'Lábios em proporção', texto: 'Contorno, hidratação e volume sob medida, em harmonia com o resto do rosto.', procedimentos: 'Preenchimento Labial' },
-      { id: 'mandibula', nome: 'Mandíbula e queixo', titulo: 'Contorno definido', texto: 'Define a linha da mandíbula e equilibra o queixo com o perfil.', procedimentos: 'Full Face, Ulthera' },
-      { id: 'pele', nome: 'Pele', titulo: 'Firmeza e viço', texto: 'Estimula o colágeno da própria pele para mais firmeza, textura e luminosidade.', procedimentos: 'Bioestimulador de Colágeno, Ulthera' }
-    ]
+  agenda: {
+    ativo: true,
+    dias: 'seg, ter, qua, qui, sex, sab',
+    inicio: '09:00',
+    fim: '18:00',
+    duracao: 60,
+    antecedenciaHoras: 12,
+    diasFuturos: 21,
+    bloqueios: ''
   },
 
   galeria: {

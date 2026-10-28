@@ -376,3 +376,19 @@ strong, b, .card__title, .kpi__value, .top h1 { font-weight: 500; }
 @media (max-width: 860px) {
   .side { background: var(--sidebar); }
 }
+
+/* Agenda */
+.booking { display: grid; grid-template-columns: 64px 1fr 160px auto; gap: 16px; align-items: center; padding: 16px 24px; border-bottom: 1px solid var(--line); }
+.booking:last-child { border-bottom: 0; }
+.booking__time { font-family: var(--serif); font-size: 24px; line-height: 32px; }
+.booking__who strong { display: block; }
+.booking__who small { color: var(--mute); font-size: 13px; }
+.bk-pendente { background-color: rgba(194, 107, 0, .12); color: var(--orange); }
+.bk-confirmado { background-color: rgba(29, 154, 75, .12); color: var(--green); }
+.bk-cancelado { background-color: rgba(0, 0, 0, .06); color: var(--mute); }
+.switch { display: inline-flex; align-items: center; gap: 8px; padding-top: 6px; }
+.switch input { width: 18px; height: 18px; accent-color: var(--accent); }
+@media (max-width: 860px) {
+  .booking { grid-template-columns: 56px 1fr; }
+  .booking select, .booking .btn { grid-column: 2; justify-self: start; }
+}

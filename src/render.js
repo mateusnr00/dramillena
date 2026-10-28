@@ -2,7 +2,7 @@
 // Todo texto vindo do painel passa por esc() (ou fmt(), que escapa antes
 // de aplicar os marcadores *itálico* e |quebra).
 
-const ASSET_VERSION = '7';
+const ASSET_VERSION = '9';
 
 export function esc(s) {
   return String(s ?? '').replace(/[&<>"']/g, c => (
@@ -123,7 +123,7 @@ ${safeUrl(cfg.hero.antes) ? `<link rel="preload" as="image" href="${esc(safeUrl(
 <link rel="stylesheet" href="/css/site.css?v=${ASSET_VERSION}" />`;
 }
 
-const NAV = [['#sobre', 'Sobre'], ['#metodo', 'Método'], ['#mapa', 'Tratamentos'], ['#resultados', 'Resultados'], ['#duvidas', 'Dúvidas']];
+const NAV = [['#sobre', 'Sobre'], ['#metodo', 'Método'], ['#procedimentos', 'Tratamentos'], ['#resultados', 'Resultados'], ['#duvidas', 'Dúvidas']];
 
 function nav(cfg) {
   return `
@@ -215,65 +215,6 @@ function metodo(cfg) {
         <p>${esc(p.texto)}</p>
       </li>`).join('')}
     </ul>
-  </div>
-</section>`;
-}
-
-// Posição de cada região na ilustração (em % da largura e altura).
-const ZONE_POS = {
-  testa: [50, 24], olhos: [36.5, 42.5], nariz: [50, 54], macas: [27, 55],
-  labios: [50, 67.5], mandibula: [66, 79], pele: [73, 52]
-};
-
-const FACE_SVG = `
-<svg class="facemap__art" viewBox="0 0 400 520" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M200 58c86 0 128 74 127 168-1 92-37 172-82 212-22 19-68 19-90 0-45-40-81-120-82-212-1-94 41-168 127-168z"/>
-  <path d="M150 442c2 30 0 54-5 78M250 442c-2 30 0 54 5 78"/>
-  <path d="M118 198c18-14 44-16 64-8M282 198c-18-14-44-16-64-8"/>
-  <path d="M124 228c14-12 38-12 52 0-14 9-38 9-52 0zM224 228c14-12 38-12 52 0-14 9-38 9-52 0z"/>
-  <circle cx="150" cy="228" r="4.5" fill="currentColor" stroke="none"/>
-  <circle cx="250" cy="228" r="4.5" fill="currentColor" stroke="none"/>
-  <path d="M199 236c-3 26-10 50-16 64M183 300c8 10 26 10 34 0"/>
-  <path d="M160 350c14-9 28-11 40-5 12-6 26-4 40 5M160 350c20 18 60 18 80 0M163 351c20 5 54 5 74 0"/>
-  <path d="M100 268c12 30 28 46 48 52M300 268c-12 30-28 46-48 52" opacity=".45"/>
-  <path d="M170 418c18 8 42 8 60 0" opacity=".45"/>
-</svg>`;
-
-function mapa(cfg) {
-  const m = cfg.mapa;
-  const zonas = list(m && m.zonas);
-  if (!zonas.length) return '';
-  const first = zonas[0];
-  const panel = z => `
-        <p class="facemap__zone">${esc(z.nome)}</p>
-        <h3 class="facemap__title">${esc(z.titulo)}</h3>
-        <p class="facemap__text">${esc(z.texto)}</p>
-        ${z.procedimentos ? `<ul class="facemap__procs">${String(z.procedimentos).split(',').map(p => p.trim()).filter(Boolean).map(p => `<li>${esc(p)}</li>`).join('')}</ul>` : ''}
-        <a class="link-wa" href="${esc(waLink(cfg.settings, `Olá, gostaria de saber mais sobre tratamentos para ${plain(z.nome).toLowerCase()}.`))}" target="_blank" rel="noopener" data-track="mapa_${esc(z.id || 'zona')}_wa">${icon.wa}<span>Perguntar sobre ${esc(plain(z.nome).toLowerCase())}</span></a>`;
-  return `
-<section class="facemap" id="mapa">
-  <div class="wrap">
-    <div class="sec-head">
-      <h2 class="h2">${fmt(m.title)}</h2>
-      ${m.intro ? `<p class="sec-intro">${esc(m.intro)}</p>` : ''}
-    </div>
-    <div class="facemap__grid">
-      <div class="facemap__stage">
-        ${FACE_SVG}
-        ${zonas.map((z, i) => {
-          const pos = ZONE_POS[z.id];
-          if (!pos) return '';
-          return `<button type="button" class="facemap__dot" style="left:${pos[0]}%;top:${pos[1]}%" data-zone="${i}" aria-label="${esc(z.nome)}"${i === 0 ? ' aria-pressed="true"' : ' aria-pressed="false"'}><span></span></button>`;
-        }).join('')}
-      </div>
-      <div class="facemap__side">
-        <div class="facemap__tabs" role="group" aria-label="Regiões do rosto">
-          ${zonas.map((z, i) => `<button type="button" data-zone="${i}" aria-pressed="${i === 0}">${esc(z.nome)}</button>`).join('')}
-        </div>
-        <div class="facemap__panel" aria-live="polite" data-panel>${panel(first)}</div>
-        ${zonas.map((z, i) => `<template data-zone-tpl="${i}">${panel(z)}</template>`).join('')}
-      </div>
-    </div>
   </div>
 </section>`;
 }
@@ -406,6 +347,7 @@ function faq(cfg) {
 function agendar(cfg) {
   const f = cfg.form;
   const opts = [...list(cfg.procedimentos.items).map(p => plain(p.title)), 'Ainda não sei'];
+  const waDirect = waLink(cfg.settings, 'Olá, gostaria de agendar minha avaliação com a Dra. Millena');
   return `
 <section class="book" id="agendar">
   <div class="wrap">
@@ -413,33 +355,70 @@ function agendar(cfg) {
       <div class="book__copy">
         <h2 class="h2">${fmt(f.title)}</h2>
         <p class="lead">${esc(f.desc)}</p>
-        <a class="btn btn--wa" href="${esc(waLink(cfg.settings, 'Olá, gostaria de agendar minha avaliação com a Dra. Millena'))}" target="_blank" rel="noopener" data-track="lead_hero_wa">${icon.wa}<span>${esc(f.waTitle)}</span></a>
-        <p class="book__note">${esc(f.waSub)}</p>
+        <ul class="book__facts">
+          <li>${icon.check}<span>Escolha o dia e o horário aqui mesmo</span></li>
+          <li>${icon.check}<span>A equipe confirma pelo WhatsApp</span></li>
+          <li>${icon.check}<span>Avaliação sem compromisso</span></li>
+        </ul>
+        <a class="link-wa" href="${esc(waDirect)}" target="_blank" rel="noopener" data-track="lead_hero_wa">${icon.wa}<span>Prefiro falar direto no WhatsApp</span></a>
       </div>
-      <form class="form" id="leadForm" novalidate>
-        <h3 class="form__title">${fmt(f.formTitle)}</h3>
-        <div class="field">
-          <label for="nome">Nome</label>
-          <input id="nome" name="nome" type="text" autocomplete="name" required maxlength="80" placeholder="Como podemos te chamar?" />
+
+      <div class="booker" data-booker>
+        <ol class="booker__steps" aria-label="Etapas">
+          <li data-step-dot="1" aria-current="step">Interesse</li>
+          <li data-step-dot="2">Dia e horário</li>
+          <li data-step-dot="3">Seus dados</li>
+        </ol>
+
+        <fieldset class="booker__step" data-step="1">
+          <legend class="booker__q">O que você gostaria de avaliar?</legend>
+          <div class="options">
+            ${opts.map((o, i) => `<label class="option"><input type="radio" name="interesse" value="${esc(o)}"${i === opts.length - 1 ? ' checked' : ''} /><span>${esc(o)}</span></label>`).join('')}
+          </div>
+          <button type="button" class="btn btn--bronze btn--block" data-next>Continuar</button>
+        </fieldset>
+
+        <fieldset class="booker__step" data-step="2" hidden>
+          <legend class="booker__q">Escolha o melhor dia</legend>
+          <div class="days" data-days role="radiogroup" aria-label="Dias disponíveis"></div>
+          <p class="booker__q booker__q--sm">Horários livres</p>
+          <div class="times" data-times role="radiogroup" aria-label="Horários disponíveis"></div>
+          <div class="booker__nav">
+            <button type="button" class="btn btn--ghost" data-back>Voltar</button>
+            <button type="button" class="btn btn--bronze" data-next disabled>Continuar</button>
+          </div>
+        </fieldset>
+
+        <form class="booker__step" data-step="3" id="leadForm" novalidate hidden>
+          <p class="booker__summary" data-summary></p>
+          <div class="field">
+            <label for="nome">Nome</label>
+            <input id="nome" name="nome" type="text" autocomplete="name" required maxlength="80" placeholder="Como podemos te chamar?" />
+          </div>
+          <div class="field">
+            <label for="telefone">WhatsApp</label>
+            <input id="telefone" name="telefone" type="tel" inputmode="tel" autocomplete="tel" required maxlength="16" placeholder="(11) 99999-9999" />
+          </div>
+          <p class="form__err" id="formErr" role="alert"></p>
+          <div class="booker__nav">
+            <button type="button" class="btn btn--ghost" data-back>Voltar</button>
+            <button type="submit" class="btn btn--bronze">Confirmar pré-reserva</button>
+          </div>
+          <p class="form__legal">${esc(f.legal)}</p>
+        </form>
+
+        <div class="booker__done" data-done hidden role="status">
+          <span class="booker__done-icon" aria-hidden="true">${icon.check}</span>
+          <h3>Pré-reserva feita</h3>
+          <p data-done-text></p>
+          <a class="btn btn--wa" data-done-wa href="${esc(waDirect)}" target="_blank" rel="noopener" data-track="reserva_wa">${icon.wa}<span>Avisar no WhatsApp</span></a>
         </div>
-        <div class="field">
-          <label for="telefone">WhatsApp</label>
-          <input id="telefone" name="telefone" type="tel" inputmode="tel" autocomplete="tel" required maxlength="16" placeholder="(11) 99999-9999" />
+
+        <div class="booker__closed" data-closed hidden>
+          <p>A agenda online está indisponível agora. Fale com a equipe pelo WhatsApp e encontramos um horário para você.</p>
+          <a class="btn btn--wa" href="${esc(waDirect)}" target="_blank" rel="noopener" data-track="agenda_fechada_wa">${icon.wa}<span>Falar no WhatsApp</span></a>
         </div>
-        <div class="field">
-          <label for="interesse">Interesse</label>
-          <select id="interesse" name="interesse">
-            ${opts.map((o, i) => `<option${i === opts.length - 1 ? ' selected' : ''}>${esc(o)}</option>`).join('')}
-          </select>
-        </div>
-        <p class="form__err" id="formErr" role="alert"></p>
-        <button class="btn btn--bronze btn--block" type="submit">${esc(f.submit)}</button>
-        <p class="form__legal">${esc(f.formSub)} ${esc(f.legal)}</p>
-        <div class="form__done" id="success" role="status" hidden>
-          <p><strong>Recebemos seu contato.</strong> Estamos abrindo o WhatsApp para você falar com a equipe.</p>
-          <a class="btn btn--wa" id="successWa" href="${esc(waLink(cfg.settings))}" target="_blank" rel="noopener" data-track="form_success_wa">${icon.wa}<span>Abrir WhatsApp</span></a>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
 </section>`;
@@ -505,7 +484,6 @@ ${nav(cfg)}
 ${hero(cfg)}
 ${sobre(cfg)}
 ${metodo(cfg)}
-${mapa(cfg)}
 ${procedimentos(cfg)}
 ${processo(cfg)}
 ${resultados(cfg)}
