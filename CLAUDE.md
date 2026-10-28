@@ -16,7 +16,8 @@ Depois de cada mudança:
 ## Design
 
 Direção atual, pedida pelo dono: **estilo Apple/Nike, clean e feminino** (o site é de uma doutora; a versão preta com Archivo condensada em caixa alta foi rejeitada por parecer masculina). Fundos branco e rosé bem claro (#f9f1f0), texto ameixa escuro (#2b2125), botões e destaques em rosa antigo (#9b4a62). Títulos grandes em Bodoni Moda (sem caixa alta, com itálico rosa no destaque), texto em Inter, imagens de borda a borda e pouco texto por tela.
-- Movimento: fade em degradê entre seções (`.fade--w2g` / `.fade--g2w`), conteúdo que surge suave ao rolar (`.rv`) e parallax nas fotos (`data-parallax`). Tudo desligado com movimento reduzido.
+- Estrutura editorial, sem cara de template: nada de faixa de números gigantes, cards com ícone, colunas de "pilares" com linha, passos 1-2-3-4 soltos, cards de depoimento com estrelas ou nome gigante no rodapé. Tratamentos em lista (índice), um depoimento por vez em destaque, números discretos no topo, passos dentro do agendamento.
+- Movimento: fade em degradê entre seções (`.fade--w2g` / `.fade--g2w`), conteúdo que surge suave ao rolar, sem desfoque (`.rv`) e parallax nas fotos (`data-parallax`). Tudo desligado com movimento reduzido.
 
 - Grade de 8 px: espaçamentos, alturas de linha, controles e raios em múltiplos de 8.
 - Tamanhos de texto em rem; o site precisa aguentar letra em 200% sem vazar.

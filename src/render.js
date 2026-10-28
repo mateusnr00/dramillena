@@ -2,7 +2,7 @@
 // Todo texto vindo do painel passa por esc() (ou fmt(), que escapa antes
 // de aplicar os marcadores *itálico* e |quebra).
 
-const ASSET_VERSION = '14';
+const ASSET_VERSION = '15';
 
 export function esc(s) {
   return String(s ?? '').replace(/[&<>"']/g, c => (
@@ -159,6 +159,7 @@ function nav(cfg) {
 // Topo: tipografia gigante em preto, imagem de borda a borda.
 function hero(cfg) {
   const h = cfg.hero;
+  const trust = list(h.trust);
   return `
 <section class="hero" id="topo">
   <div class="hero__copy">
@@ -167,38 +168,16 @@ function hero(cfg) {
     <p class="hero__sub">${esc(h.sub)}</p>
     <div class="hero__actions">
       <a class="btn btn--light" href="#agendar" data-track="hero_agendar">${esc(h.ctaPrimary)}</a>
-      <a class="btn btn--outline-light" href="${esc(waLink(cfg.settings))}" target="_blank" rel="noopener" data-track="hero_wa">${icon.wa}<span>${esc(h.ctaSecondary)}</span></a>
+      <a class="link-wa link-wa--inline" href="${esc(waLink(cfg.settings))}" target="_blank" rel="noopener" data-track="hero_wa">${icon.wa}<span>${esc(h.ctaSecondary)}</span></a>
     </div>
+    ${trust.length ? `<ul class="hero__trust" aria-label="Em números">
+      ${trust.map(t => `<li><strong>${esc(t.num)}</strong> ${esc(t.label)}</li>`).join('')}
+    </ul>` : ''}
   </div>
   <figure class="hero__media">
     ${ba({ before: h.antes, after: h.depois, alt: 'Harmonização facial', cls: 'ba--bleed', eager: true, parallax: true })}
     ${h.note ? `<figcaption>${esc(h.note)}</figcaption>` : ''}
   </figure>
-</section>`;
-}
-
-// Frase que acende palavra por palavra durante a rolagem (momento único de movimento).
-function statement(cfg) {
-  const t = plain(cfg.hero.frase);
-  if (!t) return '';
-  const words = t.split(/\s+/)
-    .map(w => `<span>${esc(w)}</span>`).join(' ');
-  return `
-<section class="statement" aria-label="Filosofia">
-  <div class="wrap">
-    <p class="statement__text" data-words>${words}</p>
-  </div>
-</section>`;
-}
-
-function stats(cfg) {
-  const items = list(cfg.hero.trust);
-  if (!items.length) return '';
-  return `
-<section class="stats" aria-label="Números">
-  <div class="wrap stats__grid">
-    ${items.map(t => `<div class="stat"><strong>${esc(t.num)}</strong><span>${esc(t.label)}</span></div>`).join('')}
-  </div>
 </section>`;
 }
 
@@ -215,10 +194,10 @@ function sobre(cfg) {
     <h2 class="display">${fmt(m.title)}</h2>
     ${m.bio1 ? `<p class="body-lg">${esc(m.bio1)}</p>` : ''}
     ${m.bio2 ? `<blockquote class="pull">${esc(String(m.bio2).replace(/^["“]|["”]$/g, ''))}</blockquote>` : ''}
-    <ul class="checks">
-      ${list(m.credentials).map(c => `<li>${icon.check}<span>${esc(c)}</span></li>`).join('')}
-    </ul>
-    <a class="btn btn--dark" href="${esc(waLink(cfg.settings, 'Olá, gostaria de conversar com a Dra. Millena'))}" target="_blank" rel="noopener" data-track="sobre_wa">${icon.wa}<span>${esc(m.cta)}</span></a>
+    ${list(m.credentials).length ? `<ul class="creds">
+      ${list(m.credentials).map(c => `<li>${esc(c)}</li>`).join('')}
+    </ul>` : ''}
+    <a class="link-wa" href="${esc(waLink(cfg.settings, 'Olá, gostaria de conversar com a Dra. Millena'))}" target="_blank" rel="noopener" data-track="sobre_wa">${icon.wa}<span>${esc(m.cta)}</span></a>
   </div>
 </section>`;
 }
@@ -229,56 +208,39 @@ function metodo(cfg) {
   if (!m || !pilares.length) return '';
   return `
 <section class="method" id="metodo">
-  <div class="wrap">
-    <p class="label">${esc(m.nome)}</p>
-    <h2 class="display display--md">${fmt(m.frase)}</h2>
-    <ul class="method__list">
-      ${pilares.map(p => `<li><h3>${esc(p.titulo)}</h3><p>${esc(p.texto)}</p></li>`).join('')}
-    </ul>
+  <div class="wrap method__grid">
+    <div class="method__intro">
+      <p class="label">${esc(m.nome)}</p>
+      <h2 class="display display--md">${fmt(m.frase)}</h2>
+      ${m.texto ? `<p class="muted">${esc(m.texto)}</p>` : ''}
+    </div>
+    <dl class="method__list">
+      ${pilares.map(p => `<div><dt>${esc(p.titulo)}</dt><dd>${esc(p.texto)}</dd></div>`).join('')}
+    </dl>
   </div>
 </section>`;
 }
 
-// Procedimentos em vitrine horizontal, como as prateleiras de produto.
+// Procedimentos como um índice editorial: nome, descrição e pergunta direta.
 function procedimentos(cfg) {
   const p = cfg.procedimentos;
   const items = list(p.items);
   if (!items.length) return '';
   return `
-<section class="shelf" id="procedimentos">
-  <div class="wrap shelf__head">
-    <h2 class="display display--md">${fmt(p.title)}</h2>
-    <div class="arrows">
-      <button type="button" class="arrow" data-scroll="-1" aria-label="Anterior">${icon.left}</button>
-      <button type="button" class="arrow" data-scroll="1" aria-label="Próximo">${icon.right}</button>
-    </div>
-  </div>
-  <ul class="shelf__rail" data-rail tabindex="0" aria-label="Tratamentos">
-    ${items.map((it, i) => {
-      const ic = safeUrl(it.icon);
-      return `
-    <li class="tile">
-      <div class="tile__media">${ic ? `<img src="${esc(ic)}" alt="" loading="lazy" decoding="async" width="400" height="400" />` : ''}</div>
-      <h3 class="tile__title">${esc(it.title)}</h3>
-      <p class="tile__desc">${esc(it.desc)}</p>
-      <a class="tile__link" href="${esc(waLink(cfg.settings, `Olá, gostaria de saber mais sobre ${plain(it.title)}.`))}" target="_blank" rel="noopener" data-track="proc_${i}_wa">Perguntar no WhatsApp</a>
-    </li>`;
-    }).join('')}
-  </ul>
-</section>`;
-}
-
-function processo(cfg) {
-  const p = cfg.processo;
-  const steps = list(p && p.steps);
-  if (!steps.length) return '';
-  return `
-<section class="steps">
+<section class="idx" id="procedimentos">
   <div class="wrap">
-    <h2 class="display display--md">${fmt(p.title)}</h2>
-    <ol class="steps__list">
-      ${steps.map((s, i) => `<li><span class="steps__n">${i + 1}</span><h3>${esc(s.title)}</h3><p>${esc(s.desc)}</p></li>`).join('')}
-    </ol>
+    <div class="idx__head">
+      <p class="label">${esc(p.eyebrow || 'Tratamentos')}</p>
+      <h2 class="display display--md">${fmt(p.title)}</h2>
+    </div>
+    <ul class="idx__list">
+      ${items.map((it, i) => `
+      <li class="idx__row">
+        <h3 class="idx__name">${esc(it.title)}</h3>
+        <p class="idx__desc">${esc(it.desc)}</p>
+        <a class="idx__link" href="${esc(waLink(cfg.settings, `Olá, gostaria de saber mais sobre ${plain(it.title)}.`))}" target="_blank" rel="noopener" data-track="proc_${i}_wa" aria-label="Perguntar sobre ${esc(plain(it.title))} no WhatsApp"><span>Perguntar</span>${icon.right}</a>
+      </li>`).join('')}
+    </ul>
   </div>
 </section>`;
 }
@@ -292,11 +254,15 @@ function resultados(cfg) {
     const c = plain(i.categoria);
     if (c && !cats.some(x => x.slug === slug(c))) cats.push({ slug: slug(c), label: c });
   });
+  const frase = plain(cfg.hero.frase);
   return `
 <section class="results" id="resultados">
   <div class="wrap">
     <div class="results__head">
-      <h2 class="display display--md">${fmt(g.title)}</h2>
+      <div>
+        <p class="label">${esc(g.eyebrow || 'Resultados')}</p>
+        <h2 class="display display--md">${fmt(g.title)}</h2>
+      </div>
       ${g.intro ? `<p class="muted">${esc(g.intro)}</p>` : ''}
     </div>
     ${cats.length > 1 ? `<div class="chips-filter" role="group" aria-label="Filtrar por procedimento">
@@ -309,32 +275,35 @@ function resultados(cfg) {
         ${ba({ before: i.before, after: i.after, alt: plain(i.titulo) || 'Resultado' })}
         <figcaption><span>${esc(i.titulo)}</span>${i.categoria ? `<small>${esc(i.categoria)}</small>` : ''}</figcaption>
       </figure>`).join('')}
+      ${items.length === 1 && frase ? `<blockquote class="results__quote">${esc(frase)}</blockquote>` : ''}
     </div>
     ${g.disclaimer ? `<p class="fine">${esc(g.disclaimer)}</p>` : ''}
   </div>
 </section>`;
 }
 
+// Um depoimento por vez, em destaque, como numa revista.
 function depoimentos(cfg) {
   const d = cfg.depoimentos;
   const items = list(d.items);
   if (!items.length) return '';
   return `
 <section class="quotes" id="depoimentos">
-  <div class="wrap shelf__head">
-    <h2 class="display display--md">${fmt(d.title)}</h2>
-    <div class="arrows">
-      <button type="button" class="arrow" data-scroll="-1" aria-label="Depoimento anterior">${icon.left}</button>
-      <button type="button" class="arrow" data-scroll="1" aria-label="Próximo depoimento">${icon.right}</button>
+  <div class="wrap">
+    <div class="quotes__head">
+      <p class="label">${esc(d.eyebrow || 'Depoimentos')}</p>
+      <div class="arrows">
+        <button type="button" class="arrow" data-scroll="-1" aria-label="Depoimento anterior">${icon.left}</button>
+        <button type="button" class="arrow" data-scroll="1" aria-label="Próximo depoimento">${icon.right}</button>
+      </div>
     </div>
-  </div>
-  <div class="quotes__rail" data-rail tabindex="0" aria-label="Depoimentos">
-    ${items.map(t => `
-    <figure class="quote">
-      <div class="quote__stars" role="img" aria-label="5 estrelas">${icon.star.repeat(5)}</div>
-      <blockquote>${esc(t.texto)}</blockquote>
-      <figcaption><strong>${esc(t.nome)}</strong><span>${esc(t.role)}</span></figcaption>
-    </figure>`).join('')}
+    <div class="quotes__rail" data-rail tabindex="0" aria-label="Depoimentos">
+      ${items.map((t, n) => `
+      <figure class="quote">
+        <blockquote>${esc(t.texto)}</blockquote>
+        <figcaption><strong>${esc(t.nome)}</strong><span>${esc(t.role)}</span><span class="quote__n">${n + 1} de ${items.length}</span></figcaption>
+      </figure>`).join('')}
+    </div>
   </div>
 </section>`;
 }
@@ -365,6 +334,7 @@ function agendar(cfg) {
   const f = cfg.form;
   const opts = [...list(cfg.procedimentos.items).map(p => plain(p.title)), 'Ainda não sei'];
   const waDirect = waLink(cfg.settings, 'Olá, gostaria de agendar minha avaliação com a Dra. Millena');
+  const steps = list(cfg.processo && cfg.processo.steps);
   return `
 <section class="book" id="agendar">
   <div class="wrap">
@@ -372,11 +342,9 @@ function agendar(cfg) {
       <div class="book__copy">
         <h2 class="h2">${fmt(f.title)}</h2>
         <p class="lead">${esc(f.desc)}</p>
-        <ul class="book__facts">
-          <li>${icon.check}<span>Escolha o dia e o horário aqui mesmo</span></li>
-          <li>${icon.check}<span>A equipe confirma pelo WhatsApp</span></li>
-          <li>${icon.check}<span>Avaliação sem compromisso</span></li>
-        </ul>
+        ${steps.length ? `<ol class="book__steps" aria-label="${esc(cfg.processo.title ? plain(cfg.processo.title) : 'Como funciona')}">
+          ${steps.map(st => `<li><strong>${esc(st.title)}</strong><span>${esc(st.desc)}</span></li>`).join('')}
+        </ol>` : ''}
         <a class="link-wa" href="${esc(waDirect)}" target="_blank" rel="noopener" data-track="lead_hero_wa">${icon.wa}<span>Prefiro falar direto no WhatsApp</span></a>
       </div>
 
@@ -447,7 +415,7 @@ function footer(cfg) {
   return `
 <footer class="foot">
   <div class="wrap">
-    <p class="foot__brand">${esc(brandName(cfg))}</p>
+    <p class="foot__brand">${esc(plain(cfg.settings.nome))}</p>
     <div class="foot__cols">
       <p class="foot__tag">${esc(cfg.footer.tag)}</p>
       <nav class="foot__links" aria-label="Contato">
@@ -500,20 +468,17 @@ export function renderPage(cfg, { origin }) {
 ${nav(cfg)}
 <main id="conteudo">
 ${hero(cfg)}
-${statement(cfg)}
 ${fade('w2g')}
 ${sobre(cfg)}
 ${fade('g2w')}
-${stats(cfg)}
 ${procedimentos(cfg)}
 ${fade('w2g')}
 ${resultados(cfg)}
 ${fade('g2w')}
 ${metodo(cfg)}
 ${fade('w2g')}
-${processo(cfg)}
-${fade('g2w')}
 ${depoimentos(cfg)}
+${fade('g2w')}
 ${faq(cfg)}
 ${fade('w2g')}
 ${agendar(cfg)}
